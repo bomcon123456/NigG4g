@@ -1,0 +1,25 @@
+{
+  "name": "nigg4g",
+  "version": "1.0.0",
+  "description": "Very awesome something",
+  "main": "./server/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bomcon123456/Nigg4g.git"
+  },
+  "author": "Swagboii/Thickboii",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bomcon123456/Nigg4g/issues"
+  },
+  "homepage": "https://github.com/bomcon123456/Nigg4g#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.6.0"
+  }
+}
