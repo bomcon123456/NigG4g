@@ -43,9 +43,9 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.use("/auth", authRoutes);
-app.use("/users", userRoutes);
-app.use("/posts", postRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/posts", postRoutes);
 
 // Error-handling Middleware
 app.use((error, req, res, next) => {

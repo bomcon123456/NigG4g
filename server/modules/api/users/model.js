@@ -27,10 +27,19 @@ const userModel = new Schema(
       }
     },
     avatarURL: { type: String, default: "" },
-    gender: { type: String, required: true },
+    gender: { type: Boolean, required: true },
     birthday: { type: Date, required: true },
     active: { type: Boolean, default: true },
-    posts: { type: Schema.Types.ObjectId, ref: "posts", required: false }
+    posts: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "Post"
+        }
+      ],
+      required: false,
+      default: []
+    }
   },
   { timestamps: { createdAt: "createdAt" } }
 );

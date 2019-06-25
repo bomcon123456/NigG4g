@@ -41,6 +41,9 @@ URI: /api/users/
     - DELETE -> /api/users/:id = delete that user
     - PUT -> /api/users/:id = update that user
 
+URI: /api/auth/
+    - POST -> /api/auth/ = login
+
 URI: /api/posts/
     - POST -> /api/posts/ = create new post
     - GET -> /api/posts/?page = get all posts for that page
