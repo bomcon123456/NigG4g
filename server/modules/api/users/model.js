@@ -1,54 +1,53 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 
-const commentModel = new Schema (
-    {
-      createdBy: { type: Schema.Types.ObjectId, ref: "users", required: true },
-      content: { type: String, required: true }
-    },
-    { timestamps: { createdAt: "createdAt" } }
-  );
-  
+const commentModel = new Schema(
+  {
+    createdBy: { type: Schema.Types.ObjectId, ref: "users", required: true },
+    content: { type: String, required: true }
+  },
+  { timestamps: { createdAt: "createdAt" } }
+);
 
 const userModel = new Schema(
-    {
-        username: { type: String, required: true, unique: true },
-        password: { type: String, require: true },
-        email: {
-            type: String,
-            required: true,
-            unique: true,
-            validate: {
-                validator: function (value) {
-                    const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                    return regex.test(value);
-                },
-                message: "{Value} is not a valid email address!"
-            }
+  {
+    username: { type: String, required: true, unique: true },
+    password: { type: String, require: true },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      validate: {
+        validator: function(value) {
+          const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          return regex.test(value);
         },
-        avatarURL: { type: String, default: "" },
-        gender: { type: String, required: true },
-        birthday: { type: Date, required: true },
-        active: { type: Boolean, default: true },
-        post: { type: Schema.Types.ObjectId, ref: "posts", required: true }
+        message: "{Value} is not a valid email address!"
+      }
     },
-    { timestamps: { createdAt: "createdAt" } }
+    avatarURL: { type: String, default: "" },
+    gender: { type: String, required: true },
+    birthday: { type: Date, required: true },
+    active: { type: Boolean, default: true },
+    posts: { type: Schema.Types.ObjectId, ref: "posts", required: false }
+  },
+  { timestamps: { createdAt: "createdAt" } }
 );
 
 userModel.pre("save", function(next) {
-    if (!this.isModified("password")) {
-        return next();
-    } 
+  if (!this.isModified("password")) {
+    return next();
+  }
 
-    bcrypt
-        .genSalt(12)
-        .then(salt => bcrypt.hash(this.password, salt))
-        .then(hash => {
-            this.password = hash;
-            next();
-        })
-        .catch(err => next(err));
-})
+  bcrypt
+    .genSalt(12)
+    .then(salt => bcrypt.hash(this.password, salt))
+    .then(hash => {
+      this.password = hash;
+      next();
+    })
+    .catch(err => next(err));
+});
 
-module.exports = mongoose.model("users", userModel);
+module.exports = mongoose.model("User", userModel);
