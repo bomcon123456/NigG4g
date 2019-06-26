@@ -3,9 +3,9 @@ const Schema = mongoose.Schema;
 
 const commentModel = new Schema(
   {
-    createdBy: { type: Schema.Types.ObjectId, ref: "users", required: true },
+    createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
     content: { type: String, required: true },
-    subcomment: { type: [commentModel] },
+    subcomment: { type: [this] },
     point: { type: Number, default: 0 }
   },
   { timestamps: { createdAt: "createdAt" } }
@@ -15,9 +15,11 @@ const postModel = new Schema(
   {
     title: { type: String, required: true },
     content: { type: String, required: true },
+    createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
     point: { type: Number, default: 0 },
     category: { type: String, required: true },
-    comment: { type: [commentModel], default: [] }
+    comment: { type: [commentModel], default: [] },
+    active: { type: Boolean, default: true },
   },
   { timestamps: { createdAt: "createdAt" } }
 );
