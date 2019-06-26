@@ -21,4 +21,22 @@ router.delete(
   postController.deletePost
 )
 
+router.post(
+  "/:postId/comments",
+  isAuth,
+  postController.addComment
+)
+
+router.delete(
+  "/:postId/comments/:commentId",
+  isAuth,
+  postController.deleteComment
+)
+
+router.put(
+  "/:postId/comments/:commentId",
+  isAuth,
+  postController.updateComment
+)
+
 module.exports = router;

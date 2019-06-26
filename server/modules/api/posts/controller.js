@@ -37,7 +37,7 @@ const getAllPosts = (req, res, next) => {
     .sort({ createdAt: -1 })
     .skip((page - 1) * 20)
     .limit(20)
-    .select("_id title content createdAt point category")
+    .select("_id title content createdAt point comment category")
     .populate("createdBy", "username avatarURL")
     .exec()
     .then(data => {
@@ -127,10 +127,139 @@ const deletePost = (req, res, next) => {
     })
 }
 
+const addComment = (req, res, next) => {
+  const postId = req.params.postId;
+  const userId = req.userId;
+  const content = req.body.content;
+  const imageURL = req.body.imageURL;
+  console.log(imageURL)
+
+  return Post.update(
+    {
+      _id: postId
+    },
+    {
+      $push: { comment: { createdBy: userId, content: content, imageURL: imageURL } }
+    }
+  )
+    .then(data => {
+      res.status(200).json({
+        message: "User comments on post",
+        content: content,
+        imageURL: imageURL,
+        userId: userId
+      })
+    })
+    .catch(err => {
+      console.log(err);
+      next(err);
+    })
+}
+
+const deleteComment = (req, res, next) => {
+  const postId = req.params.postId;
+  const userId = req.userId;
+  const commentId = req.params.commentId;
+
+  return Post.update(
+    {
+      _id: postId
+    },
+    {
+      $pull: {
+        comment: {
+          _id: commentId,
+          createdBy: userId
+        }
+      }
+    }
+  )
+    .then(data => {
+      res.status(200).json({
+        message: "Comment has been deleted",
+        commentId: commentId
+      })
+    })
+    .catch(err => {
+      console.log(err);
+      next(err);
+    })
+}
+
+// const updateComment = (req, res, next) => {
+//   const postId = req.params.postId;
+//   const userId = req.userId;
+//   const commentId = req.params.commentId;
+//   const content = req.body.content;
+//   const imageURL = req.body.imageURL;
+
+//   return Post.update(
+//     {
+//       '_id': postId,
+//       'comment._id': commentId
+//     },
+//     {
+//       "$set": {
+//         "comment.$.content": content,
+//         "comment.$.imageURL": imageURL,
+//         "comment.$.createdBy": userId
+//       }
+//     }
+//   )
+//     .then(result => {
+//       res.status(200).json({
+//         message: "Update comment successfully",
+//         commentId: commentId
+//       })
+//     })
+//     .catch(err => {
+//       console.log(err);
+//       next(err)
+//     })
+// }
+
+const updateComment = (req, res, next) => {
+  const postId = req.params.postId;
+  const userId = req.userId;
+  const commentId = req.params.commentId;
+  const content = req.body.content;
+  const imageURL = req.body.imageURL;
+
+  return Post.findOne({
+    '_id': postId,
+  })
+    .then(data => {
+      const comment = data.comment.find((comment) => {
+        return comment._id == commentId;
+      })
+      if (!comment) {
+        const error = new Error("Comment is not existed.");
+        error.statusCode = 400;
+        throw error;
+      }
+      comment.userId = userId ? userId : comment.userId;
+      comment.content = content ? content : comment.content;
+      comment.imageURL = imageURL ? imageURL : comment.imageURL;
+      return data.save().then(result => {
+        res.status(200).json({
+          message: "Update comment successfully",
+          commentId: commentId
+        })
+      })
+    })
+    .catch(err => {
+      console.log(err);
+      next(err);
+    })
+}
+
 module.exports = {
   createPost,
   getAllPosts,
   getPost,
   updatePost,
-  deletePost
+  deletePost,
+  addComment,
+  deleteComment,
+  updateComment
 }

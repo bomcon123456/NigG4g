@@ -5,7 +5,15 @@ const commentModel = new Schema(
   {
     createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
     content: { type: String, required: true },
-    subcomment: { type: [this] },
+    imageURL: { type: String, required: false },
+    subcomment: {
+      type: [{
+        type: Schema.Types.ObjectId,
+        ref: "commentModel"
+      }],
+      required: false,
+      default: []
+    },
     point: { type: Number, default: 0 }
   },
   { timestamps: { createdAt: "createdAt" } }
