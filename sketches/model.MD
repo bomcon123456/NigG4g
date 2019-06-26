@@ -55,7 +55,11 @@ URI: /api/posts/
     - POST -> /api/posts/:id/comments = create comment for that post
     - DELETE -> /api/posts/:id/comments/:commentId = delete comment for that post
     - PUT -> /api/posts/:id/comments/:commentId = update comment for that post
-    
+
+    - POST -> /api/posts/:id/comments/:commentId/subComments = create subcomment for that comment
+    - DELETE -> api/posts/:id/comments/:commentId/subComments/:subCommentId = delete subcomment for that comment
+    - PUT -> api/posts/:id/comments/:commentId/subComments/:subCommentId = update subcomment for that comment 
+
 ### 4. Cooked Data
 
 
