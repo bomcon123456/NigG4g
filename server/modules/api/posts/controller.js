@@ -8,7 +8,7 @@ const createPost = (req, res, next) => {
   const content = req.body.content;
   const userId = req.body.userId;
   const category = req.body.category;
-  console.log(req.file)
+  console.log(req.file);
   const post = new Post({
     title: title,
     content: content,
@@ -17,12 +17,13 @@ const createPost = (req, res, next) => {
   });
   return post
     .save()
-    .then((result) => {
+    .then(result => {
       res.status(200).json({
         message: "Post created",
         postId: result._id
-      })
-    }).catch((err) => {
+      });
+    })
+    .catch(err => {
       console.log(err);
       next(err);
     });
@@ -30,10 +31,9 @@ const createPost = (req, res, next) => {
 
 const getAllPosts = (req, res, next) => {
   const page = req.query.page || 1;
-  return Post
-    .find({
-      active: true
-    })
+  return Post.find({
+    active: true
+  })
     .sort({ createdAt: -1 })
     .skip((page - 1) * 20)
     .limit(20)
@@ -41,13 +41,13 @@ const getAllPosts = (req, res, next) => {
     .populate("createdBy", "username avatarURL")
     .exec()
     .then(data => {
-      res.status(200).send(data)
+      res.status(200).send(data);
     })
     .catch(err => {
       console.log(err);
       next(err);
-    })
-}
+    });
+};
 
 const getPost = (req, res, next) => {
   const postId = req.params.postId;
@@ -73,18 +73,20 @@ const getPost = (req, res, next) => {
     .catch(err => {
       console.log(err);
       next(err);
-    })
-}
+    });
+};
 
 const updatePost = (req, res, next) => {
   const postId = req.params.postId;
+  const userId = req.userId;
   const title = req.body.title;
   const content = req.body.content;
   const category = req.body.category;
 
   return Post.findOne({
-    active: true,
-    _id: postId
+    _id: postId,
+    createdBy: userId,
+    active: true
   })
     .then(post => {
       if (!post) {
@@ -95,79 +97,96 @@ const updatePost = (req, res, next) => {
       post.title = title ? title : post.title;
       post.content = content ? content : post.content;
       post.category = category ? category : post.category;
-      return post.save().then(result => {
-        res.status(200).json({
-          message: "Update post successfully",
-          postId: postId
-        });
+      return post.save();
+    })
+    .then(result => {
+      res.status(200).json({
+        message: "Update post successfully",
+        postId: postId
       });
     })
     .catch(err => {
       console.log(err);
       next(err);
-    })
-}
+    });
+};
 
 const deletePost = (req, res, next) => {
   const postId = req.params.postId;
   const userId = req.userId;
 
-  return Post.update(
+  return Post.updateOne(
     {
       _id: postId,
-      createdBy: userId
+      createdBy: userId,
+      active: true
     },
     { active: false }
   )
     .then(result => {
+      if (!result.nModified) {
+        const error = new Error("Post is not existed.");
+        error.statusCode = 400;
+        throw error;
+      }
       res.status(200).json({
         message: "Post has been deleted",
         postId: postId
-      })
+      });
     })
     .catch(err => {
       console.log(err);
       next(err);
-    })
-}
+    });
+};
 
+// @TODO: Neu comment chi la anh thi sao?, content dang de la required: true, same for updated
 const addComment = (req, res, next) => {
   const postId = req.params.postId;
   const userId = req.userId;
   const content = req.body.content;
   const imageURL = req.body.imageURL;
-  console.log(imageURL)
+  console.log(imageURL);
 
-  return Post.update(
+  return Post.updateOne(
     {
-      _id: postId
+      _id: postId,
+      active: true
     },
     {
-      $push: { comment: { createdBy: userId, content: content, imageURL: imageURL } }
+      $push: {
+        comment: { createdBy: userId, content: content, imageURL: imageURL }
+      }
     }
   )
-    .then(data => {
+    .then(result => {
+      if (!result.nModified) {
+        const error = new Error("Post is not existed.");
+        error.statusCode = 400;
+        throw error;
+      }
       res.status(200).json({
         message: "User comments on post",
         content: content,
         imageURL: imageURL,
         userId: userId
-      })
+      });
     })
     .catch(err => {
       console.log(err);
       next(err);
-    })
-}
+    });
+};
 
 const deleteComment = (req, res, next) => {
   const postId = req.params.postId;
   const userId = req.userId;
   const commentId = req.params.commentId;
 
-  return Post.update(
+  return Post.updateOne(
     {
-      _id: postId
+      _id: postId,
+      active: true
     },
     {
       $pull: {
@@ -178,17 +197,69 @@ const deleteComment = (req, res, next) => {
       }
     }
   )
-    .then(data => {
+    .then(result => {
       res.status(200).json({
         message: "Comment has been deleted",
         commentId: commentId
-      })
+      });
     })
     .catch(err => {
       console.log(err);
       next(err);
+    });
+};
+
+const updateComment = (req, res, next) => {
+  const postId = req.params.postId;
+  const userId = req.userId;
+  const commentId = req.params.commentId;
+  const content = req.body.content;
+  const imageURL = req.body.imageURL;
+
+  return Post.findOne({
+    _id: postId,
+    active: true
+  })
+    .then(data => {
+      if (!data) {
+        const error = new Error("Post is not existed.");
+        error.statusCode = 400;
+        throw error;
+      }
+      const comment = data.comment.find(comment => {
+        return comment._id.toString() === commentId.toString();
+      });
+      if (!comment) {
+        const error = new Error("Comment is not existed.");
+        error.statusCode = 400;
+        throw error;
+      }
+      comment.createdBy = userId;
+      comment.content = content ? content : comment.content;
+      comment.imageURL = imageURL ? imageURL : comment.imageURL;
+      return data.save().then(result => {
+        res.status(200).json({
+          message: "Update comment successfully",
+          commentId: commentId
+        });
+      });
     })
-}
+    .catch(err => {
+      console.log(err);
+      next(err);
+    });
+};
+
+module.exports = {
+  createPost,
+  getAllPosts,
+  getPost,
+  updatePost,
+  deletePost,
+  addComment,
+  deleteComment,
+  updateComment
+};
 
 // const updateComment = (req, res, next) => {
 //   const postId = req.params.postId;
@@ -221,49 +292,3 @@ const deleteComment = (req, res, next) => {
 //       next(err)
 //     })
 // }
-
-const updateComment = (req, res, next) => {
-  const postId = req.params.postId;
-  const userId = req.userId;
-  const commentId = req.params.commentId;
-  const content = req.body.content;
-  const imageURL = req.body.imageURL;
-
-  return Post.findOne({
-    '_id': postId,
-  })
-    .then(data => {
-      const comment = data.comment.find((comment) => {
-        return comment._id === commentId.toString();
-      })
-      if (!comment) {
-        const error = new Error("Comment is not existed.");
-        error.statusCode = 400;
-        throw error;
-      }
-      comment.createdBy = userId;
-      comment.content = content ? content : comment.content;
-      comment.imageURL = imageURL ? imageURL : comment.imageURL;
-      return data.save().then(result => {
-        res.status(200).json({
-          message: "Update comment successfully",
-          commentId: commentId
-        })
-      })
-    })
-    .catch(err => {
-      console.log(err);
-      next(err);
-    })
-}
-
-module.exports = {
-  createPost,
-  getAllPosts,
-  getPost,
-  updatePost,
-  deletePost,
-  addComment,
-  deleteComment,
-  updateComment
-}

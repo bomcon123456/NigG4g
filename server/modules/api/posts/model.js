@@ -7,7 +7,18 @@ const commentSchema = new Schema(
     content: { type: String, required: true },
     imageURL: { type: String, required: false },
     subcomment: {
-      type: [],
+      type: [
+        {
+          createdBy: {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+            required: true
+          },
+          content: { type: String, required: true },
+          imageURL: { type: String, required: false },
+          point: { type: Number, default: 0 }
+        }
+      ],
       required: false,
       default: []
     },
@@ -24,7 +35,7 @@ const postSchema = new Schema(
     point: { type: Number, default: 0 },
     category: { type: String, required: true },
     comment: { type: [commentSchema], default: [] },
-    active: { type: Boolean, default: true },
+    active: { type: Boolean, default: true }
   },
   { timestamps: { createdAt: "createdAt" } }
 );
