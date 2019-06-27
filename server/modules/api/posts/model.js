@@ -1,16 +1,13 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const commentModel = new Schema(
+const commentSchema = new Schema(
   {
     createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
     content: { type: String, required: true },
     imageURL: { type: String, required: false },
     subcomment: {
-      type: [{
-        type: Schema.Types.ObjectId,
-        ref: "commentModel"
-      }],
+      type: [commentSchema],
       required: false,
       default: []
     },
@@ -19,7 +16,7 @@ const commentModel = new Schema(
   { timestamps: { createdAt: "createdAt" } }
 );
 
-const postModel = new Schema(
+const postSchema = new Schema(
   {
     title: { type: String, required: true },
     content: { type: String, required: true },
@@ -32,4 +29,4 @@ const postModel = new Schema(
   { timestamps: { createdAt: "createdAt" } }
 );
 
-module.exports = mongoose.model("Post", postModel);
+module.exports = mongoose.model("Post", postSchema);

@@ -230,14 +230,14 @@ const updateComment = (req, res, next) => {
   })
     .then(data => {
       const comment = data.comment.find((comment) => {
-        return comment._id == commentId;
+        return comment._id === commentId.toString();
       })
       if (!comment) {
         const error = new Error("Comment is not existed.");
         error.statusCode = 400;
         throw error;
       }
-      comment.userId = userId ? userId : comment.userId;
+      comment.createdBy = userId;
       comment.content = content ? content : comment.content;
       comment.imageURL = imageURL ? imageURL : comment.imageURL;
       return data.save().then(result => {
