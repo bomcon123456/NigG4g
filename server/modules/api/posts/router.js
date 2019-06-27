@@ -39,4 +39,22 @@ router.put(
   postController.updateComment
 )
 
+router.post(
+  "/:postId/comments/:commentId/subcomments",
+  isAuth,
+  postController.addSubcomment
+)
+
+router.delete(
+  "/:postId/comments/:commentId/subcomments/:subcommentId",
+  isAuth,
+  postController.deleteSubcomment
+)
+
+router.put(
+  "/:postId/comments/:commentId/subcomments/:subcommentId",
+  isAuth,
+  postController.updateSubcomment
+)
+
 module.exports = router;

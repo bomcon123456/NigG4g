@@ -250,6 +250,120 @@ const updateComment = (req, res, next) => {
     });
 };
 
+const addSubcomment = (req, res, next) => {
+  const postId = req.params.postId;
+  const userId = req.userId;
+  const commentId = req.params.commentId;
+  const content = req.body.content;
+  const imageURL = req.body.imageURL;
+
+  return Post.findOne({
+    _id: postId,
+    active: true
+  })
+    .then(data => {
+      if (!data) {
+        const error = new Error("Post is not existed.");
+        error.statusCode = 400;
+        throw error;
+      }
+      const comment = data.comment.find(comment => {
+        return comment._id.toString() === commentId.toString();
+      });
+      if (!comment) {
+        const error = new Error("Comment is not existed.");
+        error.statusCode = 400;
+        throw error;
+      }
+      const subcomment = {
+        createdBy: userId,
+        content: content,
+        imageURL: imageURL
+      }
+      comment.subcomment.push(subcomment);
+      return data.save().then(result => {
+        res.status(200).json({
+          message: "User create subcomment",
+          userId: userId,
+          postId: postId,
+          commentId: commentId
+        })
+      })
+    })
+    .catch(err => {
+      console.log(err);
+      next(err);
+    })
+}
+
+const deleteSubcomment = (req, res, next) => {
+  const postId = req.params.postId;
+  const userId = req.userId;
+  const commentId = req.params.commentId;
+  const subcommentId = req.params.subcommentId;
+  return Post.findOneAndUpdate(
+    {
+      "_id": postId,
+      "active": true,
+      "comment._id": commentId,
+    },
+    {
+      $pull: {
+        "comment.$.subcomment": { "_id": subcommentId, "createdBy": userId },
+      }
+    }
+  )
+    .then(result => {
+      res.status(200).json({
+        message: "Subcomment has been deleted",
+        commentId: commentId
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      next(err);
+    });
+}
+
+const updateSubcomment = (req, res, next) => {
+  const postId = req.params.postId;
+  const userId = req.userId;
+  const commentId = req.params.commentId;
+  const content = req.body.content;
+  const imageURL = req.body.imageURL;
+  const subcommentId = req.params.subcommentId;
+
+
+  return Post.findOneAndUpdate(
+    {
+      "_id": postId,
+      "active": true,
+      "comment._id": commentId,
+      "comment.subcomment._id": subcommentId,
+      "comment.subcomment.createdBy": userId
+    },
+    {
+      $set: {
+        "comment.$.subcomment": {
+          "createdBy": userId,
+          "content": content ? content : "comment.$.subcomment.$[content]",
+          "imageURL": imageURL ? imageURL : "comment.$.subcomment.$[imageURL]"
+        },
+      }
+    }
+  )
+    .then(result => {
+      res.status(200).json({
+        message: "Update subcomment successfully",
+        commentId: commentId
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      next(err);
+    });
+}
+
 module.exports = {
   createPost,
   getAllPosts,
@@ -258,7 +372,10 @@ module.exports = {
   deletePost,
   addComment,
   deleteComment,
-  updateComment
+  updateComment,
+  addSubcomment,
+  deleteSubcomment,
+  updateSubcomment
 };
 
 // const updateComment = (req, res, next) => {
