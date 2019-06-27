@@ -55,6 +55,10 @@ const getPost = (req, res, next) => {
     active: true,
     _id: postId
   })
+    .select("_id title content createdAt point comment category")
+    .populate("comment.createdBy", "username avatarURL")
+    .populate("createdBy", "username avatarURL")
+    .exec()
     .then(post => {
       if (!post) {
         const error = new Error("Post is not existed.");
