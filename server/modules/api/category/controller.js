@@ -30,3 +30,8 @@ const getCategory = (req, res, next) => {
       next(error);
     });
 };
+
+module.exports = {
+  getCategories,
+  getCategory
+}

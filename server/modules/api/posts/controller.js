@@ -7,13 +7,13 @@ const createPost = (req, res, next) => {
   const title = req.body.title;
   const content = req.body.content;
   const userId = req.body.userId;
-  const category = req.body.category;
-  console.log(req.file);
+  const categoryId = req.body.categoryId;
+  // console.log(req.file);
   const post = new Post({
     title: title,
     content: content,
     createdBy: userId,
-    category: category
+    categoryId: categoryId
   });
   return post
     .save()
@@ -37,7 +37,7 @@ const getAllPosts = (req, res, next) => {
     .sort({ createdAt: -1 })
     .skip((page - 1) * 20)
     .limit(20)
-    .select("_id title content createdAt point comment category")
+    .select("_id title content createdAt point comments categoryId")
     .populate("createdBy", "username avatarURL")
     .exec()
     .then(data => {
@@ -55,8 +55,8 @@ const getPost = (req, res, next) => {
     active: true,
     _id: postId
   })
-    .select("_id title content createdAt point comment category")
-    .populate("comment.createdBy", "username avatarURL")
+    .select("_id title content createdAt point comments categoryId")
+    .populate("comments.createdBy", "username avatarURL")
     .populate("createdBy", "username avatarURL")
     .exec()
     .then(post => {
@@ -81,7 +81,7 @@ const updatePost = (req, res, next) => {
   const userId = req.userId;
   const title = req.body.title;
   const content = req.body.content;
-  const category = req.body.category;
+  const categoryId = req.body.categoryId;
 
   return Post.findOne({
     _id: postId,
@@ -96,7 +96,7 @@ const updatePost = (req, res, next) => {
       }
       post.title = title ? title : post.title;
       post.content = content ? content : post.content;
-      post.category = category ? category : post.category;
+      post.categoryId = categoryId ? categoryId : post.categoryId;
       return post.save();
     })
     .then(result => {
@@ -155,7 +155,7 @@ const addComment = (req, res, next) => {
     },
     {
       $push: {
-        comment: { createdBy: userId, content: content, imageURL: imageURL }
+        comments: { createdBy: userId, content: content, imageURL: imageURL }
       }
     }
   )
@@ -190,7 +190,7 @@ const deleteComment = (req, res, next) => {
     },
     {
       $pull: {
-        comment: {
+        comments: {
           _id: commentId,
           createdBy: userId
         }
@@ -226,7 +226,7 @@ const updateComment = (req, res, next) => {
         error.statusCode = 400;
         throw error;
       }
-      const comment = data.comment.find(comment => {
+      const comment = data.comments.find(comment => {
         return comment._id.toString() === commentId.toString();
       });
       if (!comment) {
@@ -267,7 +267,7 @@ const addSubcomment = (req, res, next) => {
         error.statusCode = 400;
         throw error;
       }
-      const comment = data.comment.find(comment => {
+      const comment = data.comments.find(comment => {
         return comment._id.toString() === commentId.toString();
       });
       if (!comment) {
@@ -280,7 +280,7 @@ const addSubcomment = (req, res, next) => {
         content: content,
         imageURL: imageURL
       }
-      comment.subcomment.push(subcomment);
+      comment.subcomments.push(subcomment);
       return data.save().then(result => {
         res.status(200).json({
           message: "User create subcomment",
@@ -315,24 +315,24 @@ const deleteSubcomment = (req, res, next) => {
         error.statusCode = 400;
         throw error;
       }
-      const commentIndex = result.comment.findIndex(each => each._id.toString() === commentId)
+      const commentIndex = result.comments.findIndex(each => each._id.toString() === commentId)
       if (commentIndex === -1) {
         const error = new Error("Comment is not existed.");
         error.statusCode = 400;
         throw error;
       }
-      const comment = result.comment[commentIndex];
-      const newSubcomment = comment.subcomment.filter(subcomment => {
+      const comment = result.comments[commentIndex];
+      const newSubcomment = comment.subcomments.filter(subcomment => {
         return subcomment._id.toString() !== subcommentId.toString();
       })
 
-      if (newSubcomment.length === comment.subcomment.length) {
+      if (newSubcomment.length === comment.subcomments.length) {
         const error = new Error("Subcomment is not existed.");
         error.statusCode = 400;
         throw error;
       }
 
-      result.comment[commentIndex].subcomment = newSubcomment;
+      result.comments[commentIndex].subcomments = newSubcomment;
       return result.save();
     })
     .then(result => {
@@ -368,14 +368,14 @@ const updateSubcomment = (req, res, next) => {
         error.statusCode = 400;
         throw error;
       }
-      const comment = result.comment.find(each => each._id.toString() === commentId)
+      const comment = result.comments.find(each => each._id.toString() === commentId)
       if (!comment) {
         const error = new Error("Comment is not existed.");
         error.statusCode = 400;
         throw error;
       }
 
-      const subcomment = comment.subcomment.find(subcomment => {
+      const subcomment = comment.subcomments.find(subcomment => {
         return subcomment._id.toString() === subcommentId.toString();
       })
 
