@@ -107,11 +107,12 @@ exports.updateUserInformation = (req, res, next) => {
       user.avatarURL = avatarURL ? avatarURL : user.avatarURL;
       user.gender = gender ? gender : user.gender;
       user.birthday = birthday ? birthday : user.birthday;
-      return user.save().then(result => {
-        res.status(200).json({
-          message: "Update user successfully",
-          userId: userId
-        });
+      return user.save();
+    })
+    .then(result => {
+      res.status(200).json({
+        message: "Update user successfully",
+        userId: userId
       });
     })
     .catch(error => {

@@ -301,21 +301,43 @@ const deleteSubcomment = (req, res, next) => {
   const userId = req.userId;
   const commentId = req.params.commentId;
   const subcommentId = req.params.subcommentId;
-  return Post.findOneAndUpdate(
+
+  return Post.findOne(
     {
       "_id": postId,
-      "active": true,
-      "comment._id": commentId,
-    },
-    {
-      $pull: {
-        "comment.$.subcomment": { "_id": subcommentId, "createdBy": userId },
-      }
+      "active": true
     }
   )
     .then(result => {
+      console.log(result)
+      if (!result) {
+        const error = new Error("Post is not existed.");
+        error.statusCode = 400;
+        throw error;
+      }
+      const commentIndex = result.comment.findIndex(each => each._id.toString() === commentId)
+      if (commentIndex === -1) {
+        const error = new Error("Comment is not existed.");
+        error.statusCode = 400;
+        throw error;
+      }
+      const comment = result.comment[commentIndex];
+      const newSubcomment = comment.subcomment.filter(subcomment => {
+        return subcomment._id.toString() !== subcommentId.toString();
+      })
+
+      if (newSubcomment.length === comment.subcomment.length) {
+        const error = new Error("Subcomment is not existed.");
+        error.statusCode = 400;
+        throw error;
+      }
+
+      result.comment[commentIndex].subcomment = newSubcomment;
+      return result.save();
+    })
+    .then(result => {
       res.status(200).json({
-        message: "Subcomment has been deleted",
+        message: "Delete subcomment successfully",
         commentId: commentId
       });
     })
@@ -333,25 +355,42 @@ const updateSubcomment = (req, res, next) => {
   const imageURL = req.body.imageURL;
   const subcommentId = req.params.subcommentId;
 
-
-  return Post.findOneAndUpdate(
+  return Post.findOne(
     {
       "_id": postId,
-      "active": true,
-      "comment._id": commentId,
-      "comment.subcomment._id": subcommentId,
-      "comment.subcomment.createdBy": userId
-    },
-    {
-      $set: {
-        "comment.$.subcomment": {
-          "createdBy": userId,
-          "content": content ? content : "comment.$.subcomment.$[content]",
-          "imageURL": imageURL ? imageURL : "comment.$.subcomment.$[imageURL]"
-        },
-      }
+      "active": true
     }
   )
+    .then(result => {
+      console.log(result)
+      if (!result) {
+        const error = new Error("Post is not existed.");
+        error.statusCode = 400;
+        throw error;
+      }
+      const comment = result.comment.find(each => each._id.toString() === commentId)
+      if (!comment) {
+        const error = new Error("Comment is not existed.");
+        error.statusCode = 400;
+        throw error;
+      }
+
+      const subcomment = comment.subcomment.find(subcomment => {
+        return subcomment._id.toString() === subcommentId.toString();
+      })
+
+      if (!subcomment) {
+        const error = new Error("Subcomment is not existed.");
+        error.statusCode = 400;
+        throw error;
+      }
+
+      subcomment.createdBy = userId;
+      subcomment.content = content ? content : subcomment.content;
+      subcomment.imageURL = imageURL ? imageURL : subcomment.imageURL
+
+      return result.save();
+    })
     .then(result => {
       res.status(200).json({
         message: "Update subcomment successfully",
@@ -363,6 +402,8 @@ const updateSubcomment = (req, res, next) => {
       next(err);
     });
 }
+
+// @TODO: Mai sua lai cac hang update cho xin hon :v  
 
 module.exports = {
   createPost,
