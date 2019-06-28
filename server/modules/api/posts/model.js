@@ -33,9 +33,17 @@ const postSchema = new Schema(
     content: { type: String, required: true },
     createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
     points: { type: Number, default: 0 },
-    categoryId: { type: Schema.Types.ObjectId, ref: "Category", required: true },
+    categoryId: {
+      type: Schema.Types.ObjectId,
+      ref: "Category",
+      required: true
+    },
     comments: { type: [commentSchema], default: [] },
-    active: { type: Boolean, default: true }
+    active: { type: Boolean, default: true },
+    tags: {
+      type: [String],
+      default: []
+    }
   },
   { timestamps: { createdAt: "createdAt" } }
 );
