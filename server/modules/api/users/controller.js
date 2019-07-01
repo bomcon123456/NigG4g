@@ -9,7 +9,7 @@ exports.getUser = (req, res, next) => {
   return User.findById(userId)
     .then(user => {
       if (!user) {
-        const error = new Error("User is not existed.");
+        const error = new Error("account_not_found");
         error.statusCode = 400;
         throw error;
       }
@@ -63,7 +63,7 @@ exports.deleteUser = (req, res, next) => {
   return User.findById(userId)
     .then(user => {
       if (!user) {
-        const error = new Error("User is not existed.");
+        const error = new Error("account_not_found");
         error.statusCode = 400;
         throw error;
       }
@@ -98,14 +98,14 @@ exports.updateUserInformation = (req, res, next) => {
   return User.findById(userId)
     .then(user => {
       if (!user) {
-        const error = new Error("User is not existed.");
+        const error = new Error("account_not_found");
         error.statusCode = 400;
         throw error;
       }
       user.email = email ? email : user.email;
       user.password = password ? password : user.password;
       user.avatarURL = avatarURL ? avatarURL : user.avatarURL;
-      user.gender = gender ? gender : user.gender;
+      user.gender = gender != null ? gender : user.gender;
       user.birthday = birthday ? birthday : user.birthday;
       return user.save();
     })

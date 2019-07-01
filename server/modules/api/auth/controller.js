@@ -4,6 +4,22 @@ const jwt = require("jsonwebtoken");
 
 const { validationResult } = require("express-validator/check");
 
+exports.getAuthenUser = (req, res, next) => {
+  const userId = req.userId;
+  return User.findById(userId)
+    .then(user => {
+      if (!user) {
+        const error = new Error("account_not_found");
+        error.statusCode = 401;
+        throw error;
+      }
+      res.status(200).json(user);
+    })
+    .catch(error => {
+      next(error);
+    });
+};
+
 exports.login = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -11,7 +27,7 @@ exports.login = (req, res, next) => {
   return User.findOne({ email: email })
     .then(user => {
       if (!user) {
-        const error = new Error("User is not existed.");
+        const error = new Error("account_not_found");
         error.statusCode = 401;
         throw error;
       }

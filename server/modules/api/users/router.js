@@ -29,25 +29,25 @@ router.post(
   userController.createUser
 );
 
-router.delete("/users/:userId", userController.deleteUser);
+router.delete("/:userId", userController.deleteUser);
 router.put(
   "/:userId",
-  [
-    body("email")
-      .isEmail()
-      .withMessage("Please enter a valid email.")
-      .custom((value, { req }) => {
-        return User.findOne({ email: value }).then(user => {
-          if (user && user._id.toString() !== req.params.userId.toString()) {
-            return Promise.reject("Email has been used already");
-          }
-        });
-      })
-      .normalizeEmail(),
-    body("password")
-      .trim()
-      .isLength({ min: 5 })
-  ],
+  // [
+  //   body("email")
+  //     .isEmail()
+  //     .withMessage("Please enter a valid email.")
+  //     .custom((value, { req }) => {
+  //       return User.findOne({ email: value }).then(user => {
+  //         if (user && user._id.toString() !== req.params.userId.toString()) {
+  //           return Promise.reject("Email has been used already");
+  //         }
+  //       });
+  //     })
+  //     .normalizeEmail(),
+  //   body("password")
+  //     .trim()
+  //     .isLength({ min: 5 })
+  // ]
   userController.updateUserInformation
 );
 

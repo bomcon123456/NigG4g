@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 module.exports = (req, res, next) => {
   const authHeader = req.get("Authorization");
   if (!authHeader) {
-    const error = new Error("Not authenticated");
+    const error = new Error("require_login");
     error.statusCode = 401;
     throw error;
   }
@@ -17,7 +17,16 @@ module.exports = (req, res, next) => {
       throw error;
     }
     if (!decodedToken) {
-      const error = new Error("Not authenticated.");
+      const error = new Error("require_login");
+      error.statusCode = 401;
+      throw error;
+    }
+    var current_time = Date.now() / 1000;
+    if (
+      typeof decodedToken.exp !== "undefined" &&
+      decodedToken.exp < current_time
+    ) {
+      const error = new Error("token_expired");
       error.statusCode = 401;
       throw error;
     }
