@@ -1,4 +1,5 @@
 import axios from "axios";
+import { authenCache } from "../cache/authen-cache";
 
 class API {
   constructor({ url, onErrors }) {
@@ -61,16 +62,15 @@ export const axiosApi = new API({
   onErrors: {
     token_expired: () => {
       console.log("token_expired");
-      // authenCache.clearAuthen();
+      authenCache.clearAuthen();
     },
     account_not_found: () => {
       console.log("account_not_found");
-
-      // authenCache.clearAuthen();
+      authenCache.clearAuthen();
     },
     require_login: () => {
       console.log("require_login");
-      // authenCache.clearAuthen();
+      authenCache.clearAuthen();
     }
   }
 });

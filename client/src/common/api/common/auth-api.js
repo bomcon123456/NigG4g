@@ -5,8 +5,6 @@ export const authApi = {
     return axiosApi.post("/auth", data);
   },
   get() {
-    console.log("asdsad");
-
     return axiosApi.get("/auth");
   }
 };

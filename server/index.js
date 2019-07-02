@@ -10,6 +10,7 @@ const MONGODB_URI = "mongodb+srv://test:test@cloud-ejl26.mongodb.net/nigg4g";
 const authRoutes = require("./modules/api/auth/router");
 const userRoutes = require("./modules/api/users/router");
 const postRoutes = require("./modules/api/posts/router");
+const categoryRoutes = require("./modules/api/category/router");
 
 const {
   fileFilter,
@@ -46,6 +47,7 @@ app.use((req, res, next) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
+app.use("/api/categories", categoryRoutes);
 
 // Error-handling Middleware
 app.use((error, req, res, next) => {
