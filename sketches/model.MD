@@ -52,10 +52,14 @@ URI: /api/posts/
     - DELETE -> /api/posts/:id = delete that post
     - PUT -> /api/posts/:id = update that post
 
+    - GET -> /api/get/:id/comments/ = get that post's comments
+    - GET -> /api/get/:id/comments/:commentId = get that post's comment
     - POST -> /api/posts/:id/comments = create comment for that post
     - DELETE -> /api/posts/:id/comments/:commentId = delete comment for that post
     - PUT -> /api/posts/:id/comments/:commentId = update comment for that post
 
+    - GET -> api/posts/:id/comments/:commentId/subComments/ = get that post's comment's subcomments
+    - GET -> api/posts/:id/comments/:commentId/subComments/:subCommentId = get that post's comment's subcomment
     - POST -> /api/posts/:id/comments/:commentId/subComments = create subcomment for that comment
     - DELETE -> api/posts/:id/comments/:commentId/subComments/:subCommentId = delete subcomment for that comment
     - PUT -> api/posts/:id/comments/:commentId/subComments/:subCommentId = update subcomment for that comment 
