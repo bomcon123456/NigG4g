@@ -18,6 +18,46 @@ export const keyEvents = {
     return e.keyCode == 13;
   },
   isEsc(e) {
-    return (e.keyCode = 27);
+    return e.keyCode == 27;
   }
 };
+
+export function createEventEmitter() {
+  const _events = {};
+  const on = (event, listener) => {
+    if (isNil(_events[event])) {
+      _events[event] = [];
+    }
+    _events[event].push(listener);
+
+    return () => {
+      removeListener(event, listener);
+    };
+  };
+  const removeListener = (event, listener) => {
+    if (isNil(_events[event])) {
+      return;
+    }
+    let i = _events[event].indexOf(listener);
+    _events[event].splice(i, 1);
+  };
+  return {
+    on,
+    events: () => _events,
+    emit: (event, ...args) => {
+      if (isNil(_events[event])) {
+        return;
+      }
+      forEach(_events[event], listener => {
+        listener(...args);
+      });
+    },
+    removeListener,
+    once: (event, listener) => {
+      on(event, function handler(...args) {
+        removeListener(event, handler);
+        listener(args);
+      });
+    }
+  };
+}
