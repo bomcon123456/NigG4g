@@ -1,15 +1,19 @@
 import React, { Component } from "react";
-import { userApi } from "./common/api/common/user-api";
-import { authApi } from "./common/api/common/auth-api";
-import { axiosApi } from "./common/api/api";
-import { authenCache } from "./common/cache/authen-cache";
-import { userInfo } from "./common/states/user-info";
+import { appModal, ModalsRegistry } from "./common/react/modals/modals";
 
 import logo from "./logo.svg";
 import "./App.css";
 
 class App extends Component {
   componentDidMount() {
+    appModal
+      .alert({
+        text: "This is a freaking modal bitch",
+        title: "Modal Show up!"
+      })
+      .then(() => {
+        console.log("hehehe");
+      });
     // authApi
     //   .post({
     //     email: "axios@admin.com",
@@ -33,6 +37,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <ModalsRegistry />
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
