@@ -78,11 +78,6 @@
   font-size: 14px;
 }
 
-.modal {
-  display: flex;
-  z-index: 4000;
-}
-
 .confirm-modal,
 .alert-modal {
   position: absolute;
