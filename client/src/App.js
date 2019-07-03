@@ -1,19 +1,21 @@
 import React, { Component } from "react";
 import { appModal, ModalsRegistry } from "./common/react/modals/modals";
+import { loginModal } from "./common/react/modals/Login/login";
 
 import logo from "./logo.svg";
 import "./App.css";
 
 class App extends Component {
   componentDidMount() {
-    appModal
-      .alert({
-        text: "This is a freaking modal bitch",
-        title: "Modal Show up!"
-      })
-      .then(() => {
-        console.log("hehehe");
-      });
+    loginModal.open();
+    // appModal
+    //   .alert({
+    //     text: "This is a freaking modal bitch",
+    //     title: "Modal Show up!"
+    //   })
+    //   .then(() => {
+    //     console.log("hehehe");
+    //   });
     // authApi
     //   .post({
     //     email: "axios@admin.com",
