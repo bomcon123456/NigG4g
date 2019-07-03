@@ -14,6 +14,10 @@ router.put("/:postId", isAuth, postController.updatePost);
 router.delete("/:postId", isAuth, postController.deletePost);
 
 /// Comment API
+router.get("/:postId/comments", postController.getAllCommentOfPost);
+
+router.get("/:postId/comments/:commentId", postController.getComment);
+
 router.post("/:postId/comments", isAuth, postController.addComment);
 
 router.put(
@@ -29,6 +33,16 @@ router.delete(
 );
 
 /// Subcomment API
+router.get(
+  "/:postId/comments/:commentId/subcomments",
+  postController.getAllSubcommentOfComment
+);
+
+router.get(
+  "/:postId/comments/:commentId/subcomments/:subcommentId",
+  postController.getSubcomment
+);
+
 router.post(
   "/:postId/comments/:commentId/subcomments",
   isAuth,
