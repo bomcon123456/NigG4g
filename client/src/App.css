@@ -8,6 +8,10 @@
   pointer-events: none;
 }
 
+.App-login {
+  filter: hue-rotate(-225deg);
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;

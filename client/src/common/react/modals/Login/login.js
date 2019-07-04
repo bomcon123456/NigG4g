@@ -9,11 +9,9 @@ import { authApi } from "../../../api/common/auth-api";
 import { authenCache } from "../../../cache/authen-cache";
 import { userInfo } from "../../../states/user-info";
 import { Link } from "react-router-dom";
-import {
-  FacebookLoginButton,
-  GoogleLoginButton
-} from "../../social-buttons/social-button";
+import omit from "lodash/omit";
 import { LoginSocial } from "../login-social/login-social";
+import axios from "axios";
 
 export class LoginModal extends KComponent {
   constructor(props) {
@@ -44,7 +42,7 @@ export class LoginModal extends KComponent {
       .then(data => {
         authenCache.setAuthen(data.data.token, { expire: 1 });
         userInfo.setState(data.data.user).then(() => {
-          console.log(userInfo);
+          console.log("[USER_STATE]", userInfo);
           this.props.onLoginSuccess();
         });
       })
@@ -56,15 +54,106 @@ export class LoginModal extends KComponent {
       );
   };
 
-  handleSocialResponse = (res, type) => {};
+  socialStrategies = {
+    google: {
+      isValid: res => res.hasOwnProperty("googleId") && res.googleId,
+      getData: res => {
+        let { email, name, imageUrl, googleId } = res.profileObj;
+        let { accessToken } = res;
+        return {
+          email,
+          username: name,
+          avatarURL: imageUrl,
+          accessToken,
+          social: { id: googleId, type: "GOOGLE" }
+        };
+      },
+      getBirthday: (accessToken, googleId) => {
+        return axios
+          .get(
+            `https://people.googleapis.com/v1/people/${googleId}?personFields=birthdays`,
+            {
+              headers: {
+                Authorization: "Bearer " + accessToken
+              }
+            }
+          )
+          .then(data => {
+            if (data && data.data) {
+              console.log(data.data.birthdays[0].date);
+              let { year, month, day } = data.data.birthdays[0].date;
+              return {
+                birthday: new Date(year, month - 1, day).toISOString()
+              };
+            }
+          });
+      },
+      errorMsg: "gg_login_failed"
+    },
+    facebook: {
+      isValid: res => res.hasOwnProperty("userID") && res.userID,
+      getData: res => {
+        let { email, name, picture, userID, birthday } = res;
+        let imageUrl = picture.data.url;
+        return {
+          email,
+          username: name,
+          avatarURL: imageUrl,
+          birthday: new Date(birthday).toISOString(),
+          social: { id: userID, type: "FACEBOOK" }
+        };
+      },
+      errorMsg: "fb_login_failed"
+    }
+  };
+
+  handleSocialResponse = async (res, type) => {
+    console.log(type, res);
+    let strategy = this.socialStrategies[type];
+    let { isValid, getData, errorMsg } = strategy;
+    if (!isValid(res)) {
+      this.setState({ error: errorMsg, loading: false });
+    } else {
+      let rawData = getData(res);
+      let sendData = rawData;
+      let birthday = null;
+      if (type === "google") {
+        try {
+          birthday = await strategy.getBirthday(
+            rawData.accessToken,
+            rawData.social.id
+          );
+        } catch (error) {
+          this.setState({ error: error, loading: false });
+        }
+        sendData = omit(rawData, "accessToken");
+        sendData.birthday = birthday.birthday;
+      }
+      console.log(sendData);
+      authApi
+        .postSocial(sendData)
+        .then(data => {
+          console.log(data);
+          authenCache.setAuthen(data.data.token, { expire: 1 });
+          userInfo.setState(data.data.user).then(() => {
+            console.log("[USER_STATE]", userInfo);
+            this.props.onLoginSuccess();
+          });
+        })
+        .catch(err => this.setState({ error: err, loading: false }));
+    }
+  };
 
   handleServerError = () => {
     const { error } = this.state;
+    const { email } = this.form.getData();
     const message = error.message;
     let errMatcher = {
       account_not_found: "User is not registered yet.",
       network_error: "Database is ded",
-      wrong_password: "Password is invalid."
+      wrong_password: "Password is invalid.",
+      gg_taken: `Email: ${email} has been linked to Google`,
+      fb_taken: `Email: ${email} has been linked to Facebook`
     };
     return errMatcher.hasOwnProperty(message)
       ? errMatcher[message]
@@ -156,13 +245,14 @@ export class LoginModal extends KComponent {
 }
 
 export const loginModal = {
-  open() {
+  open(handleLogin) {
     const modal = modals.openModal({
       content: (
         <LoginModal
           onClose={() => modal.close()}
           onLoginSuccess={() => {
             modal.close();
+            handleLogin();
             console.log(userInfo.getState());
           }}
         />

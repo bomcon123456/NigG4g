@@ -5,7 +5,7 @@
         - Password
         - Email
         - Active
-        - Gender
+        - Social
         - Birthday
         - Posts -> Model
         - Comments -> [postId]
@@ -82,7 +82,6 @@ URI: /api/posts/
     - Avatar
     - Username
     - Email
-    - Gender
     - Birthday
     - Posts -> Model
     - Comments -> [postId]

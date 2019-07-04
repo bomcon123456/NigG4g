@@ -26,9 +26,10 @@ export class LoginSocial extends Component {
         <FacebookLogin
           appId="2158998807742962"
           autoLoad={false}
-          fields="name,email,picture"
+          fields="name,email,picture,birthday"
+          scope="public_profile, user_birthday"
           onClick={() => this.props.handleClickSocialBtn()}
-          callback={this.facebookResponse}
+          callback={this.handleFacebookResponse}
           render={props => {
             return (
               <FacebookLoginButton onClick={props.onClick} text={"Facebook"} />
@@ -36,14 +37,20 @@ export class LoginSocial extends Component {
           }}
         />
         <GoogleLogin
-          clientId="315323914416-ivad6fjm9ehif4fal5j359lc83len18s.apps.googleusercontent.com"
+          clientId="315323914416-kboqkv3ehemndnke8cumdbcbfqmvqa2d.apps.googleusercontent.com"
+          scope="https://www.googleapis.com/auth/user.birthday.read"
+          hello="test"
           render={props => (
-            <GoogleLoginButton onClick={props.onClick} text={"Google"} />
+            <GoogleLoginButton
+              onClick={() => {
+                props.onClick();
+              }}
+              text={"Google"}
+            />
           )}
-          onClick={() => this.props.handleClickSocialBtn()}
-          onSuccess={this.googleResponse}
+          onSuccess={this.handleGoogleResponse}
           cookiePolicy={"single_host_origin"}
-          onFailure={this.googleResponse}
+          onFailure={this.handleGoogleResponse}
         />
       </div>
     );

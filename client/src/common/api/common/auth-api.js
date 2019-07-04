@@ -6,5 +6,8 @@ export const authApi = {
   },
   get() {
     return axiosApi.get("/auth");
+  },
+  postSocial(data) {
+    return axiosApi.post("/auth/social", data);
   }
 };

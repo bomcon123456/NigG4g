@@ -21,7 +21,7 @@
   "scripts": {
     "build-css": "./style/shell/script.sh && stylus -c ./style/main.styl --out public/css/",
     "watch-css": "npm run build-css && stylus -c -w ./style/main.styl --out public/css/",
-    "start-js": "react-scripts start",
+    "start-js": "HTTPS=true react-scripts start",
     "start": "npm-run-all -p watch-css start-js",
     "build-js": "react-scripts build",
     "build": "npm-run-all build-css build-js",

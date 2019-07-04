@@ -12,7 +12,7 @@ const commentModel = new Schema(
 
 const userModel = new Schema(
   {
-    username: { type: String, required: true, unique: true },
+    username: { type: String, required: true },
     password: { type: String, require: true },
     email: {
       type: String,
@@ -27,9 +27,15 @@ const userModel = new Schema(
       }
     },
     avatarURL: { type: String, default: "" },
-    gender: { type: Boolean, required: true },
     birthday: { type: Date, required: true },
     active: { type: Boolean, default: true },
+    social: {
+      id: String,
+      type: {
+        type: String,
+        enum: ["GOOGLE", "FACEBOOK"]
+      }
+    },
     posts: {
       type: [
         {

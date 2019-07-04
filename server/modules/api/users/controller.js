@@ -14,7 +14,7 @@ exports.getUser = (req, res, next) => {
         throw error;
       }
       res.status(200).json({
-        message: "User information retreived",
+        message: "user_info_retrieved",
         user: user
       });
     })
@@ -23,10 +23,11 @@ exports.getUser = (req, res, next) => {
       next(error);
     });
 };
+
 exports.createUser = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    const error = new Error("User validation failed.");
+    const error = new Error("user_validation_faied");
     error.statusCode = 422;
     error.data = errors.array();
     throw error;
@@ -35,21 +36,19 @@ exports.createUser = (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
   const avatarURL = req.body.avatarURL;
-  const gender = req.body.gender;
   const birthday = req.body.birthday;
   const user = new User({
     username: username,
     password: password,
     email: email,
     avatarURL: avatarURL,
-    gender: gender,
     birthday: birthday
   });
   return user
     .save()
     .then(result => {
       res.status(200).json({
-        message: "User created",
+        message: "user_created",
         userId: result._id
       });
     })
@@ -72,7 +71,7 @@ exports.deleteUser = (req, res, next) => {
     })
     .then(result => {
       res.status(200).json({
-        message: "User has been deleted",
+        message: "user_deleted",
         userId: userId
       });
     })
@@ -84,7 +83,7 @@ exports.deleteUser = (req, res, next) => {
 exports.updateUserInformation = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    const error = new Error("User validation failed.");
+    const error = new Error("user_validation_faied");
     error.statusCode = 422;
     error.data = errors.array();
     throw error;
@@ -93,7 +92,6 @@ exports.updateUserInformation = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
   const avatarURL = req.body.avatarURL;
-  const gender = req.body.gender;
   const birthday = req.body.birthday;
   return User.findById(userId)
     .then(user => {
@@ -105,13 +103,12 @@ exports.updateUserInformation = (req, res, next) => {
       user.email = email ? email : user.email;
       user.password = password ? password : user.password;
       user.avatarURL = avatarURL ? avatarURL : user.avatarURL;
-      user.gender = gender != null ? gender : user.gender;
       user.birthday = birthday ? birthday : user.birthday;
       return user.save();
     })
     .then(result => {
       res.status(200).json({
-        message: "Update user successfully",
+        message: "user_updated_successfully",
         userId: userId
       });
     })
