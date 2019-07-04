@@ -57,10 +57,10 @@ export class LoginModal extends KComponent {
 
   handleServerError = () => {
     const { error } = this.state;
-    const message = error.response.data.message;
-    console.log(message);
+    const message = error.message;
     let errMatcher = {
       account_not_found: "User is not registered yet.",
+      network_error: "Database is ded",
       wrong_password: "Password is invalid."
     };
     return errMatcher.hasOwnProperty(message)
@@ -96,7 +96,6 @@ export class LoginModal extends KComponent {
           error={error}
           id={"password"}
           onChange={e => {
-            console.log(e);
             onChange(e);
           }}
           label="Password"
