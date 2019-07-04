@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import classnames from "classnames";
 
-import "./input-base.css";
-
 export class InputBase extends Component {
   constructor(props) {
     super(props);

@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import classnames from "classnames";
 
-import "./modal.css";
-
 export class Modal extends Component {
   overlayElement = null;
   constructor(props) {

@@ -5,8 +5,6 @@ import { createFormWithValidator } from "../../form-validator/form-validator";
 import { accountSchema } from "./schema";
 import { InputBase } from "../../input-base/input-base";
 
-import "./login.css";
-
 export class LoginModal extends KComponent {
   constructor(props) {
     super(props);

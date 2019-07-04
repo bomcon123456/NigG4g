@@ -7,15 +7,15 @@ import "./App.css";
 
 class App extends Component {
   componentDidMount() {
-    loginModal.open();
-    // appModal
-    //   .alert({
-    //     text: "This is a freaking modal bitch",
-    //     title: "Modal Show up!"
-    //   })
-    //   .then(() => {
-    //     console.log("hehehe");
-    //   });
+    // loginModal.open();
+    appModal
+      .alert({
+        text: "This is a freaking modal bitch",
+        title: "Modal Show up!"
+      })
+      .then(() => {
+        console.log("hehehe");
+      });
     // authApi
     //   .post({
     //     email: "axios@admin.com",
