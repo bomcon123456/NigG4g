@@ -13,6 +13,7 @@ import {
   FacebookLoginButton,
   GoogleLoginButton
 } from "../../social-buttons/social-button";
+import { LoginSocial } from "../login-social/login-social";
 
 export class LoginModal extends KComponent {
   constructor(props) {
@@ -54,6 +55,8 @@ export class LoginModal extends KComponent {
         })
       );
   };
+
+  handleSocialResponse = (res, type) => {};
 
   handleServerError = () => {
     const { error } = this.state;
@@ -112,16 +115,10 @@ export class LoginModal extends KComponent {
             <p className="login-modal-subtitle">
               Connect with a social network
             </p>
-            <div className="login-modal-social-auth-container">
-              <FacebookLoginButton
-                text="Facebook"
-                onClick={() => console.log("facebook")}
-              />
-              <GoogleLoginButton
-                text="Google"
-                onClick={() => console.log("google")}
-              />
-            </div>
+            <LoginSocial
+              handleClickSocialBtn={() => this.setState({ loading: true })}
+              onResponse={this.handleSocialResponse}
+            />
           </div>
           <i
             className="fas fa-times close-modal login-close-button"
@@ -163,6 +160,7 @@ export const loginModal = {
     const modal = modals.openModal({
       content: (
         <LoginModal
+          onClose={() => modal.close()}
           onLoginSuccess={() => {
             modal.close();
             console.log(userInfo.getState());
