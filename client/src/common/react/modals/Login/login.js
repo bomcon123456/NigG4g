@@ -6,9 +6,13 @@ import { accountSchema } from "./schema";
 import { InputBase } from "../../input-base/input-base";
 import { LoadingInline } from "../../loading-inline/loading-inline";
 import { authApi } from "../../../api/common/auth-api";
-import { userApi } from "../../../api/common/user-api";
 import { authenCache } from "../../../cache/authen-cache";
 import { userInfo } from "../../../states/user-info";
+import { Link } from "react-router-dom";
+import {
+  FacebookLoginButton,
+  GoogleLoginButton
+} from "../../social-buttons/social-button";
 
 export class LoginModal extends KComponent {
   constructor(props) {
@@ -56,7 +60,8 @@ export class LoginModal extends KComponent {
     const message = error.response.data.message;
     console.log(message);
     let errMatcher = {
-      account_not_found: "User is not registered yet."
+      account_not_found: "User is not registered yet.",
+      wrong_password: "Password is invalid."
     };
     return errMatcher.hasOwnProperty(message)
       ? errMatcher[message]
@@ -70,6 +75,7 @@ export class LoginModal extends KComponent {
       "email",
       ({ error, onChange, value }) => (
         <InputBase
+          className="login-modal-input"
           error={error}
           id={"email"}
           onChange={e => {
@@ -86,6 +92,7 @@ export class LoginModal extends KComponent {
       "password",
       ({ error, onChange, value }) => (
         <InputBase
+          className="login-modal-input"
           error={error}
           id={"password"}
           onChange={e => {
@@ -101,19 +108,38 @@ export class LoginModal extends KComponent {
     return (
       <div className="login-modal">
         <div className="modal-header">
-          <div className="modal-title">Login</div>
-          <i className="fas fa-times close-modal" onClick={() => onClose()} />
+          <div className="modal-title login-modal-header">
+            <h2 className="login-modal-title">Login</h2>
+            <p className="login-modal-subtitle">
+              Connect with a social network
+            </p>
+            <div className="login-modal-social-auth-container">
+              <FacebookLoginButton
+                text="Facebook"
+                onClick={() => console.log("facebook")}
+              />
+              <GoogleLoginButton
+                text="Google"
+                onClick={() => console.log("google")}
+              />
+            </div>
+          </div>
+          <i
+            className="fas fa-times close-modal login-close-button"
+            onClick={() => onClose()}
+          />
         </div>
         <div className="modal-body">
+          <p className="login-modal-subtitle">Log in with your email address</p>
           {this.state.error && (
             <div className="server-error">{this.handleServerError()}</div>
-          )}{" "}
+          )}
           {emailForm}
           {passForm}
           {this.state.loading ? <LoadingInline /> : null}
         </div>
 
-        <div className="modal-footer">
+        <div className="modal-footer justify-content-between login-modal-footer">
           <button
             type="button"
             className="btn btn-primary"
@@ -122,8 +148,11 @@ export class LoginModal extends KComponent {
             }}
             disabled={!canSubmit}
           >
-            OK
+            Log in
           </button>
+          <Link className="login-modal-footer-link" to="/">
+            Forgot password
+          </Link>
         </div>
       </div>
     );

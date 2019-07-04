@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { appModal, ModalsRegistry } from "./common/react/modals/modals";
-import { loginModal } from "./common/react/modals/Login/login";
+import { loginModal } from "./common/react/modals/login/login";
 
 import logo from "./logo.svg";
 import "./App.css";

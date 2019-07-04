@@ -1,0 +1,54 @@
+.btn-social {
+  width: 100%;
+  position: relative;
+  text-align: left;
+  margin-top: 10px;
+  margin-right: 20px;
+  font-size: 15px;
+  white-space: nowrap;
+  flex-grow: 2;
+
+  &.btn-google-login {
+    background-color: #df4a32;
+    color: white;
+
+    &:hover {
+      background-color: darken(#df4a32, 15%);
+    }
+  }
+
+  &.btn-facebook-login {
+    background-color: #4267b2;
+    color: white;
+
+    &:hover {
+      background-color: darken(#4267b2, 15%);
+    }
+  }
+
+  .social-icon {
+    vertical-align: middle;
+    width: 40px;
+    display: inline-block;
+
+    i {
+      font-size: 25px;
+    }
+  }
+
+  .line {
+    position: absolute;
+    top: 0;
+    left: 45px;
+    height: 100%;
+    width: 1px;
+    background-color: darken(grey, 30%);
+  }
+
+  .btn-text {
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+    width: calc(100% - 50px);
+  }
+}
