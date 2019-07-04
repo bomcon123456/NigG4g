@@ -7,32 +7,14 @@ import "./App.css";
 
 class App extends Component {
   componentDidMount() {
-    // loginModal.open();
-    appModal
-      .alert({
-        text: "This is a freaking modal bitch",
-        title: "Modal Show up!"
-      })
-      .then(() => {
-        console.log("hehehe");
-      });
-    // authApi
-    //   .post({
-    //     email: "axios@admin.com",
-    //     password: "password"
+    loginModal.open(this.handleLogin);
+    // appModal
+    //   .alert({
+    //     text: "This is a freaking modal bitch",
+    //     title: "Modal Show up!"
     //   })
-    //   .then(data => {
-    //     authenCache.setAuthen(data.data.token, { expire: 1 });
-    //     userApi
-    //       .put(userInfo.getState()["_id"], {
-    //         gender: true
-    //       })
-    //       .then(data => {
-    //         console.log(data);
-    //       })
-    //       .catch(err => {
-    //         // ERROR HANDLING
-    //       });
+    //   .then(() => {
+    //     console.log("hehehe");
     //   });
   }
 

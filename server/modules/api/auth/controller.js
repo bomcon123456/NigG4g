@@ -1,6 +1,7 @@
 const User = require("../users/model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const omit = require("lodash/omit");
 
 const { validationResult } = require("express-validator/check");
 
@@ -25,6 +26,7 @@ exports.login = (req, res, next) => {
   const password = req.body.password;
   let loadedUser;
   return User.findOne({ email: email })
+    .lean()
     .then(user => {
       if (!user) {
         const error = new Error("account_not_found");
@@ -36,7 +38,7 @@ exports.login = (req, res, next) => {
     })
     .then(isEqual => {
       if (!isEqual) {
-        const error = new Error("Wrong password.");
+        const error = new Error("wrong_password");
         error.statusCode = 401;
         throw error;
       }
@@ -48,9 +50,16 @@ exports.login = (req, res, next) => {
         "TopSecretWebTokenKey",
         { expiresIn: "12h" }
       );
+      let resUser = omit(loadedUser, [
+        "password",
+        "createdAt",
+        "updatedAt",
+        "active"
+      ]);
+      console.log(resUser);
       res.status(200).json({
         token: token,
-        userId: loadedUser._id.toString()
+        user: resUser
       });
     })
     .catch(error => {
