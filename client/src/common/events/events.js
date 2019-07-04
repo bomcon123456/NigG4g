@@ -1,9 +1,10 @@
+/* eslint-disable eqeqeq */
 import isNil from "lodash/isNil";
 import forEach from "lodash/forEach";
 
 export const keyEvents = {
   isPeriod(e) {
-    return e.keyCoe == 190;
+    return e.keyCode == 190;
   },
   isSpacebar(e) {
     return e.keyCode == 32;
