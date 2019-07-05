@@ -12,6 +12,7 @@ class App extends Component {
       <div>
         <ModalsRegistry />
         <Switch>
+          <Route path="/confirm-reset-password" component={ForgotPassword} />
           <Route path="/forgot-password" component={ForgotPassword} />
           <Route path="/" exact component={MainPage} />
         </Switch>
