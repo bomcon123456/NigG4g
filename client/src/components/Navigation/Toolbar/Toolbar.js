@@ -1,14 +1,16 @@
 import React from "react";
 import NavItems from "../NavItems/NavItems";
+import image from '../../../Images/sprite-logo.png'
 
 const toolbar = props => {
   return (
-    <header className="my-toolbar">
-      <div className="logo" />
-      <nav className="nav">
-        {/*<NavItems />*/}
-        <div>LOL</div>
-      </nav>
+    <header id="top-nav">
+      <div className="nav-wrap">
+        <a className="my-logo" href="/">9GAG</a>
+        <nav className="nav-menu">
+          {<NavItems />}
+        </nav>
+      </div>
     </header>
   );
 };
