@@ -83,7 +83,10 @@ export class LoginModal extends KComponent {
               console.log(data.data.birthdays[0].date);
               let { year, month, day } = data.data.birthdays[0].date;
               return {
-                birthday: new Date(year, month - 1, day).toISOString()
+                birthday:
+                  year && month && day
+                    ? new Date(year, month - 1, day).toISOString()
+                    : null
               };
             }
           });
@@ -99,7 +102,7 @@ export class LoginModal extends KComponent {
           email,
           username: name,
           avatarURL: imageUrl,
-          birthday: new Date(birthday).toISOString(),
+          birthday: birthday ? new Date(birthday).toISOString() : null,
           social: { id: userID, type: "FACEBOOK" }
         };
       },

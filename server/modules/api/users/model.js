@@ -27,7 +27,7 @@ const userModel = new Schema(
       }
     },
     avatarURL: { type: String, default: "" },
-    birthday: { type: Date, required: true },
+    birthday: { type: Date },
     active: { type: Boolean, default: true },
     social: {
       id: String,
