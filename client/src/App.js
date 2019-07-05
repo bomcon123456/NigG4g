@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { appModal, ModalsRegistry } from "./common/react/modals/modals";
+import Toolbar from ".././src/components/Navigation/Toolbar/Toolbar";
 import { loginModal } from "./common/react/modals/login/login";
 import { userInfo } from "./common/states/user-info";
 import classnames from "classnames";
@@ -9,7 +10,7 @@ import "./App.css";
 
 class App extends Component {
   componentDidMount() {
-    loginModal.open(this.handleLogin);
+    // loginModal.open(this.handleLogin);
     // appModal
     //   .alert({
     //     text: "This is a freaking modal bitch",
@@ -30,24 +31,7 @@ class App extends Component {
     return (
       <div className="App">
         <ModalsRegistry />
-        <header className={classnames("App-header", loginCSS)}>
-          <img src={logo} className="App-logo" alt="logo" />
-          {info ? (
-            `Welcome back, ${info.username}`
-          ) : (
-            <p>
-              Edit <code>src/App.js</code> and save to reload.
-            </p>
-          )}
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <Toolbar />
       </div>
     );
   }
