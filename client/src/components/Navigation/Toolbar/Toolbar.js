@@ -1,13 +1,13 @@
 import React from "react";
-import NavItems from "../NavItems/NavItems.js";
-import "./Toolbar.styl";
+import NavItems from "../NavItems/NavItems";
 
 const toolbar = props => {
   return (
-    <header className="toolbar">
+    <header className="my-toolbar">
       <div className="logo" />
       <nav className="nav">
-        <NavItems />
+        {/*<NavItems />*/}
+        <div>LOL</div>
       </nav>
     </header>
   );
