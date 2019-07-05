@@ -27,7 +27,7 @@ export class LoginSocial extends Component {
           appId="2158998807742962"
           autoLoad={false}
           fields="name,email,picture,birthday"
-          scope="public_profile, user_birthday"
+          scope="public_profile, email, user_birthday"
           onClick={() => this.props.handleClickSocialBtn()}
           callback={this.handleFacebookResponse}
           render={props => {
