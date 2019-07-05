@@ -33,7 +33,6 @@ export class LoginModal extends KComponent {
   }
 
   handleLogin = () => {
-    console.log("hah");
     const { email, password } = this.form.getData();
     this.setState({ loading: true });
     authApi
@@ -172,6 +171,7 @@ export class LoginModal extends KComponent {
       "email",
       ({ error, onChange, onEnter, ...other }) => (
         <InputBase
+          autoFocus
           className="login-modal-input"
           error={error}
           id={"email"}

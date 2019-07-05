@@ -12,5 +12,11 @@ export const userApi = {
   },
   delete(userId) {
     return axiosApi.delete("/users/" + userId);
+  },
+  checkEmail(data) {
+    return axiosApi.post("/users/check-email", data);
+  },
+  postForgotPassword(data) {
+    return axiosApi.post("/forgot-password", data);
   }
 };

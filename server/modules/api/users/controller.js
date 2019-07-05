@@ -5,6 +5,29 @@ const { sendEmail } = require("../../common/util/email/email");
 
 const User = require("./model");
 
+exports.checkEmailValid = (req, res, next) => {
+  const { email } = req.body;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const error = new Error("user_validation_faied");
+    error.statusCode = 422;
+    error.data = errors.array();
+    throw error;
+  }
+  return User.findOne({ email: email })
+    .then(user => {
+      if (!user) {
+        const error = new Error("account_not_found");
+        error.statusCode = 404;
+        throw error;
+      }
+      res.status(200).json({
+        message: "account_found"
+      });
+    })
+    .catch(err => next(err));
+};
+
 exports.getUser = (req, res, next) => {
   const userId = req.params.userId;
   return User.findById(userId)
@@ -122,6 +145,13 @@ exports.updateUserInformation = (req, res, next) => {
 exports.requireResetPassword = (req, res, next) => {
   const { email } = req.body;
   let myUser = null;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const error = new Error("user_validation_faied");
+    error.statusCode = 422;
+    error.data = errors.array();
+    throw error;
+  }
   return User.findOne({ email: email })
     .lean()
     .then(user => {
@@ -165,6 +195,13 @@ exports.requireResetPassword = (req, res, next) => {
 };
 
 exports.updatePassword = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const error = new Error("user_validation_faied");
+    error.statusCode = 422;
+    error.data = errors.array();
+    throw error;
+  }
   const password = req.body.password;
   const token = req.body.token;
   let userID = null;

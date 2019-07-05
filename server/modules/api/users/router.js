@@ -22,6 +22,14 @@ const createUserBodyValidator = [
     .trim()
     .isLength({ min: 5 })
 ];
+
+const emailValidator = [
+  body("email")
+    .isEmail()
+    .withMessage("Please enter a valid email.")
+    .normalizeEmail()
+];
+
 router.get("/:userId", userController.getUser);
 
 router.post("/", createUserBodyValidator, userController.createUser);
@@ -29,14 +37,11 @@ router.post("/", createUserBodyValidator, userController.createUser);
 router.delete("/:userId", isAuth, userController.deleteUser);
 router.put("/:userId", isAuth, userController.updateUserInformation);
 
+router.post("/check-email", emailValidator, userController.checkEmailValid);
+
 router.post(
   "/forgot-password",
-  [
-    body("email")
-      .isEmail()
-      .withMessage("Please enter a valid email.")
-      .normalizeEmail()
-  ],
+  emailValidator,
   userController.requireResetPassword
 );
 

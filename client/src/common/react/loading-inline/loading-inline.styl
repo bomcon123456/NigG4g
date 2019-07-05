@@ -1,37 +1,25 @@
-@keyframes spinner{
-  from{
-    transform rotateZ(0)
-  }
-  to{
-    transform rotateZ(360deg)
-  }
-}
-.spin{
-  animation spinner 1s linear forwards infinite
-}
+.loading-inline {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  z-index: 10;
+  top: 0;
 
+  .overlay {
+    position: relative;
+    background-color: rgba(white, 0.6);
+    width: 100%;
+    height: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
 
-.loading-inline{
-  position absolute
-  width 100%
-  height 100%
-  left 0
-  z-index 10
-  top 0
-  .overlay{
-    position relative
-    background-color rgba(white, 0.6)
-    width 100%
-    height 100%
-    margin 0 !important
-    padding 0 !important
-    i{
-      font-size 20px
-      color #212529
-      top 50%
-      left 50%
-      transform translate(-50%, -50%)
+    i {
+      font-size: 20px;
+      color: #212529;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
   }
-
 }

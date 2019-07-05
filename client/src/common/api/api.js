@@ -23,10 +23,13 @@ class API {
     this.instance.interceptors.response.use(
       response => {
         // console.log(response);
+        // console.log(response.message);
         return response;
       },
       error => {
         let resError = null;
+        console.log(error);
+        console.log(error.message);
         if (error.response) {
           if (onErrors.hasOwnProperty(error.response.data.message))
             onErrors[error.response.data.message]();
