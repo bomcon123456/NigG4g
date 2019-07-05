@@ -2,14 +2,6 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const bcrypt = require("bcryptjs");
 
-const commentModel = new Schema(
-  {
-    createdBy: { type: Schema.Types.ObjectId, ref: "users", required: true },
-    content: { type: String, required: true }
-  },
-  { timestamps: { createdAt: "createdAt" } }
-);
-
 const userModel = new Schema(
   {
     username: { type: String, required: true },

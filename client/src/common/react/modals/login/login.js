@@ -28,6 +28,7 @@ export class LoginModal extends KComponent {
       }
     });
     this.onUnmount(this.form.on("change", () => this.forceUpdate()));
+    this.onUnmount(this.form.on("enter", () => this.handleLogin()));
     this.form.validateData();
   }
 
@@ -168,8 +169,9 @@ export class LoginModal extends KComponent {
     let canSubmit = this.form.isValid() && !this.state.loading;
     const emailForm = this.form.enhancedComponent(
       "email",
-      ({ error, onChange, value }) => (
+      ({ error, onChange, onEnter, ...other }) => (
         <InputBase
+          autoFocus
           className="login-modal-input"
           error={error}
           id={"email"}
@@ -179,13 +181,15 @@ export class LoginModal extends KComponent {
           label="Email"
           type={"email"}
           placeholder={"abc@xyz.com"}
+          onKeyDown={onEnter}
+          {...other}
         />
       ),
       true
     );
     const passForm = this.form.enhancedComponent(
       "password",
-      ({ error, onChange, value }) => (
+      ({ error, onChange, onEnter, ...other }) => (
         <InputBase
           className="login-modal-input"
           error={error}
@@ -195,6 +199,8 @@ export class LoginModal extends KComponent {
           }}
           label="Password"
           type={"password"}
+          onKeyDown={onEnter}
+          {...other}
         />
       ),
       true

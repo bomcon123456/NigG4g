@@ -10,21 +10,34 @@ export class InputBase extends Component {
     const {
       className,
       error = false,
+      success = false,
       label = null,
       helper = null,
       id,
+      icon, // Icon Styl currently work with: <i className="fas fa-spinner spin" />
       inputType = "input",
       ...other
     } = this.props;
-
+    console.log(success);
     let input = null;
     switch (inputType) {
       case "input":
-        input = (
+        input = icon ? (
           <input
             type="text"
             className={classnames("form-control", {
-              "is-invalid": error
+              "is-invalid": error,
+              "is-valid": success
+            })}
+            id={id}
+            {...other}
+          />
+        ) : (
+          <input
+            type="text"
+            className={classnames("form-control", {
+              "is-invalid": error,
+              "is-valid": success
             })}
             id={id}
             {...other}
@@ -36,7 +49,8 @@ export class InputBase extends Component {
           <textarea
             type="text"
             className={classnames("form-control", {
-              "is-invalid": error
+              "is-invalid": error,
+              "is-valid": success
             })}
             id={id}
             {...other}
@@ -48,7 +62,8 @@ export class InputBase extends Component {
           <input
             type="text"
             className={classnames("form-control", {
-              "is-invalid": error
+              "is-invalid": error,
+              "is-valid": success
             })}
             id={id}
             {...other}
@@ -57,9 +72,21 @@ export class InputBase extends Component {
         break;
     }
 
+    if (icon) {
+      input = (
+        <div className="input-with-icon">
+          {input}
+          <span className="input-icon">
+            <span>{icon}</span>
+          </span>
+        </div>
+      );
+    }
+
     return (
       <div
         className={classnames("form-group", className, {
+          // "has-success": success,
           "has-error": error
         })}
       >
