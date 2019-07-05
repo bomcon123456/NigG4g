@@ -15,7 +15,9 @@ gmailTransporter.use(
     viewPath: path.join(__dirname, "./templates"),
     extName: ".hbs",
     viewEngine: {
-      partialsDir: path.join(__dirname, "./templates/partials")
+      extName: ".hbs",
+      partialsDir: path.join(__dirname, "./templates/partials"),
+      defaultLayout: false
     }
   })
 );

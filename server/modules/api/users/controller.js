@@ -121,35 +121,82 @@ exports.updateUserInformation = (req, res, next) => {
 
 exports.requireResetPassword = (req, res, next) => {
   const { email } = req.body;
-  const { userId } = req;
+  let myUser = null;
   return User.findOne({ email: email })
     .lean()
     .then(user => {
-      ResetPasswordToken.deleteMany({ _userId: userId })
-        .then(() => user)
-        .catch(err => {
-          throw error;
-        });
+      if (!user) {
+        const error = new Error("account_not_found");
+        error.statusCode = 400;
+        throw error;
+      }
+      myUser = user;
+      return ResetPasswordToken.deleteMany({ _userId: user._id });
     })
-    .then(user => {
+    .then(result => {
+      const myToken = crypto.randomBytes(16).toString("hex");
       let token = new ResetPasswordToken({
-        _userId: user._id,
-        token: crypto.randomBytes(16).toString("hex")
+        _userId: myUser._id,
+        token: myToken
       });
-      token.save();
+      return token.save();
     })
     .then(token => {
       return sendEmail("gmail", {
         from: "Nigg4g | Where the fun begins",
-        to: user.email,
-        subject: "Confirm reset password",
+        to: email,
+        subject: "Account Password Reset",
         template: "reset-password",
         context: {
-          appUrl: "https://localhost:6969/",
-          redirect:
-            "https://localhost:6969/confirm-reset-password?reset_code=${token.token}",
-          name: user.username
+          appUrl: "https://localhost:3000/",
+          redirect: `https://localhost:3000/confirm-reset-password?token=${
+            token.token
+          }`,
+          name: myUser.username
         }
+      });
+    })
+    .then(() => {
+      res.status(200).json({
+        message: "reset_email_sent"
+      });
+    })
+    .catch(err => next(err));
+};
+
+exports.updatePassword = (req, res, next) => {
+  const password = req.body.password;
+  const token = req.body.token;
+  let userID = null;
+  return ResetPasswordToken.findOne({ token: token })
+    .then(resTok => {
+      if (!resTok) {
+        const error = new Error("token_expired");
+        error.statusCode = 404;
+        throw error;
+      }
+      return resTok._userId;
+    })
+    .then(userId => {
+      userID = userId;
+      return User.findById(userId);
+    })
+    .then(user => {
+      if (!user) {
+        const error = new Error("account_not_found");
+        error.statusCode = 400;
+        throw error;
+      }
+      user.password = password;
+      return user.save();
+    })
+    .then(result => {
+      return ResetPasswordToken.deleteMany({ _userId: userID });
+    })
+    .then(result => {
+      res.status(200).json({
+        message: "change_password_successfully",
+        userId: userID
       });
     })
     .catch(err => next(err));

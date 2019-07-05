@@ -10,4 +10,4 @@ const resetSchema = new Schema({
   token: { type: String, required: true },
   createdAt: { type: Date, required: true, default: Date.now, expires: 1800 }
 });
-module.exports = mongoose.model("ResetPasswordToken", userModel);
+module.exports = mongoose.model("ResetPasswordToken", resetSchema);
