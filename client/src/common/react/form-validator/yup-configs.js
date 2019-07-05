@@ -43,6 +43,8 @@ yup.addMethod(yup.string, "haveNumber", function(
   });
 });
 
+//passwordConfirm: yup.string().equalTo(yup.ref('password'), 'Passwords must match').required('Required'),
+
 yup.addMethod(yup.string, "equalTo", function(ref, message) {
   return this.test({
     name: "equalTo",
