@@ -27,7 +27,7 @@ class App extends Component {
     let loginCSS = info ? "App-login" : null;
     return (
       <div className="App">
-        <header className={classnames("App-header", loginCSS)}>
+        <main className={classnames("App-header", loginCSS)}>
           <img src={logo} className="App-logo" alt="logo" />
           {info ? (
             `Welcome back, ${info.username}`
@@ -44,7 +44,7 @@ class App extends Component {
           >
             Learn React
           </a>
-        </header>
+        </main>
       </div>
     );
   }

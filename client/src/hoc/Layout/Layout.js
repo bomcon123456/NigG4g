@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Toolbar from "../../components/Navigation/Toolbar/Toolbar";
 
 class Layout extends Component {
   constructor(props) {
@@ -11,6 +12,7 @@ class Layout extends Component {
     return (
       // Add toolbar here
       <div className="container">
+        <Toolbar />
         <div className="row justify-content-center">
           {/* Add sidebar-1 here */}
           <div className="col-sm">{this.props.children}</div>
