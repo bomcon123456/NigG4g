@@ -26,12 +26,20 @@ class API {
         return response;
       },
       error => {
-        if (onErrors.hasOwnProperty(error.response.data.message)) {
-          onErrors[error.response.data.message]();
+        let resError = null;
+        if (error.response) {
+          if (onErrors.hasOwnProperty(error.response.data.message))
+            onErrors[error.response.data.message]();
+          resError = new Error(error.response.data.message);
         } else {
-          // console.log(error);
+          resError = new Error(
+            error.message
+              .toString()
+              .toLowerCase()
+              .replace(" ", "_")
+          );
         }
-        return Promise.reject(error);
+        return Promise.reject(resError);
       }
     );
   }

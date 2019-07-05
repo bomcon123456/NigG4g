@@ -5,7 +5,7 @@
         - Password
         - Email
         - Active
-        - Gender
+        - Social
         - Birthday
         - Posts -> Model
         - Comments -> [postId]
@@ -59,7 +59,7 @@ URI: /api/posts/
     - PUT -> /api/posts/:id/comments/:commentId = update comment for that post
 
     - GET -> api/posts/:id/comments/:commentId/subComments/ = get that post's comment's subcomments
-    - GET -> api/posts/:id/comments/:commentId/subComments/:subCommentId = get that post's comment's subcomment
+    - GET -> api/posts/:id/comments/:commentId/subComments/:subCommentId = get that post's comment's subcomment 
     - POST -> /api/posts/:id/comments/:commentId/subComments = create subcomment for that comment
     - DELETE -> api/posts/:id/comments/:commentId/subComments/:subCommentId = delete subcomment for that comment
     - PUT -> api/posts/:id/comments/:commentId/subComments/:subCommentId = update subcomment for that comment 
@@ -82,7 +82,6 @@ URI: /api/posts/
     - Avatar
     - Username
     - Email
-    - Gender
     - Birthday
     - Posts -> Model
     - Comments -> [postId]
