@@ -1,6 +1,7 @@
 const { validationResult } = require("express-validator/check");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+const ResetPasswordToken = require("./ResetPasswordToken/model");
+const crypto = require("crypto");
+const { sendEmail } = require("../../common/util/email/email");
 
 const User = require("./model");
 
@@ -116,4 +117,40 @@ exports.updateUserInformation = (req, res, next) => {
       console.log(error);
       next(error);
     });
+};
+
+exports.requireResetPassword = (req, res, next) => {
+  const { email } = req.body;
+  const { userId } = req;
+  return User.findOne({ email: email })
+    .lean()
+    .then(user => {
+      ResetPasswordToken.deleteMany({ _userId: userId })
+        .then(() => user)
+        .catch(err => {
+          throw error;
+        });
+    })
+    .then(user => {
+      let token = new ResetPasswordToken({
+        _userId: user._id,
+        token: crypto.randomBytes(16).toString("hex")
+      });
+      token.save();
+    })
+    .then(token => {
+      return sendEmail("gmail", {
+        from: "Nigg4g | Where the fun begins",
+        to: user.email,
+        subject: "Confirm reset password",
+        template: "reset-password",
+        context: {
+          appUrl: "https://localhost:6969/",
+          redirect:
+            "https://localhost:6969/confirm-reset-password?reset_code=${token.token}",
+          name: user.username
+        }
+      });
+    })
+    .catch(err => next(err));
 };
