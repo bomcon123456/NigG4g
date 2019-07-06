@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Toolbar from "../../components/Navigation/Toolbar/Toolbar";
 
 class Layout extends Component {
@@ -10,15 +10,17 @@ class Layout extends Component {
 
   render() {
     return (
-      // Add toolbar here
-      <div className="container">
+      <Fragment>
         <Toolbar />
-        <div className="row justify-content-center">
-          {/* Add sidebar-1 here */}
-          <div className="col-sm">{this.props.children}</div>
-          {/* Add sidebar-2 here */}
+        <div className="container space-navbar">
+          <div className="row justify-content-center">
+            {/* Add sidebar-1 here */}
+            <div className="col-sm">{this.props.children}</div>
+            {/* Add sidebar-2 here */}
+          </div>
         </div>
-      </div>
+      </Fragment>
+      // Add toolbar here
     );
   }
 }
