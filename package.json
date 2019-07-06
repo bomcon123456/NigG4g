@@ -1,0 +1,24 @@
+{
+  "name": "nigg4g",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start-client": "cd client && npm start",
+    "start-server": "cd server && npm start",
+    "start": "npm-run-all -p start-client start-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bomcon123456/Nigg4g.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bomcon123456/Nigg4g/issues"
+  },
+  "homepage": "https://github.com/bomcon123456/Nigg4g#readme",
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  }
+}

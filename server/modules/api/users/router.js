@@ -20,7 +20,7 @@ const createUserBodyValidator = [
     .normalizeEmail(),
   body("password")
     .trim()
-    .isLength({ min: 5 })
+    .isLength({ min: 6 })
 ];
 
 const emailValidator = [
@@ -50,7 +50,7 @@ router.post(
   [
     body("password")
       .trim()
-      .isLength({ min: 5 })
+      .isLength({ min: 6 })
   ],
   userController.updatePassword
 );

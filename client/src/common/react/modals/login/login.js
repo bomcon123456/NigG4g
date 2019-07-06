@@ -244,7 +244,11 @@ export class LoginModal extends KComponent {
           >
             Log in
           </button>
-          <Link className="login-modal-footer-link" to="/">
+          <Link
+            className="login-modal-footer-link"
+            to="/forgot-password"
+            onClick={() => onClose()}
+          >
             Forgot password
           </Link>
         </div>

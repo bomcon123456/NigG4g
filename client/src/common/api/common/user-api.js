@@ -18,5 +18,8 @@ export const userApi = {
   },
   postForgotPassword(data) {
     return axiosApi.post("/users/forgot-password", data);
+  },
+  postUpdatePassword(data) {
+    return axiosApi.post("/users/update-password", data);
   }
 };
