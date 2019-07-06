@@ -10,6 +10,7 @@ const toolbar = props => {
         <nav className="nav-menu">
           {<NavItems />}
         </nav>
+        <div className="function-wrap"></div>
       </div>
     </header>
   );

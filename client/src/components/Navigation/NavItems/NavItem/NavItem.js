@@ -3,7 +3,11 @@ import { NavLink } from "react-router-dom";
 
 const navigationItem = props => (
   <li >
-    <a href="/">{props.children}</a>
+    <NavLink className="my-nav-link"
+      to={props.link}
+    >
+      {props.children}
+    </NavLink>
   </li>
 );
 
