@@ -2,6 +2,7 @@ const User = require("../users/model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const omit = require("lodash/omit");
+const crypto = require("crypto");
 
 const { validationResult } = require("express-validator/check");
 
@@ -9,7 +10,7 @@ exports.getAuthenUser = (req, res, next) => {
   const userId = req.userId;
   return User.findById(userId)
     .then(user => {
-      if (!user) {
+      if (!user || (user && !user.active)) {
         const error = new Error("account_not_found");
         error.statusCode = 401;
         throw error;
@@ -36,8 +37,7 @@ exports.loginSocialUser = (req, res, next) => {
       if (!user) {
         const email = req.body.email;
         const username = req.body.username;
-        const password =
-          "$2a$12$4Bvohw57uosmu8eLRfkrP.i.L5HaX34GGgHNXbno/fefyWG9jt.nS";
+        const password = crypto.randomBytes(16).toString("hex");
         const avatarURL = req.body.avatarURL;
         const birthday = req.body.birthday;
         const user = new User({
@@ -46,7 +46,8 @@ exports.loginSocialUser = (req, res, next) => {
           email: email,
           avatarURL: avatarURL,
           birthday: birthday,
-          social: social
+          social: social,
+          verified: true
         });
         return user.save();
       } else {
@@ -89,7 +90,7 @@ exports.login = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
   let loadedUser;
-  return User.findOne({ email: email })
+  return User.findOne({ email: email, active: 1 })
     .lean()
     .then(user => {
       if (!user) {

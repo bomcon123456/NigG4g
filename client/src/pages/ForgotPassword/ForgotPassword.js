@@ -73,12 +73,19 @@ export default class ForgotPassword extends KComponent {
             loading: false,
             validated: true
           });
+        } else if (res.data.message === "account_not_found") {
+          this.setState({
+            error: { message: "account_not_found" },
+            checking: false,
+            loading: false,
+            validated: false
+          });
         } else {
           this.setState({
             error: { message: "bad_error" },
             checking: false,
             loading: false,
-            validated: true
+            validated: false
           });
         }
       })

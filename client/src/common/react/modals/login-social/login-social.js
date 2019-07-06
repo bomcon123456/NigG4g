@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { GoogleLogin } from "react-google-login";
+import classnames from "classnames";
 import {
   FacebookLoginButton,
   GoogleLoginButton
@@ -22,7 +23,9 @@ export class LoginSocial extends Component {
 
   render() {
     return (
-      <div className="login-social-container">
+      <div
+        className={classnames("login-social-container", this.props.className)}
+      >
         <FacebookLogin
           appId="2158998807742962"
           autoLoad={false}

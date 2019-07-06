@@ -37,7 +37,9 @@ router.post("/", createUserBodyValidator, userController.createUser);
 router.delete("/:userId", isAuth, userController.deleteUser);
 router.put("/:userId", isAuth, userController.updateUserInformation);
 
-router.post("/check-email", emailValidator, userController.checkEmailValid);
+router.post("/check-email", emailValidator, userController.checkEmailExisted);
+
+router.get("/verify/:myToken", userController.verifyUser);
 
 router.post(
   "/forgot-password",
