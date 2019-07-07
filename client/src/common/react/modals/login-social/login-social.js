@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import classnames from "classnames";
+
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { GoogleLogin } from "react-google-login";
-import classnames from "classnames";
+
 import {
   FacebookLoginButton,
   GoogleLoginButton

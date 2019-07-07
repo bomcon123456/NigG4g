@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
-import { appModal, ModalsRegistry } from "./common/react/modals/modals";
-import { loginModal } from "./common/react/modals/login/login";
-import { userInfo } from "./common/states/user-info";
+
+import { ModalsRegistry } from "./common/react/modals/modals";
+
 import MainPage from "./pages/MainPage/MainPage";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import ConfirmResetPassword from "./pages/ConfirmResetPassword/ConfirmResetPassword";

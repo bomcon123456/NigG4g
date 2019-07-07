@@ -4,18 +4,19 @@ import debounce from "lodash/debounce";
 import axios from "axios";
 import classnames from "classnames";
 
-import { modals } from "../modals";
 import { KComponent } from "../../../../components/KComponent";
+import { modals } from "../modals";
 import { registerSchema } from "./schema";
 import { createFormWithValidator } from "../../form-validator/form-validator";
 import { InputBase } from "../../input-base/input-base";
 import { LoadingInline } from "../../loading-inline/loading-inline";
 import { loginModal } from "../login/login";
+import { LoginSocial } from "../login-social/login-social";
+
 import { userApi } from "../../../api/common/user-api";
 import { authApi } from "../../../api/common/auth-api";
 import { authenCache } from "../../../cache/authen-cache";
 import { userInfo } from "../../../states/user-info";
-import { LoginSocial } from "../login-social/login-social";
 
 const MODALTYPE = {
   INITIAL: "initial",

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Modal } from "./modal";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import remove from "lodash/remove";
+
+import { Modal } from "./modal";
 
 export const appModal = {
   alert({ text, title, btnText = "OK" }) {

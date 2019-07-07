@@ -5,8 +5,9 @@ import debounce from "lodash/debounce";
 import { KComponent } from "../../components/KComponent";
 import { createFormWithValidator } from "../../common/react/form-validator/form-validator";
 import { InputBase } from "../../common/react/input-base/input-base";
-import { userApi } from "../../common/api/common/user-api";
 import Layout from "../../hoc/Layout/Layout";
+
+import { userApi } from "../../common/api/common/user-api";
 
 export default class ForgotPassword extends KComponent {
   constructor(props) {

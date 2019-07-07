@@ -1,17 +1,19 @@
 import React from "react";
-import { modals } from "../modals";
+import { Link } from "react-router-dom";
+import omit from "lodash/omit";
+import axios from "axios";
+
 import { KComponent } from "../../../../components/KComponent";
+import { modals } from "../modals";
 import { createFormWithValidator } from "../../form-validator/form-validator";
-import { accountSchema } from "./schema";
 import { InputBase } from "../../input-base/input-base";
 import { LoadingInline } from "../../loading-inline/loading-inline";
+import { LoginSocial } from "../login-social/login-social";
+
 import { authApi } from "../../../api/common/auth-api";
 import { authenCache } from "../../../cache/authen-cache";
 import { userInfo } from "../../../states/user-info";
-import { Link } from "react-router-dom";
-import omit from "lodash/omit";
-import { LoginSocial } from "../login-social/login-social";
-import axios from "axios";
+import { accountSchema } from "./schema";
 
 export class LoginModal extends KComponent {
   constructor(props) {

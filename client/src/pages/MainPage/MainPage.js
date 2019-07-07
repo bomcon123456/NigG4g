@@ -1,9 +1,10 @@
 import React, { Component } from "react";
+import classnames from "classnames";
+
 import { appModal } from "../../common/react/modals/modals";
 import { loginModal } from "../../common/react/modals/login/login";
 import { registerModal } from "../../common/react/modals/register/register";
 import { userInfo } from "../../common/states/user-info";
-import classnames from "classnames";
 
 import logo from "../../logo.svg";
 
