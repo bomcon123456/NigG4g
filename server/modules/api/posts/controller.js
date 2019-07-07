@@ -1,28 +1,23 @@
 const Post = require("./model");
 
-const createPost = (req, res, next) => {
-  req.body.userId = req.userId;
-  // req.body.content = !req.file ? "nourl" : "localhost:6969/images/" + file.filename
+// @TODO: NEED VERY BIG REWORK!
+const createPost = (req, res, next) => {};
 
-  const title = req.body.title;
-  const content = req.body.content;
-  const userId = req.body.userId;
-  const categoryId = req.body.categoryId;
-  const tags = req.body.tags;
-  // console.log(req.file);
-  const post = new Post({
-    title: title,
-    content: content,
-    createdBy: userId,
-    categoryId: categoryId,
-    tags: tags
-  });
-  return post
-    .save()
-    .then(result => {
+// @TODO: Return image460* only
+const getPosts = (req, res, next) => {
+  const page = req.query.page || 1;
+  return Post.find({
+    active: true
+  })
+    .sort({ createdAt: -1 })
+    .skip((page - 1) * 20)
+    .limit(20)
+    .populate("createdBy", "username avatarURL")
+    .exec()
+    .then(data => {
       res.status(200).json({
-        message: "Post created",
-        postId: result._id
+        message: "fetch_posts_successfully",
+        post: data
       });
     })
     .catch(err => {
@@ -31,44 +26,24 @@ const createPost = (req, res, next) => {
     });
 };
 
-const getAllPosts = (req, res, next) => {
-  const page = req.query.page || 1;
-  return Post.find({
-    active: true
-  })
-    .sort({ createdAt: -1 })
-    .skip((page - 1) * 20)
-    .limit(20)
-    .select("_id title content createdAt point comments categoryId tags")
-    .populate("createdBy", "username avatarURL")
-    .exec()
-    .then(data => {
-      res.status(200).send(data);
-    })
-    .catch(err => {
-      console.log(err);
-      next(err);
-    });
-};
-
+// @TODO: Populate subcomment
 const getPost = (req, res, next) => {
   const postId = req.params.postId;
   return Post.findOne({
     active: true,
     _id: postId
   })
-    .select("_id title content createdAt point comments categoryId tags")
     .populate("comments.createdBy", "username avatarURL")
     .populate("createdBy", "username avatarURL")
     .exec()
     .then(post => {
       if (!post) {
-        const error = new Error("Post is not existed.");
+        const error = new Error("post_not_found");
         error.statusCode = 400;
         throw error;
       }
       res.status(200).json({
-        message: "Post information retreived",
+        message: "fetch_post_successfully",
         post: post
       });
     })
@@ -78,42 +53,8 @@ const getPost = (req, res, next) => {
     });
 };
 
-const updatePost = (req, res, next) => {
-  const postId = req.params.postId;
-  const userId = req.userId;
-  const title = req.body.title;
-  const content = req.body.content;
-  const categoryId = req.body.categoryId;
-  const tags = req.body.tags;
-
-  return Post.findOne({
-    _id: postId,
-    createdBy: userId,
-    active: true
-  })
-    .then(post => {
-      if (!post) {
-        const error = new Error("Post is not existed.");
-        error.statusCode = 400;
-        throw error;
-      }
-      post.title = title ? title : post.title;
-      post.content = content ? content : post.content;
-      post.categoryId = categoryId ? categoryId : post.categoryId;
-      post.tags = tags ? tags : post.tags;
-      return post.save();
-    })
-    .then(result => {
-      res.status(200).json({
-        message: "Update post successfully",
-        postId: postId
-      });
-    })
-    .catch(err => {
-      console.log(err);
-      next(err);
-    });
-};
+// @TODO: NEED VERY BIG REWORK!
+const updatePost = (req, res, next) => {};
 
 const deletePost = (req, res, next) => {
   const postId = req.params.postId;
@@ -129,12 +70,12 @@ const deletePost = (req, res, next) => {
   )
     .then(result => {
       if (!result.nModified) {
-        const error = new Error("Post is not existed.");
+        const error = new Error("post_not_found");
         error.statusCode = 400;
         throw error;
       }
       res.status(200).json({
-        message: "Post has been deleted",
+        message: "post_deleted_successfully",
         postId: postId
       });
     })
@@ -144,7 +85,7 @@ const deletePost = (req, res, next) => {
     });
 };
 
-// @TODO: Neu comment chi la anh thi sao?, content dang de la required: true, same for updated
+// @TODO: Process Image
 const addComment = (req, res, next) => {
   const postId = req.params.postId;
   const userId = req.userId;
@@ -165,15 +106,12 @@ const addComment = (req, res, next) => {
   )
     .then(result => {
       if (!result.nModified) {
-        const error = new Error("Post is not existed.");
+        const error = new Error("post_not_found");
         error.statusCode = 400;
         throw error;
       }
       res.status(200).json({
-        message: "User comments on post",
-        content: content,
-        imageURL: imageURL,
-        userId: userId
+        message: "add_comment_successfully"
       });
     })
     .catch(err => {
@@ -182,7 +120,7 @@ const addComment = (req, res, next) => {
     });
 };
 
-const getAllCommentOfPost = (req, res, next) => {
+const getPostComments = (req, res, next) => {
   const postId = req.params.postId;
 
   return Post.findOne({
@@ -191,26 +129,25 @@ const getAllCommentOfPost = (req, res, next) => {
   })
     .then(data => {
       if (!data) {
-        const error = new Error("Post is not existed.");
+        const error = new Error("post_not_found");
         error.statusCode = 400;
         throw error;
       }
 
       res.status(200).json({
-        message: "Get all comments of a post successfully",
-        comment: data.comments
+        message: "fetch_post_comments_successfully",
+        comments: data.comments
       });
     })
     .catch(err => {
       console.log(err);
       next(err);
     });
-}
+};
 
 const getComment = (req, res, next) => {
   const postId = req.params.postId;
   const commentId = req.params.commentId;
-
 
   return Post.findOne({
     _id: postId,
@@ -218,7 +155,7 @@ const getComment = (req, res, next) => {
   })
     .then(data => {
       if (!data) {
-        const error = new Error("Post is not existed.");
+        const error = new Error("post_not_found");
         error.statusCode = 400;
         throw error;
       }
@@ -226,12 +163,12 @@ const getComment = (req, res, next) => {
         return comment._id.toString() === commentId.toString();
       });
       if (!comment) {
-        const error = new Error("Comment is not existed.");
+        const error = new Error("comment_not_found");
         error.statusCode = 400;
         throw error;
       }
       res.status(200).json({
-        message: "Get comment successfully",
+        message: "fetch_comment_successfully",
         comment: comment
       });
     })
@@ -239,30 +176,44 @@ const getComment = (req, res, next) => {
       console.log(err);
       next(err);
     });
-}
+};
 
 const deleteComment = (req, res, next) => {
   const postId = req.params.postId;
   const userId = req.userId;
   const commentId = req.params.commentId;
 
-  return Post.updateOne(
-    {
-      _id: postId,
-      active: true,
-    },
-    {
-      $pull: {
-        comments: {
-          _id: commentId,
-          createdBy: userId
-        }
+  return Post.findById(postId)
+    .then(data => {
+      if (!data) {
+        const error = new Error("post_not_found");
+        error.statusCode = 404;
+        throw error;
       }
-    }
-  )
-    .then(result => {
+      const comment = data.comments.find(comment => {
+        return comment._id.toString() === commentId.toString();
+      });
+      if (!comment) {
+        const error = new Error("comment_not_found");
+        error.statusCode = 404;
+        throw error;
+      }
+      if (
+        comment.createdBy.toString() !== userId.toString() &&
+        post.createdBy.toString() !== userId.toString()
+      ) {
+        const error = new Error("action_not_authorized");
+        error.statusCode = 401;
+        throw error;
+      }
+      post.comments = post.comments.filter(
+        each => each._id.toString() !== comment._id.toString()
+      );
+      return post.save();
+    })
+    .then(post => {
       res.status(200).json({
-        message: "Comment has been deleted",
+        message: "delete_comment_successfully",
         commentId: commentId
       });
     })
@@ -285,31 +236,35 @@ const updateComment = (req, res, next) => {
   })
     .then(data => {
       if (!data) {
-        const error = new Error("Post is not existed.");
-        error.statusCode = 400;
+        const error = new Error("post_not_found");
+        error.statusCode = 404;
         throw error;
       }
       const comment = data.comments.find(comment => {
         return comment._id.toString() === commentId.toString();
       });
       if (!comment) {
-        const error = new Error("Comment is not existed.");
-        error.statusCode = 400;
+        const error = new Error("comment_not_found");
+        error.statusCode = 404;
         throw error;
       }
-      if (comment.createdBy.toString() !== userId.toString()) {
-        const error = new Error("Comment is not created by this user");
-        error.statusCode = 400;
+      if (
+        comment.createdBy.toString() !== userId.toString() &&
+        data.createdBy.toString() !== userId.toString()
+      ) {
+        const error = new Error("action_not_authorized");
+        error.statusCode = 401;
         throw error;
       }
 
       comment.content = content ? content : comment.content;
       comment.imageURL = imageURL ? imageURL : comment.imageURL;
-      return data.save().then(result => {
-        res.status(200).json({
-          message: "Update comment successfully",
-          commentId: commentId
-        });
+      return data.save();
+    })
+    .then(result => {
+      res.status(200).json({
+        message: "update_comment_successfully",
+        commentId: commentId
       });
     })
     .catch(err => {
@@ -331,16 +286,16 @@ const addSubcomment = (req, res, next) => {
   })
     .then(data => {
       if (!data) {
-        const error = new Error("Post is not existed.");
-        error.statusCode = 400;
+        const error = new Error("post_not_found");
+        error.statusCode = 404;
         throw error;
       }
       const comment = data.comments.find(comment => {
         return comment._id.toString() === commentId.toString();
       });
       if (!comment) {
-        const error = new Error("Comment is not existed.");
-        error.statusCode = 400;
+        const error = new Error("comment_not_found");
+        error.statusCode = 404;
         throw error;
       }
       const subcomment = {
@@ -349,13 +304,12 @@ const addSubcomment = (req, res, next) => {
         imageURL: imageURL
       };
       comment.subcomments.push(subcomment);
-      return data.save().then(result => {
-        res.status(200).json({
-          message: "User create subcomment",
-          userId: userId,
-          postId: postId,
-          commentId: commentId
-        });
+      return data.save();
+    })
+    .then(result => {
+      res.status(200).json({
+        message: "subcomment_created_successfully",
+        post: result
       });
     })
     .catch(err => {
@@ -376,16 +330,16 @@ const getSubcomment = (req, res, next) => {
     .then(result => {
       console.log(result);
       if (!result) {
-        const error = new Error("Post is not existed.");
-        error.statusCode = 400;
+        const error = new Error("post_not_found");
+        error.statusCode = 404;
         throw error;
       }
       const comment = result.comments.find(
         each => each._id.toString() === commentId
       );
       if (!comment) {
-        const error = new Error("Comment is not existed.");
-        error.statusCode = 400;
+        const error = new Error("comment_not_found");
+        error.statusCode = 404;
         throw error;
       }
 
@@ -394,13 +348,13 @@ const getSubcomment = (req, res, next) => {
       });
 
       if (!subcomment) {
-        const error = new Error("Subcomment is not existed.");
-        error.statusCode = 400;
+        const error = new Error("subcomment_not_found");
+        error.statusCode = 404;
         throw error;
       }
 
       res.status(200).json({
-        message: "Get subcomment successfully",
+        message: "fetch_subcomment_successfully",
         Subcomment: subcomment
       });
     })
@@ -408,9 +362,9 @@ const getSubcomment = (req, res, next) => {
       console.log(err);
       next(err);
     });
-}
+};
 
-const getAllSubcommentOfComment = (req, res, next) => {
+const getCommentSubcomments = (req, res, next) => {
   const postId = req.params.postId;
   const commentId = req.params.commentId;
 
@@ -421,29 +375,29 @@ const getAllSubcommentOfComment = (req, res, next) => {
     .then(result => {
       console.log(result);
       if (!result) {
-        const error = new Error("Post is not existed.");
-        error.statusCode = 400;
+        const error = new Error("post_not_found");
+        error.statusCode = 404;
         throw error;
       }
       const comment = result.comments.find(
         each => each._id.toString() === commentId
       );
       if (!comment) {
-        const error = new Error("Comment is not existed.");
-        error.statusCode = 400;
+        const error = new Error("comment_not_found");
+        error.statusCode = 404;
         throw error;
       }
 
       res.status(200).json({
-        message: "Get subcomment successfully",
-        Subcomments: comment.subcomments
+        message: "fetch_subcomment_successfully",
+        subcomments: comment.subcomments
       });
     })
     .catch(err => {
       console.log(err);
       next(err);
     });
-}
+};
 
 const deleteSubcomment = (req, res, next) => {
   const postId = req.params.postId;
@@ -458,16 +412,16 @@ const deleteSubcomment = (req, res, next) => {
     .then(result => {
       console.log(result);
       if (!result) {
-        const error = new Error("Post is not existed.");
-        error.statusCode = 400;
+        const error = new Error("post_not_found");
+        error.statusCode = 404;
         throw error;
       }
       const commentIndex = result.comments.findIndex(
         each => each._id.toString() === commentId
       );
       if (commentIndex === -1) {
-        const error = new Error("Comment is not existed.");
-        error.statusCode = 400;
+        const error = new Error("comment_not_found");
+        error.statusCode = 404;
         throw error;
       }
       const comment = result.comments[commentIndex];
@@ -476,13 +430,16 @@ const deleteSubcomment = (req, res, next) => {
       });
 
       if (newSubcomment.length === comment.subcomments.length) {
-        const error = new Error("Subcomment is not existed.");
-        error.statusCode = 400;
+        const error = new Error("subcomment_not_found");
+        error.statusCode = 404;
         throw error;
       }
 
-      if (newSubcomment.createdBy.toString() !== userId.toString()) {
-        const error = new Error("Subcomment is not created by this user.");
+      if (
+        newSubcomment.createdBy.toString() !== userId.toString() &&
+        result.createdBy.toString() !== userId.toString()
+      ) {
+        const error = new Error("action_not_authorized");
         error.statusCode = 400;
         throw error;
       }
@@ -492,7 +449,7 @@ const deleteSubcomment = (req, res, next) => {
     })
     .then(result => {
       res.status(200).json({
-        message: "Delete subcomment successfully",
+        message: "delete_subcomment_successfully",
         commentId: commentId
       });
     })
@@ -517,16 +474,16 @@ const updateSubcomment = (req, res, next) => {
     .then(result => {
       console.log(result);
       if (!result) {
-        const error = new Error("Post is not existed.");
-        error.statusCode = 400;
+        const error = new Error("post_not_found");
+        error.statusCode = 404;
         throw error;
       }
       const comment = result.comments.find(
         each => each._id.toString() === commentId
       );
       if (!comment) {
-        const error = new Error("Comment is not existed.");
-        error.statusCode = 400;
+        const error = new Error("comment_not_found");
+        error.statusCode = 404;
         throw error;
       }
 
@@ -535,13 +492,16 @@ const updateSubcomment = (req, res, next) => {
       });
 
       if (!subcomment) {
-        const error = new Error("Subcomment is not existed.");
-        error.statusCode = 400;
+        const error = new Error("subcomment_not_found");
+        error.statusCode = 404;
         throw error;
       }
 
-      if (subcomment.createdBy.toString() !== userId.toString()) {
-        const error = new Error("Subcomment is not created by this user.");
+      if (
+        newSubcomment.createdBy.toString() !== userId.toString() &&
+        result.createdBy.toString() !== userId.toString()
+      ) {
+        const error = new Error("action_not_authorized");
         error.statusCode = 400;
         throw error;
       }
@@ -553,7 +513,7 @@ const updateSubcomment = (req, res, next) => {
     })
     .then(result => {
       res.status(200).json({
-        message: "Update subcomment successfully",
+        message: "update_subcomment_successfully",
         commentId: commentId
       });
     })
@@ -563,54 +523,20 @@ const updateSubcomment = (req, res, next) => {
     });
 };
 
-// @TODO: Mai sua lai cac hang update cho xin hon :v
-
 module.exports = {
   createPost,
-  getAllPosts,
+  getPosts,
   getPost,
   updatePost,
   deletePost,
   addComment,
-  getAllCommentOfPost,
+  getPostComments,
   getComment,
   deleteComment,
   updateComment,
   addSubcomment,
   getSubcomment,
-  getAllSubcommentOfComment,
+  getCommentSubcomments,
   deleteSubcomment,
   updateSubcomment
 };
-
-// const updateComment = (req, res, next) => {
-//   const postId = req.params.postId;
-//   const userId = req.userId;
-//   const commentId = req.params.commentId;
-//   const content = req.body.content;
-//   const imageURL = req.body.imageURL;
-
-//   return Post.update(
-//     {
-//       '_id': postId,
-//       'comment._id': commentId
-//     },
-//     {
-//       "$set": {
-//         "comment.$.content": content,
-//         "comment.$.imageURL": imageURL,
-//         "comment.$.createdBy": userId
-//       }
-//     }
-//   )
-//     .then(result => {
-//       res.status(200).json({
-//         message: "Update comment successfully",
-//         commentId: commentId
-//       })
-//     })
-//     .catch(err => {
-//       console.log(err);
-//       next(err)
-//     })
-// }

@@ -4,7 +4,7 @@ const isAuth = require("../../common/middleware/is-auth");
 const router = express.Router();
 
 /// Post API
-router.get("/", postController.getAllPosts);
+router.get("/", postController.getPosts);
 router.get("/:postId", postController.getPost);
 
 router.post("/", isAuth, postController.createPost);
@@ -14,7 +14,7 @@ router.put("/:postId", isAuth, postController.updatePost);
 router.delete("/:postId", isAuth, postController.deletePost);
 
 /// Comment API
-router.get("/:postId/comments", postController.getAllCommentOfPost);
+router.get("/:postId/comments", postController.getPostComments);
 
 router.get("/:postId/comments/:commentId", postController.getComment);
 
@@ -35,7 +35,7 @@ router.delete(
 /// Subcomment API
 router.get(
   "/:postId/comments/:commentId/subcomments",
-  postController.getAllSubcommentOfComment
+  postController.getCommentSubcomments
 );
 
 router.get(
