@@ -3,6 +3,7 @@ import classnames from "classnames";
 
 import { appModal } from "../../common/react/modals/modals";
 import { loginModal } from "../../common/react/modals/login/login";
+import { uploadPostModal } from "../../common/react/modals/upload-post/upload-post";
 import { registerModal } from "../../common/react/modals/register/register";
 import { userInfo } from "../../common/states/user-info";
 
@@ -11,7 +12,7 @@ import logo from "../../logo.svg";
 class App extends Component {
   componentDidMount() {
     // loginModal.open(this.handleLogin);
-    registerModal.open(this.handleLogin);
+    uploadPostModal.open(this.handleLogin);
     // appModal
     //   .alert({
     //     text: "This is a freaking modal bitch",

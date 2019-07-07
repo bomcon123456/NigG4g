@@ -69,7 +69,7 @@ export default class ForgotPassword extends KComponent {
       });
   };
 
-  handleServerResponse = () => {
+  handleServerError = () => {
     const { error } = this.state;
     const message = error.message;
     let errorMatcher = {
@@ -145,9 +145,7 @@ export default class ForgotPassword extends KComponent {
                 )}
               </div>
               {this.state.error && (
-                <div className="server-error">
-                  {this.handleServerResponse()}
-                </div>
+                <div className="server-error">{this.handleServerError()}</div>
               )}
               <div className="btn-container">
                 <button

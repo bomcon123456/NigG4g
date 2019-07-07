@@ -102,7 +102,7 @@ export default class ForgotPassword extends KComponent {
 
   debounceCheckEmailExisted = debounce(this.checkEmailExisted, 2000);
 
-  handleServerResponse = () => {
+  handleServerError = () => {
     const { error } = this.state;
     const { email } = this.form.getData();
     const message = error.message;
@@ -181,9 +181,7 @@ export default class ForgotPassword extends KComponent {
                   true
                 )}
                 {this.state.error && (
-                  <div className="server-error">
-                    {this.handleServerResponse()}
-                  </div>
+                  <div className="server-error">{this.handleServerError()}</div>
                 )}
               </div>
               <button
