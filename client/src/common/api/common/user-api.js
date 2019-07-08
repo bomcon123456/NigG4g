@@ -21,5 +21,8 @@ export const userApi = {
   },
   postUpdatePassword(data) {
     return axiosApi.post("/users/update-password", data);
+  },
+  getVerifyUser(token) {
+    return axiosApi.get("/users/verify/" + token);
   }
 };

@@ -1,7 +1,8 @@
 import { Cache } from "./cache";
 import Cookies from "js-cookie";
-import { authApi } from "../api/common/auth-api";
 import omit from "lodash/omit";
+
+import { authApi } from "../api/common/auth-api";
 import { userInfo } from "../states/user-info";
 
 const cookiesEngine = {

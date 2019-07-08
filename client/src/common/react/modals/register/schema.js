@@ -1,6 +1,11 @@
 import * as yup from "yup";
 
-export const accountSchema = yup.object().shape({
+export const registerSchema = yup.object().shape({
+  username: yup
+    .string()
+    .min(3, "Username must be at least 3-char long.")
+    .max(50, "Username should not have more than 50 characters")
+    .required("Username must not be empty"),
   email: yup
     .string()
     .email("Please input a valid email.")

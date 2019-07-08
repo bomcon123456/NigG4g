@@ -5,8 +5,9 @@ import debounce from "lodash/debounce";
 import { KComponent } from "../../components/KComponent";
 import { createFormWithValidator } from "../../common/react/form-validator/form-validator";
 import { InputBase } from "../../common/react/input-base/input-base";
-import { userApi } from "../../common/api/common/user-api";
 import Layout from "../../hoc/Layout/Layout";
+
+import { userApi } from "../../common/api/common/user-api";
 
 export default class ForgotPassword extends KComponent {
   constructor(props) {
@@ -73,12 +74,19 @@ export default class ForgotPassword extends KComponent {
             loading: false,
             validated: true
           });
+        } else if (res.data.message === "account_not_found") {
+          this.setState({
+            error: { message: "account_not_found" },
+            checking: false,
+            loading: false,
+            validated: false
+          });
         } else {
           this.setState({
             error: { message: "bad_error" },
             checking: false,
             loading: false,
-            validated: true
+            validated: false
           });
         }
       })
@@ -94,7 +102,7 @@ export default class ForgotPassword extends KComponent {
 
   debounceCheckEmailExisted = debounce(this.checkEmailExisted, 2000);
 
-  handleServerResponse = () => {
+  handleServerError = () => {
     const { error } = this.state;
     const { email } = this.form.getData();
     const message = error.message;
@@ -173,9 +181,7 @@ export default class ForgotPassword extends KComponent {
                   true
                 )}
                 {this.state.error && (
-                  <div className="server-error">
-                    {this.handleServerResponse()}
-                  </div>
+                  <div className="server-error">{this.handleServerError()}</div>
                 )}
               </div>
               <button

@@ -28,6 +28,11 @@ const userModel = new Schema(
         enum: ["GOOGLE", "FACEBOOK"]
       }
     },
+    verified: {
+      type: Boolean,
+      default: false,
+      required: true
+    },
     posts: {
       type: [
         {

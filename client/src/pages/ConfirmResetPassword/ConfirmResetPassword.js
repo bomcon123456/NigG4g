@@ -4,8 +4,10 @@ import * as yup from "yup";
 import { KComponent } from "../../components/KComponent";
 import { createFormWithValidator } from "../../common/react/form-validator/form-validator";
 import { InputBase } from "../../common/react/input-base/input-base";
-import { userApi } from "../../common/api/common/user-api";
 import Layout from "../../hoc/Layout/Layout";
+
+import { userApi } from "../../common/api/common/user-api";
+
 import logo from "../../assets/img/logo.png";
 
 export default class ForgotPassword extends KComponent {
@@ -67,7 +69,7 @@ export default class ForgotPassword extends KComponent {
       });
   };
 
-  handleServerResponse = () => {
+  handleServerError = () => {
     const { error } = this.state;
     const message = error.message;
     let errorMatcher = {
@@ -143,9 +145,7 @@ export default class ForgotPassword extends KComponent {
                 )}
               </div>
               {this.state.error && (
-                <div className="server-error">
-                  {this.handleServerResponse()}
-                </div>
+                <div className="server-error">{this.handleServerError()}</div>
               )}
               <div className="btn-container">
                 <button

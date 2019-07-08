@@ -18,7 +18,6 @@ export class InputBase extends Component {
       inputType = "input",
       ...other
     } = this.props;
-    console.log(success);
     let input = null;
     switch (inputType) {
       case "input":
