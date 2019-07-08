@@ -5,6 +5,7 @@ import * as yup from "yup";
 import { KComponent } from "../../../../components/KComponent";
 import { modals } from "../modals";
 import { createFormWithValidator } from "../../form-validator/form-validator";
+import { uploadFromUrlModal } from "./upload-from-url/upload-from-url";
 import { InputBase } from "../../input-base/input-base";
 import { LoadingInline } from "../../loading-inline/loading-inline";
 
@@ -38,6 +39,14 @@ export class UploadPostModal extends KComponent {
 
   handlePost = () => {};
 
+  handleUploadFromUrl = () => {
+    this.props.onClose();
+    uploadFromUrlModal.open(
+      this.props.onUploadSuccess,
+      this.props.backupURL ? this.props.backupURL : ""
+    );
+  };
+
   handleServerError = () => {
     const { error } = this.state;
     const message = error.message;
@@ -59,8 +68,8 @@ export class UploadPostModal extends KComponent {
         <Fragment>
           <div className="modal-header upload-header">
             <div className="modal-title upload-modal-header">
-              <h4 className="upload-modal-title">Upload a Post</h4>
-              <p className="upload-modal-subtitle">
+              <h4 className="modal-title-text">Upload a Post</h4>
+              <p className="modal-subtitle-text">
                 Choose how you want to upload the post
               </p>
             </div>
@@ -106,12 +115,15 @@ export class UploadPostModal extends KComponent {
                 )}
               </div>
               <div className="other-source justify-content-center">
-                <div className="upload-image-url">
-                  <i class="fas fa-image" />
+                <div
+                  className="upload-image-url"
+                  onClick={this.handleUploadFromUrl}
+                >
+                  <i className="fas fa-image" />
                   <p>Paste image URL</p>
                 </div>
                 <div className="upload-image-url">
-                  <i class="fas fa-play-circle" />
+                  <i className="fas fa-play-circle" />
                   <p>Paste Video URL</p>
                 </div>
                 <div className="upload-image-url">
@@ -128,15 +140,16 @@ export class UploadPostModal extends KComponent {
 }
 
 export const uploadPostModal = {
-  open(handlePost) {
+  open(handleUpload, backupURL) {
     const modal = modals.openModal({
       content: (
         <UploadPostModal
           onClose={() => modal.close()}
-          onPostSuccess={() => {
+          onUploadSuccess={() => {
             modal.close();
-            handlePost();
+            handleUpload();
           }}
+          backupURL={backupURL}
         />
       )
     });
