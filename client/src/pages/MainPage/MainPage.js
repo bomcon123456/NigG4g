@@ -4,8 +4,8 @@ import classnames from "classnames";
 // import { appModal } from "../../common/react/modals/modals";
 // import { loginModal } from "../../common/react/modals/login/login";
 // import { registerModal } from "../../common/react/modals/register/register";
-import { uploadPostModal } from "../../common/react/modals/upload-post/upload-post";
-// import { uploadFromUrlModal } from "../../common/react/modals/upload-post/upload-from-url/upload-from-url";
+// import { uploadPostModal } from "../../common/react/modals/upload-post/upload-post";
+import { uploadFromUrlModal } from "../../common/react/modals/upload-post/upload-from-url/upload-from-url";
 import { userInfo } from "../../common/states/user-info";
 
 import logo from "../../logo.svg";
@@ -13,8 +13,8 @@ import logo from "../../logo.svg";
 class App extends Component {
   componentDidMount() {
     // loginModal.open(this.handleLogin);
-    uploadPostModal.open(this.handleLogin);
-    // uploadFromUrlModal.open(this.handleLogin);
+    // uploadPostModal.open(this.handleLogin);
+    uploadFromUrlModal.open(this.handleLogin);
     // appModal
     //   .alert({
     //     text: "This is a freaking modal bitch",
