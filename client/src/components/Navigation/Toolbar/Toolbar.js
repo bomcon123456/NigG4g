@@ -1,5 +1,6 @@
 import React from "react";
 import NavItems from "../NavItems/NavItems";
+import FunctionWrap from "../FunctionWrap/FunctionWrap"
 import image from '../../../Images/sprite-logo.png'
 
 const toolbar = props => {
@@ -10,7 +11,7 @@ const toolbar = props => {
         <nav className="nav-menu">
           {<NavItems />}
         </nav>
-        <div className="function-wrap"></div>
+        <FunctionWrap />
       </div>
     </header>
   );
