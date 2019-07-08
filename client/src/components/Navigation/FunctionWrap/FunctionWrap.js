@@ -5,11 +5,13 @@ import UserFunction from "./UserFunction/UserFunction";
 import { userInfo } from "../../../../src/common/states/user-info";
 import { NavLink } from "react-router-dom";
 
+const isLogin = userInfo.getState();
+
 const FunctionWrap = props => (
   <div className="function-wrap">
     <GeneralFuntion />
-    {!userInfo.getState() && <VisitorFunction />}
-    {userInfo.getState() && <UserFunction />}
+    {!isLogin && <VisitorFunction />}
+    {isLogin && <UserFunction />}
   </div>
 
 );
