@@ -12,15 +12,20 @@ import { authenCache } from "../../../cache/authen-cache";
 import { userInfo } from "../../../states/user-info";
 import UploadButton from "../../upload-btn/upload-btn";
 
+import trollface from "../../../../assets/img/trollface.png";
+
 export class UploadPostModal extends KComponent {
   constructor(props) {
     super(props);
     this.state = {
       loading: false,
+      uploadError: null,
       error: null
     };
 
-    const schema = yup.object().shape({});
+    const schema = yup.object().shape({
+      picture: yup.mixed().required("Picture must not be empty")
+    });
 
     this.form = createFormWithValidator(schema, {
       initData: {}
@@ -28,6 +33,7 @@ export class UploadPostModal extends KComponent {
     this.onUnmount(this.form.on("change", () => this.forceUpdate()));
     this.onUnmount(this.form.on("enter", () => this.handlePost()));
     this.form.validateData();
+    this.buttonOnClick = null;
   }
 
   handlePost = () => {};
@@ -51,7 +57,7 @@ export class UploadPostModal extends KComponent {
     return (
       <div className={classnames("upload-post-modal")}>
         <Fragment>
-          <div className="modal-header">
+          <div className="modal-header upload-header">
             <div className="modal-title upload-modal-header">
               <h4 className="upload-modal-title">Upload a Post</h4>
               <p className="upload-modal-subtitle">
@@ -63,21 +69,58 @@ export class UploadPostModal extends KComponent {
               onClick={() => onClose()}
             />
           </div>
-          <div className="modal-body">
+          <div className="modal-body upload-modal-body">
             {/* <LoadingInline /> */}
-            <UploadButton
-              onError={err => console.log(err)}
-              onChange={data => console.log(data)}
-              isUploadImage
-              renderBtn={({ onClick }) => (
-                <button className="btn btn-primary" onClick={onClick}>
-                  Choose image
-                </button>
-              )}
-            />
+            <div className="spacer">
+              <div className="upload-image" onClick={this.buttonOnClick}>
+                <i className="fas fa-file-upload upload-icon" />
+                <p className="upload-image-text">Drop image to upload or</p>
+                {this.form.enhancedComponent(
+                  "picture",
+                  ({ error, onChange, value, ...other }) => (
+                    <UploadButton
+                      renderBtn={({ onClick }) => {
+                        this.buttonOnClick = onClick;
+                        return (
+                          <button
+                            className="btn btn-primary btn-bold-text"
+                            onClick={onClick}
+                          >
+                            Choose file...
+                          </button>
+                        );
+                      }}
+                      onError={error => {
+                        this.setState({
+                          uploadError: error
+                        });
+                      }}
+                      onChange={files => {
+                        onChange(files);
+                        console.log(files);
+                      }}
+                      value={value}
+                      isUploadImage
+                    />
+                  )
+                )}
+              </div>
+              <div className="other-source justify-content-center">
+                <div className="upload-image-url">
+                  <i class="fas fa-image" />
+                  <p>Paste image URL</p>
+                </div>
+                <div className="upload-image-url">
+                  <i class="fas fa-play-circle" />
+                  <p>Paste Video URL</p>
+                </div>
+                <div className="upload-image-url">
+                  <img src={trollface} alt="Trollface" />
+                  <p>Make meme</p>
+                </div>
+              </div>
+            </div>
           </div>
-
-          <div className="modal-footer justify-content-between register-modal-footer" />
         </Fragment>
       </div>
     );
