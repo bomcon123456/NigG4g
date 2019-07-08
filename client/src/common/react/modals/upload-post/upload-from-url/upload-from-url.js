@@ -72,11 +72,11 @@ export class UploadFromUrlModal extends KComponent {
   //   });
   // };
   handleBackClicked = () => {
+    this.props.onClose();
     uploadPostModal.open(
       this.props.onUploadSuccess,
       this.state.validUrl ? this.form.getPathData("url") : ""
     );
-    this.props.onClose();
   };
 
   render() {

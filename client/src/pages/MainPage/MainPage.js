@@ -14,7 +14,7 @@ class App extends Component {
   componentDidMount() {
     // loginModal.open(this.handleLogin);
     // uploadPostModal.open(this.handleLogin);
-    uploadFromUrlModal.open(this.handleLogin);
+    // uploadFromUrlModal.open(this.handleLogin);
     // appModal
     //   .alert({
     //     text: "This is a freaking modal bitch",
