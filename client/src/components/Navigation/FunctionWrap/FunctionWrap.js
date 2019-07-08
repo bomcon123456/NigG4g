@@ -7,15 +7,17 @@ import { NavLink } from "react-router-dom";
 import HeaderSearchDropdown from "./HeaderSearchDropdown/HeaderSearchDropdown"
 
 
-const isLogin = userInfo.getState();
-
-const FunctionWrap = props => (
-  <div className="function-wrap">
-    <GeneralFuntion />
-    {!isLogin && <VisitorFunction />}
-    {isLogin && <UserFunction />}
-
-  </div>
-);
+const FunctionWrap = props => {
+  const isLogin = userInfo.getState();
+  return (
+    <div className="function-wrap">
+      <GeneralFuntion />
+      {!isLogin && (
+        <VisitorFunction handleLoginSuccess={props.handleLoginSuccess} />
+      )}
+      {isLogin && <UserFunction />}
+    </div>
+  );
+};
 
 export default FunctionWrap;

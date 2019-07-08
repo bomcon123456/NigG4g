@@ -9,10 +9,14 @@ class Layout extends Component {
     this.state = {};
   }
 
+  handleLoginSuccess = () => {
+    this.forceUpdate();
+  };
+
   render() {
     return (
       <Fragment>
-        <Toolbar />
+        <Toolbar handleLoginSuccess={this.handleLoginSuccess} />
         <div className="container space-navbar">
           <div className="row justify-content-center">
             {/* Add sidebar-1 here */}

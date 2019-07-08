@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import mql from "@microlink/mql";
 import classnames from "classnames";
 import * as yup from "yup";
 
@@ -49,23 +50,33 @@ export class UploadFromUrlModal extends KComponent {
       : "Something bad happened.";
   };
 
-  handleLoadSuccess = () => {
-    this.setState({ loading: false, error: null, validUrl: true });
+  handleFileChanged = () => {
+    const url = this.form.getData("url");
+    console.log(url.url);
+    mql(url.url)
+      .then(data => {
+        console.log(data);
+      })
+      .catch(err => console.log(err));
   };
-  handleLoadFailed = e => {
-    // console.log(e);
-    this.setState({
-      loading: false,
-      error: { message: "invalid_url" },
-      validUrl: false
-    });
-  };
+
+  // handleLoadSuccess = () => {
+  //   this.setState({ loading: false, error: null, validUrl: true });
+  // };
+  // handleLoadFailed = e => {
+  //   // console.log(e);
+  //   this.setState({
+  //     loading: false,
+  //     error: { message: "invalid_url" },
+  //     validUrl: false
+  //   });
+  // };
   handleBackClicked = () => {
+    this.props.onClose();
     uploadPostModal.open(
       this.props.onUploadSuccess,
       this.state.validUrl ? this.form.getPathData("url") : ""
     );
-    this.props.onClose();
   };
 
   render() {
@@ -99,7 +110,7 @@ export class UploadFromUrlModal extends KComponent {
                   placeholder="http://"
                   onChange={e => {
                     onChange(e);
-                    this.setState({ loading: true });
+                    this.handleFileChanged();
                   }}
                   type={"url"}
                   {...other}
@@ -109,16 +120,7 @@ export class UploadFromUrlModal extends KComponent {
             )}{" "}
             {this.state.error && (
               <div className="server-error">{this.handleServerError()}</div>
-            )}{" "}
-            {formValid && url ? (
-              <img
-                style={{ display: "none" }}
-                src={url}
-                alt="lele"
-                onLoad={this.handleLoadSuccess}
-                onError={this.handleLoadFailed}
-              />
-            ) : null}
+            )}
           </div>
           <div className="modal-footer uploadurl-modal-footer no-border">
             <button
