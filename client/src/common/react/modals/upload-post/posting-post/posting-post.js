@@ -1,42 +1,26 @@
 import React, { Fragment } from "react";
 import classnames from "classnames";
-import * as yup from "yup";
 
 import { KComponent } from "../../../../../components/KComponent";
-import { modals } from "../../modals";
-import { createFormWithValidator } from "../../../form-validator/form-validator";
-import { InputBase } from "../../../input-base/input-base";
-import { uploadPostModal } from "../upload-post";
-import { getMetaTags } from "../../../../utils/common-util";
-import { utilApi } from "../../../../api/common/util-api";
 
+import { modals } from "../../modals";
+import { uploadPostModal } from "../upload-post";
+import FocusedImage from "../../../../react/focused-image/focused-image";
 import { LoadingInline } from "../../../loading-inline/loading-inline";
 
 export class PostingPostModal extends KComponent {
   constructor(props) {
     super(props);
     this.state = {
+      focusingImage: false,
       loading: false,
       error: null
     };
-
-    const schema = yup.object().shape({
-      description: yup.string().max(280, "Description should not be too long")
-    });
 
     this.charLeft = 280;
     this.tagArrays = [];
     this.tagInputRef = null;
     this.attributeRef = null;
-
-    this.form = createFormWithValidator(schema, {
-      initData: {
-        description: ""
-      }
-    });
-    this.onUnmount(this.form.on("change", () => this.forceUpdate()));
-    this.onUnmount(this.form.on("enter", () => this.handlePost()));
-    this.form.validateData();
   }
 
   handleBackClicked = () => {};
@@ -80,14 +64,19 @@ export class PostingPostModal extends KComponent {
   };
 
   render() {
-    let { onClose, onPostSuccess } = this.props;
-    let { loading } = this.state;
+    let { onClose, onPostSuccess, url } = this.props;
+    let { loading, focusingImage } = this.state;
     return (
       <div
         className={classnames("posting-post-modal", {
           longer: !!this.state.error
         })}
       >
+        <FocusedImage
+          hidden={!focusingImage}
+          onDismiss={() => this.setState({ focusingImage: false })}
+          url={url}
+        />
         <Fragment>
           <div className="modal-header posting-post-modal-header no-border">
             <div className="modal-title ">
@@ -112,7 +101,11 @@ export class PostingPostModal extends KComponent {
             <div className="spacer">
               <div className="field post-info">
                 <div className="preview">
-                  <img src={this.props.url} alt="Preview" />
+                  <img
+                    src={this.props.url}
+                    alt="Preview"
+                    onClick={() => this.setState({ focusingImage: true })}
+                  />
                 </div>
                 <textarea
                   type="text"
