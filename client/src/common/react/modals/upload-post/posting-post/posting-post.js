@@ -25,7 +25,10 @@ export class PostingPostModal extends KComponent {
     this.attributeLinkRef = null;
   }
 
-  handleBackClicked = () => {};
+  handleBackClicked = () => {
+    this.props.onClose();
+    uploadPostModal.open(this.props.onPostSuccess);
+  };
 
   handleServerError = () => {
     const { error } = this.state;
@@ -232,7 +235,7 @@ export class PostingPostModal extends KComponent {
           <div className="modal-footer posting-post-modal-footer no-border">
             <button
               className="btn btn-secondary"
-              onClick={this.handleBackClicked}
+              onClick={() => this.handleBackClicked()}
             >
               Back
             </button>
