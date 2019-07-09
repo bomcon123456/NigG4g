@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import mql from "@microlink/mql";
 import classnames from "classnames";
 import * as yup from "yup";
 
@@ -11,12 +10,7 @@ import { uploadPostModal } from "../upload-post";
 import { getMetaTags } from "../../../../utils/common-util";
 import { utilApi } from "../../../../api/common/util-api";
 
-// import { LoadingInline } from "../../../loading-inline/loading-inline";
-// import { checkUrlImg } from "../../../../utils/common-util";
-
-// import { authenCache } from "../../../../cache/authen-cache";
-// import { userInfo } from "../../../../states/user-info";
-// import UploadButton from "../../../upload-btn/upload-btn";
+import { LoadingInline } from "../../../loading-inline/loading-inline";
 
 export class UploadFromUrlModal extends KComponent {
   constructor(props) {
@@ -131,7 +125,7 @@ export class UploadFromUrlModal extends KComponent {
             />
           </div>
           <div className="modal-body uploadurl-modal-body">
-            {/* <LoadingInline /> */}
+            {loading ? <LoadingInline /> : null}
             {this.form.enhancedComponent(
               "url",
               ({ error, onChange, onEnter, ...other }) => (

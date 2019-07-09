@@ -1,0 +1,60 @@
+.focused-image {
+  position: fixed;
+  z-index: 1051;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  cursor: zoom-out;
+
+  .image-overlay {
+    width: 100%;
+    height: 100%;
+    padding-top: 150px;
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.9); /* Black w/ opacity */
+
+    .close-button {
+      position: fixed;
+      top: 0;
+      right: 0;
+      padding: 10px;
+
+      i {
+        color: #ddd;
+        font-size: 25px;
+      }
+
+      &:hover {
+        cursor: pointer;
+
+        i {
+          color: darken(#ddd, 30%);
+        }
+      }
+    }
+  }
+
+  .image-content {
+    width: 100%;
+    height: 100%;
+    min-width: 700px;
+    text-align: center;
+
+    img {
+      display: inline-block;
+      vertical-align: middle;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.8);
+      width: 780px;
+    }
+
+    .img-hidden {
+      display: none;
+    }
+  }
+}
+
+.focused-image-hidden {
+  display: none;
+}
