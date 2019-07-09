@@ -36,7 +36,6 @@ export class UploadPostModal extends KComponent {
 
   handlePost = file => {
     this.props.onClose();
-    console.log(file.src);
     postingPostModal.open(this.props.onUploadSuccess, file.src, file);
   };
 
@@ -133,10 +132,15 @@ export class UploadPostModal extends KComponent {
                   <i className="fas fa-play-circle" />
                   <p>Paste Video URL</p>
                 </div>
-                <div className="upload-image-url">
+                <a
+                  href="https://memeful.com/generator?ref=9gag"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="upload-image-url"
+                >
                   <img src={trollface} alt="Trollface" />
                   <p>Make meme</p>
-                </div>
+                </a>
               </div>
             </div>
           </div>

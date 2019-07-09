@@ -9,6 +9,7 @@ import { InputBase } from "../../../input-base/input-base";
 import { uploadPostModal } from "../upload-post";
 import { getMetaTags } from "../../../../utils/common-util";
 import { utilApi } from "../../../../api/common/util-api";
+import { postingPostModal } from "../posting-post/posting-post";
 
 import { LoadingInline } from "../../../loading-inline/loading-inline";
 
@@ -62,7 +63,7 @@ export class UploadFromUrlModal extends KComponent {
         utilApi.checkImageSize(image).then(({ data }) => {
           console.log(data);
           if (data.message === "valid_picture") {
-            this.handleLoadSuccess();
+            this.handleLoadSuccess(image);
           } else {
             const error = new Error("bad_error");
             this.handleLoadFailed(error);
@@ -79,14 +80,17 @@ export class UploadFromUrlModal extends KComponent {
     //   .catch(err => console.log(err));
   };
 
-  handleLoadSuccess = () => {
+  handleLoadSuccess = image => {
     this.setState({
       loading: false,
       error: null,
       validUrl: true,
       validPic: true
     });
+    this.props.onClose();
+    postingPostModal.open(this.props.onUploadSuccess, image, null, true);
   };
+
   handleLoadFailed = e => {
     // console.log(e);
     this.setState({

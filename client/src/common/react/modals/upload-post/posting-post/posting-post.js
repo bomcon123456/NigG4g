@@ -94,6 +94,8 @@ export class PostingPostModal extends KComponent {
     if (isValidated || (!isValidated && this.tagArrays.length > length)) {
       const data = {
         title: this.descriptionRef.value,
+        url: this.props.fromUrl ? this.props.url : null,
+        file: this.props.file,
         tags: this.tagArrays,
         nsfw: this.sensitiveRef.checked,
         attributeLink: this.attributeRef.checked
@@ -106,7 +108,6 @@ export class PostingPostModal extends KComponent {
 
   render() {
     let { onClose, onPostSuccess, url } = this.props;
-    console.log(url);
     let { focusingImage } = this.state;
     return (
       <div
@@ -254,7 +255,7 @@ export class PostingPostModal extends KComponent {
 }
 
 export const postingPostModal = {
-  open(handlePost, url, file) {
+  open(handlePost, url, file = null, fromUrl = false) {
     const modal = modals.openModal({
       content: (
         <PostingPostModal
@@ -264,6 +265,7 @@ export const postingPostModal = {
             handlePost();
           }}
           file={file}
+          fromUrl={fromUrl}
           url={url}
         />
       )
