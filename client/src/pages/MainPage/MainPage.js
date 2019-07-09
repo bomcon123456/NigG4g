@@ -8,7 +8,6 @@ import { postingPostModal } from "../../common/react/modals/upload-post/posting-
 // import { uploadPostModal } from "../../common/react/modals/upload-post/upload-post";
 // import { uploadFromUrlModal } from "../../common/react/modals/upload-post/upload-from-url/upload-from-url";
 import Layout from "../../hoc/Layout/Layout";
-import FocusImage from "../../common/react/focused-image/focused-image";
 import { userInfo } from "../../common/states/user-info";
 
 import logo from "../../logo.svg";
@@ -22,7 +21,10 @@ class App extends Component {
   }
   componentDidMount() {
     // loginModal.open(this.handleLogin);
-    postingPostModal.open(this.handleLogin);
+    postingPostModal.open(
+      this.handleLogin,
+      "https://i.imgur.com/Te0p8LS.jpg?fb"
+    );
     // uploadPostModal.open(this.handleLogin);
     // uploadFromUrlModal.open(this.handleLogin);
     // appModal
@@ -44,10 +46,6 @@ class App extends Component {
     let loginCSS = info ? "App-login" : null;
     return (
       <Layout>
-        {/* <FocusImage
-          hidden={!focusingImage}
-          onDismiss={() => this.setState({ focusingImage: false })}
-        /> */}
         <div className="App">
           <main className={classnames("App-header", loginCSS)}>
             <img src={logo} className="App-logo" alt="logo" />
