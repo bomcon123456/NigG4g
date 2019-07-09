@@ -30,4 +30,22 @@ let buildParams = obj => {
   return result.slice(0, result.length - 1);
 };
 
-export { wait, getBase64, buildParams };
+const getMetaTags = url => {
+  const data = {
+    key: "5d23fe49576914abd325e59c9705044764303dc5845b0",
+    q: url
+  };
+
+  return fetch("https://api.linkpreview.net", {
+    method: "POST",
+    mode: "cors",
+    body: JSON.stringify(data)
+  })
+    .then(res => res.json())
+    .then(response => response)
+    .catch(err => {
+      throw err;
+    });
+};
+
+export { wait, getBase64, buildParams, getMetaTags };

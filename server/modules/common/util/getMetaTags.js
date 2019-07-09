@@ -1,4 +1,4 @@
-import puppeteer from "puppeteer";
+const puppeteer = require("puppeteer");
 
 const createPage = async () => {
   const browser = await puppeteer.launch();
@@ -38,6 +38,7 @@ const getMetaTags = async page => {
     };
 
     const elements = document.querySelectorAll('meta[property^="og:"]');
+    console.log(elements);
     const data = Array.from(elements).reduce((prev, element) => {
       const propertyName = element.getAttribute("property");
       const names = getPropertyNames(propertyName);
@@ -57,7 +58,7 @@ const getMetaTags = async page => {
 };
 
 const getMeta = async siteUrl => {
-  const page = createPage();
+  const page = await createPage();
 
   await page.goto(siteUrl);
 
@@ -76,7 +77,4 @@ const getMetaFromHtml = async html => {
   return metaTags;
 };
 
-module.exports = {
-  getMeta,
-  getMetaFromHtml
-};
+module.exports = { getMeta, getMetaFromHtml };

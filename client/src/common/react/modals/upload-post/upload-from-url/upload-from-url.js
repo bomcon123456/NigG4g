@@ -8,6 +8,9 @@ import { modals } from "../../modals";
 import { createFormWithValidator } from "../../../form-validator/form-validator";
 import { InputBase } from "../../../input-base/input-base";
 import { uploadPostModal } from "../upload-post";
+import { getMetaTags } from "../../../../utils/common-util";
+import { utilApi } from "../../../../api/common/util-api";
+
 // import { LoadingInline } from "../../../loading-inline/loading-inline";
 // import { checkUrlImg } from "../../../../utils/common-util";
 
@@ -21,6 +24,7 @@ export class UploadFromUrlModal extends KComponent {
     this.state = {
       loading: false,
       validUrl: false,
+      validPic: false,
       error: null
     };
 
@@ -43,6 +47,7 @@ export class UploadFromUrlModal extends KComponent {
     const message = error.message;
     let errMatcher = {
       invalid_url: "Invalid URL.",
+      invalid_picture: "Unsupported image",
       network_error: "Database is ded."
     };
     return errMatcher.hasOwnProperty(message)
@@ -52,25 +57,52 @@ export class UploadFromUrlModal extends KComponent {
 
   handleFileChanged = () => {
     const url = this.form.getData("url");
-    console.log(url.url);
-    mql(url.url)
+    // console.log(url.url);
+    getMetaTags(url.url)
       .then(data => {
-        console.log(data);
+        if (data.error) {
+          const error = new Error("invalid_url");
+          throw error;
+        }
+        const { image } = data;
+        utilApi.checkImageSize(image).then(({ data }) => {
+          console.log(data);
+          if (data.message === "valid_picture") {
+            this.handleLoadSuccess();
+          } else {
+            const error = new Error("bad_error");
+            this.handleLoadFailed(error);
+          }
+        });
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        this.handleLoadFailed(err);
+      });
+    // mql(url.url)
+    //   .then(data => {
+    //     console.log(data);
+    //   })
+    //   .catch(err => console.log(err));
   };
 
-  // handleLoadSuccess = () => {
-  //   this.setState({ loading: false, error: null, validUrl: true });
-  // };
-  // handleLoadFailed = e => {
-  //   // console.log(e);
-  //   this.setState({
-  //     loading: false,
-  //     error: { message: "invalid_url" },
-  //     validUrl: false
-  //   });
-  // };
+  handleLoadSuccess = () => {
+    this.setState({
+      loading: false,
+      error: null,
+      validUrl: true,
+      validPic: true
+    });
+  };
+  handleLoadFailed = e => {
+    // console.log(e);
+    this.setState({
+      loading: false,
+      error: { message: "invalid_url" },
+      validUrl: false,
+      validPic: false
+    });
+  };
+
   handleBackClicked = () => {
     this.props.onClose();
     uploadPostModal.open(
@@ -130,7 +162,7 @@ export class UploadFromUrlModal extends KComponent {
               Back
             </button>
             <button className="btn btn-primary" disabled={!isSubmittable}>
-              Next
+              {loading ? "Loading" : "Next"}
             </button>
           </div>
         </Fragment>
