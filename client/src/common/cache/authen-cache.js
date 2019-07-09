@@ -35,7 +35,8 @@ export const authenCache = (() => {
                   "updatedAt",
                   "active"
                 ]);
-                resolve(userInfo.setState(user));
+                userInfo.setState(user);
+                resolve(userInfo.getState());
               }
             })
             .catch(error => reject());
