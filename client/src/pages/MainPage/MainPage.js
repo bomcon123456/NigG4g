@@ -21,8 +21,8 @@ class App extends Component {
     };
   }
   componentDidMount() {
-    // imageFocusModal.open(this.handleLogin, "https://i.imgur.com/Piw0UWw.jpg");
     // loginModal.open(this.handleLogin);
+    postingPostModal.open(this.handleLogin);
     // uploadPostModal.open(this.handleLogin);
     // uploadFromUrlModal.open(this.handleLogin);
     // appModal
@@ -44,10 +44,10 @@ class App extends Component {
     let loginCSS = info ? "App-login" : null;
     return (
       <Layout>
-        <FocusImage
+        {/* <FocusImage
           hidden={!focusingImage}
           onDismiss={() => this.setState({ focusingImage: false })}
-        />
+        /> */}
         <div className="App">
           <main className={classnames("App-header", loginCSS)}>
             <img src={logo} className="App-logo" alt="logo" />
