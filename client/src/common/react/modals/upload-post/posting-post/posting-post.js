@@ -13,14 +13,16 @@ export class PostingPostModal extends KComponent {
     super(props);
     this.state = {
       focusingImage: false,
-      loading: false,
       error: null
     };
 
     this.charLeft = 280;
     this.tagArrays = [];
+    this.descriptionRef = null;
     this.tagInputRef = null;
+    this.sensitiveRef = null;
     this.attributeRef = null;
+    this.attributeLinkRef = null;
   }
 
   handleBackClicked = () => {};
@@ -31,7 +33,9 @@ export class PostingPostModal extends KComponent {
     let errMatcher = {
       network_error: "Database is ded.",
       invalid_tag:
-        "Oops! Tags can contain alphanumerics, numbers and spaces only!"
+        "Oops! Tags can contain alphanumerics, numbers and spaces only!",
+      invalid_description:
+        "Boost your post with a funny, creative and descriptive title!"
     };
     return errMatcher.hasOwnProperty(message)
       ? errMatcher[message]
@@ -45,7 +49,6 @@ export class PostingPostModal extends KComponent {
       const tag = text.slice(0, text.length);
       if (tag.length >= 1) {
         if (/^[a-zA-Z0-9]+$/.test(tag)) {
-          console.log(text);
           this.tagArrays.push(tag);
           this.tagInputRef.value = "";
           this.forceUpdate();
@@ -63,9 +66,44 @@ export class PostingPostModal extends KComponent {
     }
   };
 
+  validateBeforePost() {
+    if (!this.descriptionRef) {
+      return false;
+    }
+    const description = this.descriptionRef.value;
+    if (description.length <= 3) {
+      this.setState({ error: { message: "invalid_description" } });
+      return false;
+    }
+    if (this.tagInputRef.value.length >= 1) {
+      this.handleTagInput();
+      return false;
+    }
+    if (!this.state.error) {
+      return true;
+    }
+    return false;
+  }
+
+  handleNextButton() {
+    const length = this.tagArrays ? this.tagArrays.length : 0;
+    const isValidated = this.validateBeforePost();
+    if (isValidated || (!isValidated && this.tagArrays.length > length)) {
+      const data = {
+        title: this.descriptionRef.value,
+        tags: this.tagArrays,
+        nsfw: this.sensitiveRef.checked,
+        attributeLink: this.attributeRef.checked
+          ? this.attributeLinkRef.value
+          : ""
+      };
+      console.log(data);
+    }
+  }
+
   render() {
     let { onClose, onPostSuccess, url } = this.props;
-    let { loading, focusingImage } = this.state;
+    let { focusingImage } = this.state;
     return (
       <div
         className={classnames("posting-post-modal", {
@@ -92,7 +130,6 @@ export class PostingPostModal extends KComponent {
             />
           </div>
           <div className="modal-body posting-post-modal-body">
-            {loading ? <LoadingInline /> : null}
             {this.state.error && (
               <div className="server-error pb-2">
                 {this.handleServerError()}
@@ -117,6 +154,7 @@ export class PostingPostModal extends KComponent {
                     this.charLeft = 280 - +e.target.value.length;
                     this.forceUpdate();
                   }}
+                  ref={element => (this.descriptionRef = element)}
                 />
                 <p className="count">{this.charLeft}</p>
               </div>
@@ -145,7 +183,9 @@ export class PostingPostModal extends KComponent {
                     placeholder={
                       this.tagArrays.length <= 0 ? "tag1, tag2, tag3" : null
                     }
-                    onChange={() => this.setState({ error: "" })}
+                    onChange={() => {
+                      this.setState({ error: null });
+                    }}
                     onKeyDown={this.handleSpecialKey}
                     disabled={this.tagArrays.length >= 3}
                     ref={element => (this.tagInputRef = element)}
@@ -155,7 +195,10 @@ export class PostingPostModal extends KComponent {
               <div className="field checkbox">
                 <label>
                   <p>This is sensitive</p>
-                  <input type="checkbox" />
+                  <input
+                    type="checkbox"
+                    ref={element => (this.sensitiveRef = element)}
+                  />
                 </label>
               </div>
               <div
@@ -177,7 +220,11 @@ export class PostingPostModal extends KComponent {
               </div>
               {this.attributeRef && this.attributeRef.checked ? (
                 <div className="field textbox last">
-                  <input type="url" placeholder="http://" />
+                  <input
+                    type="url"
+                    placeholder="http://"
+                    ref={element => (this.attributeLinkRef = element)}
+                  />
                 </div>
               ) : null}
             </div>
@@ -189,8 +236,11 @@ export class PostingPostModal extends KComponent {
             >
               Back
             </button>
-            <button className="btn btn-primary" disabled={!false}>
-              {loading ? "Loading" : "Next"}
+            <button
+              className="btn btn-primary"
+              onClick={() => this.handleNextButton()}
+            >
+              Next
             </button>
           </div>
         </Fragment>
