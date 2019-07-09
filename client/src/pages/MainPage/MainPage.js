@@ -21,10 +21,10 @@ class App extends Component {
   }
   componentDidMount() {
     // loginModal.open(this.handleLogin);
-    postingPostModal.open(
-      this.handleLogin,
-      "https://i.imgur.com/Te0p8LS.jpg?fb"
-    );
+    // postingPostModal.open(
+    //   this.handleLogin,
+    //   "https://i.imgur.com/Te0p8LS.jpg?fb"
+    // );
     // uploadPostModal.open(this.handleLogin);
     // uploadFromUrlModal.open(this.handleLogin);
     // appModal

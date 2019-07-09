@@ -106,6 +106,7 @@ export class PostingPostModal extends KComponent {
 
   render() {
     let { onClose, onPostSuccess, url } = this.props;
+    console.log(url);
     let { focusingImage } = this.state;
     return (
       <div
@@ -142,7 +143,7 @@ export class PostingPostModal extends KComponent {
               <div className="field post-info">
                 <div className="preview">
                   <img
-                    src={this.props.url}
+                    src={url}
                     alt="Preview"
                     onClick={() => this.setState({ focusingImage: true })}
                   />
@@ -253,7 +254,7 @@ export class PostingPostModal extends KComponent {
 }
 
 export const postingPostModal = {
-  open(handlePost, url) {
+  open(handlePost, url, file) {
     const modal = modals.openModal({
       content: (
         <PostingPostModal
@@ -262,6 +263,7 @@ export const postingPostModal = {
             modal.close();
             handlePost();
           }}
+          file={file}
           url={url}
         />
       )

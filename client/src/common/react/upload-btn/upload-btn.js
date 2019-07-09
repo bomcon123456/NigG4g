@@ -93,7 +93,7 @@ class UploadButton extends Component {
     return (
       <Fragment>
         {renderBtn({
-          onClick: () => {
+          onClick: e => {
             this.inputElement.click();
             onError(null);
           }

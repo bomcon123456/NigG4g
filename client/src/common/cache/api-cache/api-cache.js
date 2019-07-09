@@ -4,7 +4,6 @@ export const createApiCache = apiFnc => {
     get: async () => {
       if (!cacheData) {
         cacheData = await apiFnc();
-        console.log(cacheData);
         return cacheData;
       } else {
         return cacheData;

@@ -6,11 +6,8 @@ import { KComponent } from "../../../../components/KComponent";
 import { modals } from "../modals";
 import { createFormWithValidator } from "../../form-validator/form-validator";
 import { uploadFromUrlModal } from "./upload-from-url/upload-from-url";
-import { InputBase } from "../../input-base/input-base";
-import { LoadingInline } from "../../loading-inline/loading-inline";
+import { postingPostModal } from "./posting-post/posting-post";
 
-import { authenCache } from "../../../cache/authen-cache";
-import { userInfo } from "../../../states/user-info";
 import UploadButton from "../../upload-btn/upload-btn";
 
 import trollface from "../../../../assets/img/trollface.png";
@@ -25,7 +22,7 @@ export class UploadPostModal extends KComponent {
     };
 
     const schema = yup.object().shape({
-      picture: yup.mixed().required("Picture must not be empty")
+      picture: yup.mixed()
     });
 
     this.form = createFormWithValidator(schema, {
@@ -37,7 +34,11 @@ export class UploadPostModal extends KComponent {
     this.buttonOnClick = null;
   }
 
-  handlePost = () => {};
+  handlePost = file => {
+    this.props.onClose();
+    console.log(file.src);
+    postingPostModal.open(this.props.onUploadSuccess, file.src, file);
+  };
 
   handleUploadFromUrl = () => {
     this.props.onClose();
@@ -81,7 +82,12 @@ export class UploadPostModal extends KComponent {
           <div className="modal-body upload-modal-body">
             {/* <LoadingInline /> */}
             <div className="spacer">
-              <div className="upload-image" onClick={this.buttonOnClick}>
+              <div
+                className="upload-image"
+                onClick={e => {
+                  this.buttonOnClick();
+                }}
+              >
                 <i className="fas fa-file-upload upload-icon" />
                 <p className="upload-image-text">Drop image to upload or</p>
                 {this.form.enhancedComponent(
@@ -93,7 +99,7 @@ export class UploadPostModal extends KComponent {
                         return (
                           <button
                             className="btn btn-primary btn-bold-text"
-                            onClick={onClick}
+                            // onClick={onClick}
                           >
                             Choose file...
                           </button>
@@ -106,6 +112,7 @@ export class UploadPostModal extends KComponent {
                       }}
                       onChange={files => {
                         onChange(files);
+                        this.handlePost(files);
                         console.log(files);
                       }}
                       value={value}
