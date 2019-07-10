@@ -4,7 +4,8 @@ import classnames from "classnames";
 // import { appModal } from "../../common/react/modals/modals";
 // import { loginModal } from "../../common/react/modals/login/login";
 // import { registerModal } from "../../common/react/modals/register/register";
-import { postingPostModal } from "../../common/react/modals/upload-post/posting-post/posting-post";
+// import { postingPostModal } from "../../common/react/modals/upload-post/posting-post/posting-post";
+import { selectCategoryModal } from "../../common/react/modals/upload-post/select-category/select-category";
 // import { uploadPostModal } from "../../common/react/modals/upload-post/upload-post";
 // import { uploadFromUrlModal } from "../../common/react/modals/upload-post/upload-from-url/upload-from-url";
 import Layout from "../../hoc/Layout/Layout";
@@ -20,6 +21,7 @@ class App extends Component {
     };
   }
   componentDidMount() {
+    selectCategoryModal.open(this.handleLogin);
     // loginModal.open(this.handleLogin);
     // postingPostModal.open(
     //   this.handleLogin,

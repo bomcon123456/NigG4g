@@ -1,0 +1,70 @@
+.section-picker {
+  .section-list {
+    list-style-type: none;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    overflow: hidden;
+    overflow-y: scroll;
+    max-height: 416px;
+    border-radius: 2px;
+
+    .section {
+      .section-container {
+        display: block;
+        position: relative;
+        color: black;
+        height: 48px;
+        padding: 16px;
+        cursor: pointer;
+        box-sizing: content-box;
+
+        .section-icon {
+          width: 48px;
+          height: 48px;
+          background-color: #eee;
+          background-size: contain;
+          border-radius: 2px;
+          overflow: hidden;
+          position: absolute;
+          top: 16px;
+          left: 16px;
+        }
+
+        .section-text {
+          margin: 4px 48px 0 64px;
+          text-align: left;
+
+          .section-title {
+            font-size: 16px;
+            margin-bottom: 2px;
+          }
+
+          .section-subtitle {
+            color: #999;
+            font-size: 12px;
+          }
+        }
+
+        .section-selector {
+          width: 24px;
+          height: 24px;
+          border-radius: 12px;
+          background-color: #eee;
+          position: absolute;
+          right: 16px;
+          top: 50%;
+          margin-top: -12px;
+        }
+
+        .selected {
+          background-size: 100%;
+          background-color: #09f;
+        }
+
+        &:hover {
+          background-color: #ddd;
+        }
+      }
+    }
+  }
+}

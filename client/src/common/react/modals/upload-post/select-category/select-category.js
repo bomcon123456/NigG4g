@@ -3,7 +3,9 @@ import classnames from "classnames";
 import * as yup from "yup";
 
 import { KComponent } from "../../../../../components/KComponent";
+import SectionPicker from "../../../../react/section-picker/section-picker";
 import { modals } from "../../modals";
+import { categoryCache } from "../../../../cache/api-cache/common-cache";
 import { InputBase } from "../../../input-base/input-base";
 import { uploadPostModal } from "../upload-post";
 
@@ -33,55 +35,35 @@ export class SelectCategoryModal extends KComponent {
 
   render() {
     let { onClose, onUploadSuccess } = this.props;
-    const formValid = this.form.isValid();
-    let { url } = this.form.getData();
-    let { loading, validUrl, error } = this.state;
-    const isSubmittable = !loading && validUrl && error === null;
+    let { loading, error, categories } = this.state;
     return (
-      <div className={classnames("uploadurl-modal")}>
+      <div className={classnames("selecting-category-modal")}>
         <Fragment>
-          <div className="modal-header uploadurl-modal-header no-border">
+          <div className="modal-header selecting-category-modal-header no-border">
             <div className="modal-title ">
-              <h4 className="modal-title-text">Upload from URL</h4>
-              <p className="modal-subtitle-text">Type or paste Image URL</p>
+              <h4 className="modal-title-text">Pick a section</h4>
+              <p className="modal-subtitle-text">
+                Submitting to the right section to make sure your post gets the
+                right exposure it deserves!
+              </p>
             </div>
-            <i
-              className="fas fa-times close-modal register-close-button"
-              onClick={() => onClose()}
-            />
+            <i className="fas fa-times close-modal" onClick={() => onClose()} />
           </div>
-          <div className="modal-body uploadurl-modal-body">
+          <div className="modal-body selecting-category-modal-body">
             {loading ? <LoadingInline /> : null}
-            {this.form.enhancedComponent(
-              "url",
-              ({ error, onChange, onEnter, ...other }) => (
-                <InputBase
-                  className="uploadurl-modal-input"
-                  error={error}
-                  id={"url"}
-                  placeholder="http://"
-                  onChange={e => {
-                    onChange(e);
-                    this.handleFileChanged();
-                  }}
-                  type={"url"}
-                  {...other}
-                />
-              ),
-              true
-            )}{" "}
+            <SectionPicker data={categoryCache.syncGet()} />
             {this.state.error && (
               <div className="server-error">{this.handleServerError()}</div>
             )}
           </div>
-          <div className="modal-footer uploadurl-modal-footer no-border">
+          <div className="modal-footer selecting-category-modal-footer no-border">
             <button
               className="btn btn-secondary"
               onClick={this.handleBackClicked}
             >
               Back
             </button>
-            <button className="btn btn-primary" disabled={!isSubmittable}>
+            <button className="btn btn-primary" disabled={!true}>
               {loading ? "Loading" : "Next"}
             </button>
           </div>
