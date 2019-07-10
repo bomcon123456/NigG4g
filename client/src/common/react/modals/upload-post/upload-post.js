@@ -60,8 +60,7 @@ export class UploadPostModal extends KComponent {
   };
 
   render() {
-    let { onClose, onPostSuccess } = this.props;
-    let { loading } = this.state;
+    let { onClose } = this.props;
 
     return (
       <div className={classnames("upload-post-modal")}>

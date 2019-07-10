@@ -7,7 +7,6 @@ import { modals } from "../../modals";
 import { uploadPostModal } from "../upload-post";
 import FocusedImage from "../../../../react/focused-image/focused-image";
 import { selectCategoryModal } from "../select-category/select-category";
-import { LoadingInline } from "../../../loading-inline/loading-inline";
 
 export class PostingPostModal extends KComponent {
   constructor(props) {
@@ -24,6 +23,7 @@ export class PostingPostModal extends KComponent {
     this.sensitiveRef = null;
     this.attributeRef = null;
     this.attributeLinkRef = null;
+    this.savedData = { ...this.props.savedData };
   }
 
   handleBackClicked = () => {
@@ -101,7 +101,8 @@ export class PostingPostModal extends KComponent {
         nsfw: this.sensitiveRef.checked,
         attributeLink: this.attributeRef.checked
           ? this.attributeLinkRef.value
-          : ""
+          : "",
+        category: this.props.savedData ? this.props.savedData.category : null
       };
       this.props.onClose();
       selectCategoryModal.open(this.props.onPostSuccess, data);
@@ -109,12 +110,17 @@ export class PostingPostModal extends KComponent {
   }
 
   render() {
-    let { onClose, onPostSuccess, url, savedData } = this.props;
+    let { onClose, url } = this.props;
     let { focusingImage } = this.state;
     return (
       <div
         className={classnames("posting-post-modal", {
-          longer: !!this.state.error
+          longer:
+            !!this.state.error ||
+            (this.attributeRef && this.attributeRef.checked) ||
+            (!this.attributeRef &&
+              this.savedData &&
+              this.savedData.attributeLink)
         })}
       >
         <FocusedImage
@@ -162,7 +168,7 @@ export class PostingPostModal extends KComponent {
                     this.setState({ error: null });
                   }}
                   ref={element => (this.descriptionRef = element)}
-                  defaultValue={savedData ? savedData.title : ""}
+                  defaultValue={this.savedData ? this.savedData.title : ""}
                 />
                 <p className="count">{this.charLeft}</p>
               </div>
@@ -206,16 +212,20 @@ export class PostingPostModal extends KComponent {
                   <input
                     type="checkbox"
                     ref={element => (this.sensitiveRef = element)}
-                    defaultChecked={savedData ? savedData.nsfw : false}
+                    defaultChecked={
+                      this.savedData ? this.savedData.nsfw : false
+                    }
                   />
                 </label>
               </div>
               <div
                 className={classnames("field checkbox", {
-                  last:
-                    savedData &&
-                    !savedData.attributeLink &&
-                    !(this.attributeRef && this.attributeRef.checked)
+                  last: !(
+                    (this.attributeRef === null &&
+                      this.savedData &&
+                      this.savedData.attributeLink) ||
+                    (this.attributeRef && this.attributeRef.checked)
+                  )
                 })}
               >
                 <label>
@@ -228,19 +238,23 @@ export class PostingPostModal extends KComponent {
                     }}
                     ref={element => (this.attributeRef = element)}
                     defaultChecked={
-                      savedData ? !!savedData.attributeLink : false
+                      this.savedData ? !!this.savedData.attributeLink : false
                     }
                   />
                 </label>
               </div>
-              {(this.attributeRef && this.attributeRef.checked) ||
-              (savedData && savedData.attributeLink) ? (
+              {(this.attributeRef === null &&
+                this.savedData &&
+                this.savedData.attributeLink) ||
+              (this.attributeRef && this.attributeRef.checked) ? (
                 <div className="field textbox last">
                   <input
                     type="url"
                     placeholder="http://"
                     ref={element => (this.attributeLinkRef = element)}
-                    defaultValue={savedData ? savedData.attributeLink : ""}
+                    defaultValue={
+                      this.savedData ? this.savedData.attributeLink : ""
+                    }
                   />
                 </div>
               ) : null}

@@ -110,9 +110,7 @@ export class UploadFromUrlModal extends KComponent {
   };
 
   render() {
-    let { onClose, onUploadSuccess } = this.props;
-    const formValid = this.form.isValid();
-    let { url } = this.form.getData();
+    let { onClose } = this.props;
     let { loading, validUrl, error } = this.state;
     const isSubmittable = !loading && validUrl && error === null;
     return (

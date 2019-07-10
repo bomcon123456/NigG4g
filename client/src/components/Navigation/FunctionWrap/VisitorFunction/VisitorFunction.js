@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { loginModal } from "../../../../common/react/modals/login/login";
 import { registerModal } from "../../../../common/react/modals/register/register";
 

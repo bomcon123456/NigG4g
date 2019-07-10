@@ -1,12 +1,10 @@
 import React, { Fragment } from "react";
 import classnames from "classnames";
-import * as yup from "yup";
 
 import { KComponent } from "../../../../../components/KComponent";
 import SectionPicker from "../../../../react/section-picker/section-picker";
 import { modals } from "../../modals";
 import { categoryCache } from "../../../../cache/api-cache/common-cache";
-import { InputBase } from "../../../input-base/input-base";
 import { postingPostModal } from "../posting-post/posting-post";
 
 import { LoadingInline } from "../../../loading-inline/loading-inline";
@@ -17,7 +15,7 @@ export class SelectCategoryModal extends KComponent {
     this.state = {
       loading: false,
       error: null,
-      currentCategory: null
+      currentCategory: this.props.data ? this.props.data.category : null
     };
   }
 
@@ -40,19 +38,20 @@ export class SelectCategoryModal extends KComponent {
 
   handleBackClicked = () => {
     this.props.onClose();
+    const data = { ...this.props.data };
+    data.category = this.state.currentCategory;
     postingPostModal.open(
       this.props.onUploadSuccess,
       this.props.data.url,
       this.props.data.file,
       true,
-      this.props.data
+      data
     );
   };
 
   render() {
-    let { onClose, onUploadSuccess, data } = this.props;
-    console.log(data);
-    let { loading, error, currentCategory } = this.state;
+    let { onClose } = this.props;
+    let { loading, currentCategory } = this.state;
     return (
       <div className={classnames("selecting-category-modal")}>
         <Fragment>
@@ -71,6 +70,7 @@ export class SelectCategoryModal extends KComponent {
             <SectionPicker
               data={categoryCache.syncGet()}
               handleClick={this.handleSectionClick}
+              defaultSection={currentCategory}
             />
             {this.state.error && (
               <div className="server-error">{this.handleServerError()}</div>

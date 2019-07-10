@@ -3,8 +3,6 @@ import GeneralFuntion from "./GeneralFunction/GeneralFunction";
 import VisitorFunction from "./VisitorFunction/VisitorFunction";
 import UserFunction from "./UserFunction/UserFunction";
 import { userInfo } from "../../../../src/common/states/user-info";
-import { NavLink } from "react-router-dom";
-import HeaderSearchDropdown from "./HeaderSearchDropdown/HeaderSearchDropdown";
 
 const FunctionWrap = props => {
   const isLogin = userInfo.getState();

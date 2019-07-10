@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { categoryCache } from "../../cache/api-cache/common-cache";
 import classnames from "classnames";
 import customCheckbox from "../../../assets/img/custom-checkbox.png";
 
@@ -9,7 +8,9 @@ class SectionPicker extends Component {
 
     this.state = {
       data: this.props.data,
-      currentSection: null
+      currentSection: this.props.defaultSection
+        ? this.props.defaultSection
+        : null
     };
   }
 

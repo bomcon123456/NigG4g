@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import HeaderSearchDropdown from "../HeaderSearchDropdown/HeaderSearchDropdown"
+import HeaderSearchDropdown from "../HeaderSearchDropdown/HeaderSearchDropdown";
 
-
-class GeneralFunction extends React.Component {
+class GeneralFunction extends Component {
   constructor(props) {
     super(props);
     this.setWrapperRef = this.setWrapperRef.bind(this);
@@ -10,7 +9,7 @@ class GeneralFunction extends React.Component {
     this.handleToggleVisibility = this.handleToggleVisibility.bind(this);
     this.state = {
       visibility: false
-    }
+    };
   }
 
   setWrapperRef(node) {
@@ -19,12 +18,11 @@ class GeneralFunction extends React.Component {
 
   handleToggleVisibility(event) {
     if (!this.state.visibility) {
-      document.addEventListener('click', this.handleClickOutside, false);
+      document.addEventListener("click", this.handleClickOutside, false);
     } else {
-      document.removeEventListener('click', this.handleClickOutside, false);
+      document.removeEventListener("click", this.handleClickOutside, false);
     }
-    this.setState((prevState) => ({ visibility: !prevState.visibility }));
-
+    this.setState(prevState => ({ visibility: !prevState.visibility }));
   }
 
   handleClickOutside(event) {
@@ -38,14 +36,22 @@ class GeneralFunction extends React.Component {
     return (
       <span>
         <div className="general-function">
-          <button id="header-darkmode-btn" className="darkmode-toggle" >Dark mode</button>
-          <button id="header-search-btn" className="search" onClick={this.handleToggleVisibility} >Search</button>
+          <button id="header-darkmode-btn" className="darkmode-toggle">
+            Dark mode
+          </button>
+          <button
+            id="header-search-btn"
+            className="search"
+            onClick={this.handleToggleVisibility}
+          >
+            Search
+          </button>
         </div>
         {this.state.visibility && (
           <HeaderSearchDropdown ref={this.setWrapperRef} />
         )}
       </span>
-    )
+    );
   }
 }
 
