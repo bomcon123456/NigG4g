@@ -44,28 +44,34 @@ class PopularSidebar extends React.Component {
         </header>
         <ul className="nav">
           <li className={this.state.name === 'hot' ? 'selected' : ''}>
-            <Link to="#" className="label" onClick={() => { this.setState({ name: 'hot' }) }}>
-              <i className="icon hot"></i>
-              Hot
+            <div className="div-button" onClick={() => { this.setState({ name: 'hot' }) }}>
+              <Link to="#" className="label" >
+                <i className="icon hot"></i>
+                Hot
               </Link>
-            <button className="my-button" onClick={this.handleToggleVisibility}>
-              <i className="icon more"></i>
-            </button>
+              <button className="my-button" onClick={this.handleToggleVisibility}>
+                <i className="icon icon-right more"></i>
+              </button>
+            </div>
             {this.state.visibility && (
-            <MoreDropdown />
+              <MoreDropdown />
             )}
-            </li>
+          </li>
           <li className={this.state.name === 'trending' ? 'selected' : ''} >
-            <Link to="#" className="label" onClick={() => { this.setState({ name: 'trending' }) }}>
-              <i className="icon trending"></i>
-              Trending
+            <div className="div-button" onClick={() => { this.setState({ name: 'trending' }) }}>
+              <Link to="#" className="label" >
+                <i className="icon trending"></i>
+                Trending
               </Link>
+            </div>
           </li>
           <li className={this.state.name === 'fresh' ? 'selected' : ''} >
-            <Link to="#" className="label" onClick={() => { this.setState({ name: 'fresh' }) }}>
-              <i className="icon fresh"></i>
-              Fresh
+            <div className="div-button" onClick={() => { this.setState({ name: 'fresh' }) }}>
+              <Link to="#" className="label" >
+                <i className="icon fresh"></i>
+                Fresh
               </Link>
+            </div>
           </li>
         </ul>
       </div>

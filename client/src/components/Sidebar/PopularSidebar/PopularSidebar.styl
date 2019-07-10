@@ -1,10 +1,8 @@
 .popular {
-  position: absolute;
-  width: 100%;
   padding-bottom: 12px;
 }
 
-.popular header h3 {
+.section-sidebar header h3 {
   line-height: 16px;
   height: 16px;
   margin-bottom: 8px;
@@ -13,11 +11,11 @@
   text-transform: uppercase;
 }
 
-.popular li {
+.section-sidebar li {
   width: 100%;
 }
 
-.popular .label {
+.section-sidebar .label {
   color: #000;
   font-size: 14px;
   height: 36px;
@@ -29,12 +27,12 @@
   border-radius: 2px;
 }
 
-.popular li:hover {
+.section-sidebar li:hover {
   background-color: rgba(0, 0, 0, 0.03);
   // padding-right: 32px;
 }
 
-.popular li:hover .my-button {
+.section-sidebar li:hover .my-button {
   opacity: 1;
 }
 
@@ -49,17 +47,24 @@
   margin-top: -12px;
 }
 
+.section-sidebar .nav .div-button {
+  display: flex;
+  justify-content: space-between;
+}
+
 .section-sidebar .nav .my-button {
-  position: absolute;
+  // position: absolute;
+  background-color: rgba(0, 0, 0, 0);
+  position: relative;
   width: 36px;
   height: 36px;
   display: block;
   right: 0;
-  top: 24px;
   border: none;
   opacity: 0;
   transition: opacity 0.15s;
   cursor: pointer;
+  outline: none;
 }
 
 .section-sidebar .icon.hot {
@@ -74,17 +79,36 @@
   background-position: -216px 0;
 }
 
+// .section-sidebar .more {
+// top: 50%;
+// margin-top: -12px;
+// width: 24px;
+// height: 24px;
+// background-size: 264px 48px;
+// background-position: -216px 0;
+// background-image: url('https://assets-9gag-fun.9cache.com/s/fab0aa49/4db5725e46cce313ef00c8298e0a1bf9bab27ddb/static/dist/web6/img/post-action-sprite.png');
+// }
 .section-sidebar .more {
-  left: 6px;
   background-position: -72px 0;
 }
 
 .section-sidebar .more:hover {
-  left: 6px;
   background-position: -72px 0;
 }
 
-.section-sidebar .nav li.selected .label {
+.section-sidebar .nav li.selected .div-button {
   background-color: rgba(0, 0, 0, 0.05);
   font-weight: 700;
+}
+
+.section-sidebar .star {
+  background-position: -240px 0;
+}
+
+.section-sidebar .star:hover {
+  background-position: -240px 0;
+}
+
+.icon-right {
+  // left: 160px;
 }
