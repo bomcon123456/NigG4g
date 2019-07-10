@@ -1,12 +1,29 @@
 import React, { Component } from "react";
 
 import classnames from "classnames";
-import windowSize from "react-window-size";
+// import windowSize from "react-window-size";
 
 class FocusedImage extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      height: props.height,
+      width: props.width
+    };
   }
+
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener("resize", this.updateWindowDimensions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateWindowDimensions);
+  }
+
+  updateWindowDimensions = () => {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
+  };
 
   render() {
     const { onDismiss } = this.props;
@@ -26,7 +43,7 @@ class FocusedImage extends Component {
           <div className="image-content" onClick={onDismiss}>
             <img
               className={classnames(
-                this.props.windowWidth < 780 ? "img-hidden" : null
+                this.state.width < 780 ? "img-hidden" : null
               )}
               src={
                 this.props.url
@@ -43,4 +60,4 @@ class FocusedImage extends Component {
   }
 }
 
-export default windowSize(FocusedImage);
+export default FocusedImage;

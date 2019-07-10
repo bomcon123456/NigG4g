@@ -6,6 +6,7 @@ import { KComponent } from "../../../../../components/KComponent";
 import { modals } from "../../modals";
 import { uploadPostModal } from "../upload-post";
 import FocusedImage from "../../../../react/focused-image/focused-image";
+import { selectCategoryModal } from "../select-category/select-category";
 import { LoadingInline } from "../../../loading-inline/loading-inline";
 
 export class PostingPostModal extends KComponent {
@@ -17,7 +18,7 @@ export class PostingPostModal extends KComponent {
     };
 
     this.charLeft = 280;
-    this.tagArrays = [];
+    this.tagArrays = this.props.savedData ? this.props.savedData.tags : [];
     this.descriptionRef = null;
     this.tagInputRef = null;
     this.sensitiveRef = null;
@@ -94,7 +95,7 @@ export class PostingPostModal extends KComponent {
     if (isValidated || (!isValidated && this.tagArrays.length > length)) {
       const data = {
         title: this.descriptionRef.value,
-        url: this.props.fromUrl ? this.props.url : null,
+        url: this.props.fromUrl ? this.props.url : this.props.file.src,
         file: this.props.file,
         tags: this.tagArrays,
         nsfw: this.sensitiveRef.checked,
@@ -102,12 +103,13 @@ export class PostingPostModal extends KComponent {
           ? this.attributeLinkRef.value
           : ""
       };
-      console.log(data);
+      this.props.onClose();
+      selectCategoryModal.open(this.props.onPostSuccess, data);
     }
   }
 
   render() {
-    let { onClose, onPostSuccess, url } = this.props;
+    let { onClose, onPostSuccess, url, savedData } = this.props;
     let { focusingImage } = this.state;
     return (
       <div
@@ -157,9 +159,10 @@ export class PostingPostModal extends KComponent {
                   maxLength="280"
                   onChange={e => {
                     this.charLeft = 280 - +e.target.value.length;
-                    this.forceUpdate();
+                    this.setState({ error: null });
                   }}
                   ref={element => (this.descriptionRef = element)}
+                  defaultValue={savedData ? savedData.title : ""}
                 />
                 <p className="count">{this.charLeft}</p>
               </div>
@@ -203,12 +206,16 @@ export class PostingPostModal extends KComponent {
                   <input
                     type="checkbox"
                     ref={element => (this.sensitiveRef = element)}
+                    defaultChecked={savedData ? savedData.nsfw : false}
                   />
                 </label>
               </div>
               <div
                 className={classnames("field checkbox", {
-                  last: !(this.attributeRef && this.attributeRef.checked)
+                  last:
+                    savedData &&
+                    !savedData.attributeLink &&
+                    !(this.attributeRef && this.attributeRef.checked)
                 })}
               >
                 <label>
@@ -220,15 +227,20 @@ export class PostingPostModal extends KComponent {
                       this.forceUpdate();
                     }}
                     ref={element => (this.attributeRef = element)}
+                    defaultChecked={
+                      savedData ? !!savedData.attributeLink : false
+                    }
                   />
                 </label>
               </div>
-              {this.attributeRef && this.attributeRef.checked ? (
+              {(this.attributeRef && this.attributeRef.checked) ||
+              (savedData && savedData.attributeLink) ? (
                 <div className="field textbox last">
                   <input
                     type="url"
                     placeholder="http://"
                     ref={element => (this.attributeLinkRef = element)}
+                    defaultValue={savedData ? savedData.attributeLink : ""}
                   />
                 </div>
               ) : null}
@@ -255,7 +267,7 @@ export class PostingPostModal extends KComponent {
 }
 
 export const postingPostModal = {
-  open(handlePost, url, file = null, fromUrl = false) {
+  open(handlePost, url, file = null, fromUrl = false, savedData = null) {
     const modal = modals.openModal({
       content: (
         <PostingPostModal
@@ -267,6 +279,7 @@ export const postingPostModal = {
           file={file}
           fromUrl={fromUrl}
           url={url}
+          savedData={savedData}
         />
       )
     });

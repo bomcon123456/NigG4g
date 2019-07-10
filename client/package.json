@@ -16,7 +16,6 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
     "react-transition-group": "^4.2.0",
-    "react-window-size": "^1.2.2",
     "stylus": "^0.54.5",
     "yup": "^0.27.0"
   },

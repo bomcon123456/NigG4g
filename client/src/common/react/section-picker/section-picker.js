@@ -14,7 +14,7 @@ class SectionPicker extends Component {
   }
 
   render() {
-    const { className } = this.props;
+    const { className, handleClick } = this.props;
     const { data, currentSection } = this.state;
     return (
       <div className={classnames("section-picker", className)}>
@@ -25,6 +25,7 @@ class SectionPicker extends Component {
                 <div
                   className="section-container"
                   onClick={() => {
+                    handleClick(each);
                     this.setState({ currentSection: each });
                   }}
                 >

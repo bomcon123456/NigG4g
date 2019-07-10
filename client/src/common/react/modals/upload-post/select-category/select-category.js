@@ -7,7 +7,7 @@ import SectionPicker from "../../../../react/section-picker/section-picker";
 import { modals } from "../../modals";
 import { categoryCache } from "../../../../cache/api-cache/common-cache";
 import { InputBase } from "../../../input-base/input-base";
-import { uploadPostModal } from "../upload-post";
+import { postingPostModal } from "../posting-post/posting-post";
 
 import { LoadingInline } from "../../../loading-inline/loading-inline";
 
@@ -16,7 +16,8 @@ export class SelectCategoryModal extends KComponent {
     super(props);
     this.state = {
       loading: false,
-      error: null
+      error: null,
+      currentCategory: null
     };
   }
 
@@ -33,9 +34,25 @@ export class SelectCategoryModal extends KComponent {
       : "Something bad happened.";
   };
 
+  handleSectionClick = category => {
+    this.setState({ currentCategory: category });
+  };
+
+  handleBackClicked = () => {
+    this.props.onClose();
+    postingPostModal.open(
+      this.props.onUploadSuccess,
+      this.props.data.url,
+      this.props.data.file,
+      true,
+      this.props.data
+    );
+  };
+
   render() {
-    let { onClose, onUploadSuccess } = this.props;
-    let { loading, error, categories } = this.state;
+    let { onClose, onUploadSuccess, data } = this.props;
+    console.log(data);
+    let { loading, error, currentCategory } = this.state;
     return (
       <div className={classnames("selecting-category-modal")}>
         <Fragment>
@@ -51,7 +68,10 @@ export class SelectCategoryModal extends KComponent {
           </div>
           <div className="modal-body selecting-category-modal-body">
             {loading ? <LoadingInline /> : null}
-            <SectionPicker data={categoryCache.syncGet()} />
+            <SectionPicker
+              data={categoryCache.syncGet()}
+              handleClick={this.handleSectionClick}
+            />
             {this.state.error && (
               <div className="server-error">{this.handleServerError()}</div>
             )}
@@ -63,7 +83,10 @@ export class SelectCategoryModal extends KComponent {
             >
               Back
             </button>
-            <button className="btn btn-primary" disabled={!true}>
+            <button
+              className="btn btn-primary"
+              disabled={currentCategory === null}
+            >
               {loading ? "Loading" : "Next"}
             </button>
           </div>
