@@ -24,10 +24,10 @@ app.use(bodyParser.json());
 
 // Multer (file upload) middleware
 app.use(
+  "/api/util/",
   multer({
-    storage: fileStorage,
     fileFilter: fileFilter
-  }).single("image")
+  }).single("file")
 );
 
 // Static folder Middleware

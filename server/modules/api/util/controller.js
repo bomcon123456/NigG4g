@@ -2,8 +2,8 @@ const probe = require("probe-image-size");
 const sharp = require("sharp");
 
 const validateImage = async (req, res, next) => {
-  const { url, file } = req.body;
-  let message = "";
+  const { url } = req.body;
+  const file = req.file;
   if (url) {
     probe(url)
       .then(data => {
@@ -23,14 +23,30 @@ const validateImage = async (req, res, next) => {
       })
       .catch(error => next(error));
   } else if (file) {
-    console.log(file.file);
-    res.status(200).json({ message: "valid_picture" });
-
-    // sharp(file)
-    //   .metadata()
-    //   .then(metadata => {
-    //     console.log(metadata.width, metadata.height);
-    //   });
+    const image = sharp(file.buffer);
+    let format = "";
+    image
+      .metadata()
+      .then(metadata => {
+        if (
+          metadata.width >= 600 &&
+          metadata.width * metadata.height >= 600000
+        ) {
+          console.log(format);
+          return image.resize(600, 600).toBuffer();
+        } else if (metadata.width < 200 && metadata.height < 100) {
+          const error = new Error("invalid_picture");
+          error.statusCode = 406;
+          throw error;
+        }
+        return req.file.buffer;
+      })
+      .then(data => {
+        let base64 = data.toString("base64");
+        base64 = `data:image/${format};base64,` + base64;
+        res.status(200).json({ message: "valid_picture", data: base64 });
+      })
+      .catch(err => console.log(err));
   }
 };
 module.exports = {

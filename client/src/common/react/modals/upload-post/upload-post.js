@@ -40,18 +40,11 @@ export class UploadPostModal extends KComponent {
     console.log(file);
     bodyData.append("file", file.file);
     console.log(bodyData.get("file"));
-    fetch("http://localhost:6969/api/util/image-size", {
-      method: "post",
-      headers: {
-        "Content-Type": "multipart/form-data"
-      },
-      body: bodyData
-    })
-      .then(json => json)
-      .catch(err => console.log(err));
-    // utilApi.checkImageFile(bodyData);
-    // this.props.onClose();
-    // postingPostModal.open(this.props.onUploadSuccess, file.src, file);
+    utilApi.checkImageFile(bodyData).then(data => {
+      console.log(data);
+      this.props.onClose();
+      postingPostModal.open(this.props.onUploadSuccess, data.data.data, file);
+    });
   };
 
   handleUploadFromUrl = () => {
@@ -126,7 +119,6 @@ export class UploadPostModal extends KComponent {
                       onChange={files => {
                         onChange(files);
                         this.handlePost(files);
-                        console.log(files);
                       }}
                       value={value}
                       isUploadImage
