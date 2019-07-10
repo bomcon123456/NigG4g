@@ -3,6 +3,6 @@ const Controller = require("./controller");
 const router = express.Router();
 
 /// Post API
-router.get("/image-size", Controller.getImageSize);
+router.post("/image-size", Controller.validateImage);
 
 module.exports = router;

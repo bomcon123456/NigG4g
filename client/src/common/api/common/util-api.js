@@ -2,6 +2,13 @@ import { axiosApi } from "../api";
 
 export const utilApi = {
   checkImageSize(url) {
-    return axiosApi.get(`/util/image-size?url=${url}`);
+    return axiosApi.post("/util/image-size", { url: url });
+  },
+  checkImageFile(data) {
+    return axiosApi.post("/util/image-size", data, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    });
   }
 };

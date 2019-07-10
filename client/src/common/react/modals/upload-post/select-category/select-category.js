@@ -49,6 +49,16 @@ export class SelectCategoryModal extends KComponent {
     );
   };
 
+  handlePost = () => {
+    let data = { ...this.props.data };
+    data.category = this.state.currentCategory._id;
+    if (data.file) {
+      data.url = null;
+    }
+
+    console.log(data);
+  };
+
   render() {
     let { onClose } = this.props;
     let { loading, currentCategory } = this.state;
@@ -86,6 +96,7 @@ export class SelectCategoryModal extends KComponent {
             <button
               className="btn btn-primary"
               disabled={currentCategory === null}
+              onClick={() => this.handlePost()}
             >
               {loading ? "Loading" : "Next"}
             </button>

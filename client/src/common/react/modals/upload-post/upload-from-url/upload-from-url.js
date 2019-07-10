@@ -13,6 +13,7 @@ import { postingPostModal } from "../posting-post/posting-post";
 
 import { LoadingInline } from "../../../loading-inline/loading-inline";
 
+//@TODO: Debounce
 export class UploadFromUrlModal extends KComponent {
   constructor(props) {
     super(props);
@@ -51,33 +52,47 @@ export class UploadFromUrlModal extends KComponent {
   };
 
   handleFileChanged = () => {
-    const url = this.form.getData("url");
-    // console.log(url.url);
-    getMetaTags(url.url)
-      .then(data => {
-        if (data.error) {
-          const error = new Error("invalid_url");
-          throw error;
-        }
-        const { image } = data;
-        utilApi.checkImageSize(image).then(({ data }) => {
-          console.log(data);
-          if (data.message === "valid_picture") {
-            this.handleLoadSuccess(image);
-          } else {
-            const error = new Error("bad_error");
-            this.handleLoadFailed(error);
-          }
-        });
-      })
-      .catch(err => {
-        this.handleLoadFailed(err);
-      });
-    // mql(url.url)
-    //   .then(data => {
-    //     console.log(data);
-    //   })
-    //   .catch(err => console.log(err));
+    if (this.form.isValid()) {
+      const url = this.form.getData("url");
+      console.log(url);
+      var pattern = new RegExp(
+        "^(https?:\\/\\/)?" +
+          "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
+          "((\\d{1,3}\\.){3}\\d{1,3}))" +
+          "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
+          "(\\?[;&a-z\\d%_.~+=-]*)?" +
+          "(\\#[-a-z\\d_]*)?$",
+        "i"
+      );
+      if (pattern.test(url.url)) {
+        console.log(url.url);
+        getMetaTags(url.url)
+          .then(data => {
+            if (data.error) {
+              const error = new Error("invalid_url");
+              throw error;
+            }
+            const { image } = data;
+            utilApi.checkImageSize(image).then(({ data }) => {
+              console.log(data);
+              if (data.message === "valid_picture") {
+                this.handleLoadSuccess(image);
+              } else {
+                const error = new Error("bad_error");
+                this.handleLoadFailed(error);
+              }
+            });
+          })
+          .catch(err => {
+            this.handleLoadFailed(err);
+          });
+      }
+      // mql(url.url)
+      //   .then(data => {
+      //     console.log(data);
+      //   })
+      //   .catch(err => console.log(err));
+    }
   };
 
   handleLoadSuccess = image => {
@@ -138,6 +153,7 @@ export class UploadFromUrlModal extends KComponent {
                   placeholder="http://"
                   onChange={e => {
                     onChange(e);
+                    this.setState({ error: null });
                     this.handleFileChanged();
                   }}
                   type={"url"}
