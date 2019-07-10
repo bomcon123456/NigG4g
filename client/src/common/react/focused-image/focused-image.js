@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 import classnames from "classnames";
-// import windowSize from "react-window-size";
 
 class FocusedImage extends Component {
   constructor(props) {

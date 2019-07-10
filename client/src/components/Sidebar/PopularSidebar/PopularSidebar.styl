@@ -1,0 +1,90 @@
+.popular {
+  position: absolute;
+  width: 100%;
+  padding-bottom: 12px;
+}
+
+.popular header h3 {
+  line-height: 16px;
+  height: 16px;
+  margin-bottom: 8px;
+  color: #999;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.popular li {
+  width: 100%;
+}
+
+.popular .label {
+  color: #000;
+  font-size: 14px;
+  height: 36px;
+  line-height: 20px;
+  padding: 8px 0 8px 36px;
+  box-sizing: border-box;
+  display: block;
+  position: relative;
+  border-radius: 2px;
+}
+
+.popular li:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+  // padding-right: 32px;
+}
+
+.popular li:hover .my-button {
+  opacity: 1;
+}
+
+.section-sidebar .icon {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background-size: 264px 48px;
+  background-image: url('https://assets-9gag-fun.9cache.com/s/fab0aa49/4db5725e46cce313ef00c8298e0a1bf9bab27ddb/static/dist/web6/img/post-action-sprite.png');
+  left: 4px;
+  top: 50%;
+  margin-top: -12px;
+}
+
+.section-sidebar .nav .my-button {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  display: block;
+  right: 0;
+  top: 24px;
+  border: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  cursor: pointer;
+}
+
+.section-sidebar .icon.hot {
+  background-position: -168px 0;
+}
+
+.section-sidebar .icon.trending {
+  background-position: -192px 0;
+}
+
+.section-sidebar .icon.fresh {
+  background-position: -216px 0;
+}
+
+.section-sidebar .more {
+  left: 6px;
+  background-position: -72px 0;
+}
+
+.section-sidebar .more:hover {
+  left: 6px;
+  background-position: -72px 0;
+}
+
+.section-sidebar .nav li.selected .label {
+  background-color: rgba(0, 0, 0, 0.05);
+  font-weight: 700;
+}
