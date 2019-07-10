@@ -27,7 +27,11 @@ const UserFunction = props => {
         <button
           id="upload-btn"
           className="my-btn-primary"
-          onClick={uploadPostModal.open}
+          onClick={() => {
+            uploadPostModal.open(redirect => {
+              props.history.push(redirect);
+            });
+          }}
         >
           Upload
         </button>

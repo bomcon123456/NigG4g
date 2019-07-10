@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/bomcon123456/Nigg4g#readme",
   "dependencies": {
+    "axios": "^0.19.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "crypto": "^1.0.1",
@@ -30,6 +31,7 @@
     "nodemailer": "^6.2.1",
     "nodemailer-express-handlebars": "^3.0.0",
     "probe-image-size": "^4.0.1",
-    "sharp": "^0.22.1"
+    "sharp": "^0.22.1",
+    "shortid": "^2.2.14"
   }
 }

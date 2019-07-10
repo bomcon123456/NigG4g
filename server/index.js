@@ -22,14 +22,6 @@ const app = express();
 
 app.use(bodyParser.json());
 
-// Multer (file upload) middleware
-app.use(
-  "/api/util/",
-  multer({
-    fileFilter: fileFilter
-  }).single("file")
-);
-
 // Static folder Middleware
 app.use("/images", express.static(path.join(__dirname, "/uploads/images")));
 
@@ -43,6 +35,14 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
 });
+
+// Multer (file upload) middleware
+app.use(
+  "/api",
+  multer({
+    fileFilter: fileFilter
+  }).single("file")
+);
 
 // Routes
 app.use("/api/auth", authRoutes);

@@ -6,6 +6,7 @@ import SectionPicker from "../../../../react/section-picker/section-picker";
 import { modals } from "../../modals";
 import { categoryCache } from "../../../../cache/api-cache/common-cache";
 import { postingPostModal } from "../posting-post/posting-post";
+import { postApi } from "../../../../api/common/post-api";
 
 import { LoadingInline } from "../../../loading-inline/loading-inline";
 
@@ -52,11 +53,28 @@ export class SelectCategoryModal extends KComponent {
   handlePost = () => {
     let data = { ...this.props.data };
     data.category = this.state.currentCategory._id;
-    if (data.file) {
-      data.url = null;
-    }
+    let sendData = new FormData();
+    sendData.append("title", data.title);
+    sendData.append("category", data.category);
+    sendData.append("tags", data.tags);
+    sendData.append("url", data.file ? "" : data.url);
+    sendData.append("file", data.file ? data.file.file : null);
+    sendData.append("attributeLink", data.attributeLink);
+    sendData.append("nsfw", data.nsfw);
 
-    console.log(data);
+    // console.log(data.file.file);
+    postApi
+      .postPost(sendData)
+      .then(data => {
+        console.log(data);
+        this.props.onClose();
+        if (data.data && data.data.data.redirect) {
+          this.props.onUploadSuccess(data.data.data.redirect);
+        }
+      })
+      .catch(err => {
+        this.setState({ error: err });
+      });
   };
 
   render() {
@@ -113,9 +131,9 @@ export const selectCategoryModal = {
       content: (
         <SelectCategoryModal
           onClose={() => modal.close()}
-          onUploadSuccess={() => {
+          onUploadSuccess={redirect => {
             modal.close();
-            handlePost();
+            handlePost(redirect);
           }}
           data={data}
         />

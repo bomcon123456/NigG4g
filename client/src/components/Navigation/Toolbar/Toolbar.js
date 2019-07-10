@@ -10,7 +10,10 @@ const toolbar = props => {
           9GAG
         </a>
         <nav className="nav-menu">{<NavItems />}</nav>
-        <FunctionWrap handleLoginSuccess={props.handleLoginSuccess} />
+        <FunctionWrap
+          handleLoginSuccess={props.handleLoginSuccess}
+          history={props.history}
+        />
       </div>
     </header>
   );

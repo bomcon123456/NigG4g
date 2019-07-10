@@ -12,7 +12,7 @@ const FunctionWrap = props => {
       {!isLogin && (
         <VisitorFunction handleLoginSuccess={props.handleLoginSuccess} />
       )}
-      {isLogin && <UserFunction />}
+      {isLogin && <UserFunction history={props.history} />}
     </div>
   );
 };

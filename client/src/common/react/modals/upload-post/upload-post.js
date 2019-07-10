@@ -162,9 +162,9 @@ export const uploadPostModal = {
       content: (
         <UploadPostModal
           onClose={() => modal.close()}
-          onUploadSuccess={() => {
+          onUploadSuccess={redirect => {
             modal.close();
-            handleUpload();
+            handleUpload(redirect);
           }}
           backupURL={backupURL}
         />

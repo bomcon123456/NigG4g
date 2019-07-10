@@ -65,7 +65,7 @@ export class UploadFromUrlModal extends KComponent {
         "i"
       );
       if (pattern.test(url.url)) {
-        console.log(url.url);
+        this.setState({ loading: true });
         getMetaTags(url.url)
           .then(data => {
             if (data.error) {
@@ -189,9 +189,9 @@ export const uploadFromUrlModal = {
       content: (
         <UploadFromUrlModal
           onClose={() => modal.close()}
-          onUploadSuccess={() => {
+          onUploadSuccess={redirect => {
             modal.close();
-            handlePost();
+            handlePost(redirect);
           }}
           url={url}
         />

@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import { withRouter } from "react-router-dom";
 
 import Toolbar from "../../components/Navigation/Toolbar/Toolbar";
 import Sidebar1 from "../../components/Sidebar/Sidebar";
@@ -17,7 +18,10 @@ class Layout extends Component {
   render() {
     return (
       <Fragment>
-        <Toolbar handleLoginSuccess={this.handleLoginSuccess} />
+        <Toolbar
+          handleLoginSuccess={this.handleLoginSuccess}
+          history={this.props.history}
+        />
         <div id="container" className="space-navbar">
           <div className="sidebar-left">
             <Sidebar1 />
@@ -31,4 +35,4 @@ class Layout extends Component {
   }
 }
 
-export default Layout;
+export default withRouter(Layout);

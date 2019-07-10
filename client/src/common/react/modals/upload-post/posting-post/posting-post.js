@@ -286,9 +286,9 @@ export const postingPostModal = {
       content: (
         <PostingPostModal
           onClose={() => modal.close()}
-          onPostSuccess={() => {
+          onPostSuccess={redirect => {
             modal.close();
-            handlePost();
+            handlePost(redirect);
           }}
           file={file}
           fromUrl={fromUrl}
