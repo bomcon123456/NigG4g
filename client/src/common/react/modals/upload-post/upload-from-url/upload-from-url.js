@@ -7,7 +7,8 @@ import { modals } from "../../modals";
 import { createFormWithValidator } from "../../../form-validator/form-validator";
 import { InputBase } from "../../../input-base/input-base";
 import { uploadPostModal } from "../upload-post";
-import { getMetaTags } from "../../../../utils/common-util";
+import { getMetaTags } from "../../../../utils/scrapper-util";
+// import { getMetaTags } from "../../../../utils/common-util";
 import { utilApi } from "../../../../api/common/util-api";
 import { postingPostModal } from "../posting-post/posting-post";
 
@@ -65,7 +66,30 @@ export class UploadFromUrlModal extends KComponent {
         "i"
       );
       if (pattern.test(url.url)) {
-        this.setState({ loading: true });
+        this.setState({
+          loading: true
+        });
+        getMetaTags(url.url)
+          .then(data => {
+            console.log(data);
+            if (data.error) {
+              const error = new Error("invalid_url");
+              throw error;
+            }
+            const { image, message } = data;
+            if (message === "valid_url") {
+              this.handleLoadSuccess(image.url);
+            } else {
+              const error = new Error("bad_error");
+              this.handleLoadFailed(error);
+            }
+          })
+          .catch(err => {
+            this.handleLoadFailed(err);
+          });
+
+        /** Logic using LinkPreview API
+         * getMetaTags imported from common-util.js, remember to uncomment utilAPI + getmetatags
         getMetaTags(url.url)
           .then(data => {
             if (data.error) {
@@ -86,12 +110,8 @@ export class UploadFromUrlModal extends KComponent {
           .catch(err => {
             this.handleLoadFailed(err);
           });
+          */
       }
-      // mql(url.url)
-      //   .then(data => {
-      //     console.log(data);
-      //   })
-      //   .catch(err => console.log(err));
     }
   };
 

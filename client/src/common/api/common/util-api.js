@@ -10,5 +10,8 @@ export const utilApi = {
         "Content-Type": "multipart/form-data"
       }
     });
+  },
+  getMetaTags(url) {
+    return axiosApi.post("/util/get-url", { url: url });
   }
 };

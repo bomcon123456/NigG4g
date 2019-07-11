@@ -2,6 +2,19 @@ const probe = require("probe-image-size");
 const sharp = require("sharp");
 const ogs = require("open-graph-scraper");
 
+const checkImageSize = (width, height) => {
+  if (width >= 200 && height >= 100) {
+    if (
+      (width <= 600 && height <= 600) ||
+      (width >= 600 && width * height <= 600000)
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+};
+
 const validateImage = async (req, res, next) => {
   const { url } = req.body;
   const file = req.file;
@@ -10,10 +23,7 @@ const validateImage = async (req, res, next) => {
       .then(data => {
         const { width, height } = data;
         if (width >= 200 && height >= 100) {
-          if (
-            (width <= 600 && height <= 600) ||
-            (width >= 600 && width * height <= 600000)
-          ) {
+          if (checkImageSize(width, height)) {
             res.status(200).json({ message: "valid_picture" });
           }
         } else {
@@ -82,10 +92,21 @@ const getUrl = (req, res, next) => {
   ogs(options)
     .then(result => {
       if (result.success && result.data && result.data.ogUrl) {
+        const { ogImage, ogVideo, ogType } = result.data;
+        let message = "scrapped_successfully";
+        if (ogImage && !ogVideo) {
+          const { width, height } = ogImage;
+          if (width && height) {
+            message = checkImageSize(width, height)
+              ? "valid_url"
+              : "invalid_url";
+          }
+        }
         res.status(200).json({
-          ogImage: result.data.ogImage,
-          ogVideo: result.data.ogVideo,
-          ogType: result.data.ogType
+          message: message,
+          image: ogImage,
+          video: ogVideo,
+          type: ogType
         });
       }
     })

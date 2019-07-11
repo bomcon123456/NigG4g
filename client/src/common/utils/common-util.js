@@ -30,6 +30,7 @@ let buildParams = obj => {
   return result.slice(0, result.length - 1);
 };
 
+// DEPRECATED, should use scrapper-util if possible
 const getMetaTags = url => {
   const data = {
     key: "5d23fe49576914abd325e59c9705044764303dc5845b0",
