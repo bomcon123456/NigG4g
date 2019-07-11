@@ -65,7 +65,7 @@ const validateImage = async (req, res, next) => {
 const getVideoMetadata = async (req, res, next) => {
   let hasAudio, duration, width, height;
   // if stream array.length = 2 => audio
-  const command = FfmpegCommand.ffprobe("./uploads/images/porno.mp4", function(
+  const command = FfmpegCommand.ffprobe("./uploads/images/porno.mp4", function (
     err,
     metadata
   ) {

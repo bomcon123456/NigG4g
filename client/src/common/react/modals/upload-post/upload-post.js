@@ -44,7 +44,7 @@ export class UploadPostModal extends KComponent {
       console.log(data);
       this.props.onClose();
       postingPostModal.open(this.props.onUploadSuccess, data.data.data, file);
-    });
+    }).catch(err => {this.setState({error: err})});
   };
 
   handleUploadFromUrl = () => {
