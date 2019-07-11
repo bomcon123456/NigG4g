@@ -5,7 +5,7 @@ const { saveImagesToMultipleSize } = require("./util-function");
 // @TODO: NEED VERY BIG REWORK!
 const createPost = (req, res, next) => {
   const { title, tags, url, nsfw, category, attributeLink } = req.body;
-  let file = null;
+  let file = req.file;
   if (url) {
     const index = url.indexOf("?");
     let newUrl;
@@ -23,6 +23,42 @@ const createPost = (req, res, next) => {
           return saveImagesToMultipleSize(bufferImage);
         }
       })
+      .then(data => {
+        const post = new Post({
+          _id: data._id,
+          title: title,
+          images: {
+            image460: {
+              height: data.height460,
+              width: data.width460,
+              url: `http://localhost:6969/images/${data._id}_460.jpg`
+            },
+            image700: {
+              height: data.height700,
+              width: data.width700,
+              url: `http://localhost:6969/images/${data._id}_700.jpg`
+            }
+          },
+          createdBy: req.userId,
+          categoryId: category,
+          tags: tags,
+          type: "Photo",
+          nsfw: nsfw
+        });
+        return post.save();
+      })
+      .then(result => {
+        res.status(200).json({
+          message: "Hail Hydra",
+          data: { _id: result._id, redirect: `/gag/${result._id}` }
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        next(err);
+      });
+  } else if (file) {
+    return saveImagesToMultipleSize(file.buffer)
       .then(data => {
         const post = new Post({
           _id: data._id,

@@ -23,20 +23,89 @@ const saveImagesToMultipleSize = buffer => {
     })
     .then(() => {
       if (width >= 460) {
-        return image.resize(460).toFile(`./uploads/images/${_id}_460.jpg`);
+        return image
+          .resize(460, null, {
+            kernel: sharp.kernel.cubic
+          })
+          .jpeg({
+            quality: 100
+          })
+          .toFile(`./uploads/images/${_id}_460.jpg`)
+          .then(() =>
+            image
+              .webp({
+                quality: 100,
+                lossless: true
+              })
+              .toFile(`./uploads/images/${_id}_460.webp`)
+          );
       } else {
-        return image.toFile(`./uploads/images/${_id}_460.jpg`);
+        return image
+          .jpeg({
+            quality: 100
+          })
+          .toFile(`./uploads/images/${_id}_460.jpg`)
+          .then(() =>
+            image
+              .webp({
+                quality: 100,
+                lossless: true
+              })
+              .toFile(`./uploads/images/${_id}_460.webp`)
+          );
       }
     })
     .then(response => {
       width460 = response.width;
       height460 = response.height;
       if (width <= 700 && width >= 460) {
-        return image.toFile(`./uploads/images/${_id}_700.jpg`);
+        return image
+          .jpeg({
+            quality: 100
+          })
+          .toFile(`./uploads/images/${_id}_700.jpg`)
+          .then(() =>
+            image
+              .webp({
+                quality: 100,
+                lossless: true
+              })
+              .toFile(`./uploads/images/${_id}_700.webp`)
+          );
       } else if (width <= 460) {
-        return image.resize(460).toFile(`./uploads/images/${_id}_700.jpg`);
+        return image
+          .resize(460, null, {
+            kernel: sharp.kernel.cubic
+          })
+          .jpeg({
+            quality: 100
+          })
+          .toFile(`./uploads/images/${_id}_700.jpg`)
+          .then(() =>
+            image
+              .webp({
+                quality: 100,
+                lossless: true
+              })
+              .toFile(`./uploads/images/${_id}_700.webp`)
+          );
       } else {
-        return image.resize(700).toFile(`./uploads/images/${_id}_700.jpg`);
+        return image
+          .resize(700, null, {
+            kernel: sharp.kernel.cubic
+          })
+          .jpeg({
+            quality: 100
+          })
+          .toFile(`./uploads/images/${_id}_700.jpg`)
+          .then(() =>
+            image
+              .webp({
+                quality: 100,
+                lossless: true
+              })
+              .toFile(`./uploads/images/${_id}_700.webp`)
+          );
       }
     })
     .then(response => {
