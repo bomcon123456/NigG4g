@@ -44,6 +44,7 @@ export class UploadFromUrlModal extends KComponent {
     const message = error.message;
     let errMatcher = {
       invalid_url: "Invalid URL.",
+      scrapper_failed: "Cannot extract image from this url.",
       invalid_picture: "Unsupported image",
       network_error: "Database is ded."
     };
