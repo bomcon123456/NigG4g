@@ -42,6 +42,16 @@ const userModel = new Schema(
       ],
       required: false,
       default: []
+    },
+    favorite: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "Category"
+        }
+      ],
+      require: false,
+      default: []
     }
   },
   { timestamps: { createdAt: "createdAt" } }
