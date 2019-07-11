@@ -1,5 +1,6 @@
 const probe = require("probe-image-size");
 const sharp = require("sharp");
+const FfmpegCommand = require("fluent-ffmpeg");
 const ogs = require("open-graph-scraper");
 
 const checkImageSize = (width, height) => {
@@ -61,6 +62,16 @@ const validateImage = async (req, res, next) => {
   }
 };
 
+const validateVideo = async (req, res, next) => {
+  // if nb_stream =1 => no audio
+  const command = FfmpegCommand.ffprobe("./uploads/images/porno.mp4", function(
+    err,
+    metadata
+  ) {
+    console.log(metadata);
+  });
+};
+
 //@TODO: Self-scraper
 // const getURL = (req, res, next) => {
 //   let http = require("https");
@@ -118,5 +129,6 @@ const getUrl = (req, res, next) => {
 
 module.exports = {
   validateImage,
-  getUrl
+  getUrl,
+  validateVideo
 };

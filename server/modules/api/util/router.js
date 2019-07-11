@@ -16,4 +16,6 @@ router.post(
   Controller.getUrl
 );
 
+router.get("/validate-video", Controller.validateVideo);
+
 module.exports = router;
