@@ -38,12 +38,19 @@ class Category extends React.Component {
       <li key={this.props.key}>
         <div className="div-button" onClick={null}>
           <Link to="#" className="label" >
-            <i className="icon hot"></i>
-            Hot
-      </Link>
-          <button className="my-button" onClick={this.handleToggleVisibility}>
+            <i className="icon hot">
+              <img className="icon hot" src={this.props.imageUrl} alt={this.props.name} />
+            </i>
+
+
+          </Link>
+          <button className="my-button " onClick={this.handleToggleVisibility}>
             <i className="icon icon-right star"></i>
           </button>
+          <p className="test">
+            {this.props.name}
+          </p>
+
         </div>
       </li>
     )

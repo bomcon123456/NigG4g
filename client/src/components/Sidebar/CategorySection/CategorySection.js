@@ -1,6 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Category from "./Category/Category"
+import { categoryCache } from "../../../common/cache/api-cache/common-cache";
 
 class CategorySection extends React.Component {
   constructor(props) {
@@ -12,6 +12,8 @@ class CategorySection extends React.Component {
       name: '',
       visibility: false
     }
+
+    this.categories = categoryCache.syncGet();
   }
 
 
@@ -43,9 +45,16 @@ class CategorySection extends React.Component {
           <h3>Sections</h3>
         </header>
         <ul className="nav">
-          <Category />
-          <Category />
-
+          {
+            this.categories.map(category => (
+              <Category
+                key={category.name}
+                name={category.name}
+                description={category.description}
+                imageUrl={category.imageUrl}
+              />
+            ))
+          }
         </ul>
       </div>
     );

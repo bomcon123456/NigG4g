@@ -16,6 +16,7 @@
 }
 
 .section-sidebar .label {
+  width: 100%;
   color: #000;
   font-size: 14px;
   height: 36px;
@@ -27,9 +28,31 @@
   border-radius: 2px;
 }
 
+.section-sidebar .test {
+  position: absolute;
+  width: 100%;
+  color: #000;
+  font-size: 14px;
+  height: 36px;
+  line-height: 20px;
+  padding: 8px 0 8px 36px;
+  box-sizing: border-box;
+  display: block;
+  padding-right: 32px;
+  white-space: nowrap;
+  overflow-x: visible;
+}
+
 .section-sidebar li:hover {
   background-color: rgba(0, 0, 0, 0.03);
+}
+
+.section-sidebar li:hover .test {
+  // background-color: rgba(0, 0, 0, 0.03);
   // padding-right: 32px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .section-sidebar li:hover .my-button {
@@ -39,8 +62,7 @@
 .section-sidebar .icon {
   position: absolute;
   width: 24px;
-  height: 24px;        console.log(metadata)
-
+  height: 24px;
   background-size: 264px 48px;
   background-image: url('https://assets-9gag-fun.9cache.com/s/fab0aa49/4db5725e46cce313ef00c8298e0a1bf9bab27ddb/static/dist/web6/img/post-action-sprite.png');
   left: 4px;
@@ -49,8 +71,7 @@
 }
 
 .section-sidebar .nav .div-button {
-  display: flex;        console.log(metadata)
-
+  display: flex;
   justify-content: space-between;
 }
 
@@ -112,5 +133,5 @@
 }
 
 .icon-right {
-  // left: 160px;
+  left: 160px;
 }
