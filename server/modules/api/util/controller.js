@@ -1,5 +1,6 @@
 const probe = require("probe-image-size");
 const sharp = require("sharp");
+const ogs = require("open-graph-scraper");
 
 const validateImage = async (req, res, next) => {
   const { url } = req.body;
@@ -49,6 +50,52 @@ const validateImage = async (req, res, next) => {
       .catch(err => console.log(err));
   }
 };
+
+//@TODO: Self-scraper
+// const getURL = (req, res, next) => {
+//   let http = require("https");
+
+//   let options = {
+//     host: "imgur.com",
+//     path: "/gallery/08o4WMu"
+//   };
+//   let data = "";
+//   let request = http.request(options, function(res) {
+//     res.on("data", function(chunk) {
+//       data += chunk;
+//     });
+//     res.on("end", function() {
+//       console.log("ended");
+//       // Handle getting <meta> here:
+//       const str = data.toString();
+//       console.log(str);
+//     });
+//   });
+//   request.on("error", function(e) {
+//     console.log(e.message);
+//   });
+//   request.end();
+// };
+
+const getUrl = (req, res, next) => {
+  var options = { url: req.body.url };
+  ogs(options)
+    .then(result => {
+      if (result.success && result.data && result.data.ogUrl) {
+        res.status(200).json({
+          ogImage: result.data.ogImage,
+          ogVideo: result.data.ogVideo,
+          ogType: result.data.ogType
+        });
+      }
+    })
+    .catch(err => {
+      console.log("[Scrapper Error]", error);
+      next(err);
+    });
+};
+
 module.exports = {
-  validateImage
+  validateImage,
+  getUrl
 };

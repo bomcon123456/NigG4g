@@ -2,7 +2,9 @@ const Post = require("./model");
 const axios = require("axios");
 const { saveImagesToMultipleSize } = require("./util-function");
 
-// @TODO: NEED VERY BIG REWORK!
+//@TODO: Add API for change posts's votes
+
+// @TODO: Find bugs
 const createPost = (req, res, next) => {
   const { title, tags, url, nsfw, category, attributeLink } = req.body;
   let file = req.file;

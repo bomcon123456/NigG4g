@@ -1,7 +1,7 @@
 const sharp = require("sharp");
 const shortid = require("shortid");
 
-//@TODO: Resize then save to folder
+//Resize then save to folder
 /**
  * 1. image460: if the image's width is >= 460px -> resize, if not, stay the same
  * 2. image700:
