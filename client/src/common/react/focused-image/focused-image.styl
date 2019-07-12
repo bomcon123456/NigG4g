@@ -18,6 +18,7 @@
       top: 0;
       right: 0;
       padding: 10px;
+      z-index: 1052;
 
       i {
         color: #ddd;
@@ -35,6 +36,7 @@
   }
 
   .image-content {
+    position: fixed;
     width: 100%;
     height: 100%;
     min-width: 700px;
@@ -42,12 +44,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow-y: scroll;
 
-    img {
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    img, video {
       display: inline-block;
       vertical-align: middle;
       box-shadow: 0 3px 10px rgba(0, 0, 0, 0.8);
       width: 780px;
+      overflow: scroll;
     }
 
     .img-hidden {

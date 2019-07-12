@@ -9,9 +9,10 @@ export class Modal extends Component {
     this.state = {};
 
     document.body.style.overflowY = "hidden";
+    console.log(document);
   }
 
-  componentWillMount() {
+  componentWillUnmount() {
     setTimeout(() => {
       document.body.style.overflowY = null;
     }, 300);

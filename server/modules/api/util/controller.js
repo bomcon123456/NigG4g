@@ -59,13 +59,17 @@ const validateImage = async (req, res, next) => {
         res.status(200).json({ message: "valid_picture", data: base64 });
       })
       .catch(err => console.log(err));
+  } else if (!file) {
+    const error = new Error("file_not_valid");
+    error.statusCode = 406;
+    throw error;
   }
 };
 
 const getVideoMetadata = async (req, res, next) => {
   let hasAudio, duration, width, height;
   // if stream array.length = 2 => audio
-  const command = FfmpegCommand.ffprobe("./uploads/images/porno.mp4", function (
+  const command = FfmpegCommand.ffprobe("./uploads/images/porno.mp4", function(
     err,
     metadata
   ) {
@@ -127,9 +131,11 @@ const getUrl = (req, res, next) => {
           const { width, height } = ogImage;
           if (width && height) {
             message = checkImageSize(width, height)
-              ? "valid_url"
-              : "invalid_url";
+              ? "valid_picture"
+              : "invalid_picture";
           }
+        } else if (ogVideo) {
+          message = "valid_video";
         }
         res.status(200).json({
           message: message,

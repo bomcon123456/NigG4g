@@ -53,7 +53,7 @@ export class UploadFromUrlModal extends KComponent {
       : "Something bad happened.";
   };
 
-  // Go to older commit like (23d0384021277a62add16122f1fd1e979b8d5f99) to see LinkPreview Logicq
+  // Go to older commit like (23d0384021277a62add16122f1fd1e979b8d5f99) to see LinkPreview Logic
   handleFileChanged = () => {
     if (this.form.isValid()) {
       const url = this.form.getData("url");
@@ -78,9 +78,20 @@ export class UploadFromUrlModal extends KComponent {
               const error = new Error("invalid_url");
               throw error;
             }
-            const { image, message } = data;
-            if (message === "valid_url") {
-              this.handleLoadSuccess(image.url);
+            const { video, image, message } = data;
+            let sendData = {
+              type: "",
+              src: ""
+            };
+            if (message === "valid_picture") {
+              sendData = { type: "Photo", src: image.url };
+              this.handleLoadSuccess(sendData);
+            } else if (message === "valid_video") {
+              sendData = {
+                type: "Animated",
+                src: video.url
+              };
+              this.handleLoadSuccess(sendData);
             } else {
               const error = new Error("bad_error");
               this.handleLoadFailed(error);
@@ -93,7 +104,7 @@ export class UploadFromUrlModal extends KComponent {
     }
   };
 
-  handleLoadSuccess = image => {
+  handleLoadSuccess = data => {
     this.setState({
       loading: false,
       error: null,
@@ -101,7 +112,7 @@ export class UploadFromUrlModal extends KComponent {
       validPic: true
     });
     this.props.onClose();
-    postingPostModal.open(this.props.onUploadSuccess, image, null, true);
+    postingPostModal.open(this.props.onUploadSuccess, data, null, true);
   };
 
   handleLoadFailed = e => {

@@ -25,7 +25,7 @@ class FocusedImage extends Component {
   };
 
   render() {
-    const { onDismiss } = this.props;
+    const { onDismiss, type, src } = this.props;
     return (
       <div
         className={classnames(
@@ -40,18 +40,27 @@ class FocusedImage extends Component {
           </div>
 
           <div className="image-content" onClick={onDismiss}>
-            <img
-              className={classnames(
-                this.state.width < 780 ? "img-hidden" : null
-              )}
-              src={
-                this.props.url
-                  ? this.props.url
-                  : "https://i.imgur.com/Piw0UWw.jpg?fb"
-              }
-              alt="Focused One"
-              onClick={onDismiss}
-            />
+            {type === "Photo" ? (
+              <img
+                className={classnames(
+                  this.state.width < 780 ? "img-hidden" : null
+                )}
+                src={src ? src : "https://i.imgur.com/Piw0UWw.jpg?fb"}
+                alt="Focused One"
+                onClick={onDismiss}
+              />
+            ) : (
+              <video
+                className={classnames(
+                  this.state.width < 780 ? "img-hidden" : null
+                )}
+                src={src ? src : "https://i.imgur.com/miLScZY.mp4"}
+                alt="Focused One"
+                autoPlay
+                loop
+                muted
+              />
+            )}
           </div>
         </div>
       </div>

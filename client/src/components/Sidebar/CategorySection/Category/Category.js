@@ -34,7 +34,7 @@ class Category extends React.Component {
 
   render() {
     return (
-      <li key={this.props.name}>
+      <li>
         <div className="div-button" onClick={null}>
           <Link to="#" className="label">
             <i className="icon hot">

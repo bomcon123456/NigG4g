@@ -37,14 +37,21 @@ export class UploadPostModal extends KComponent {
 
   handlePost = file => {
     const bodyData = new FormData();
-    console.log(file);
     bodyData.append("file", file.file);
-    console.log(bodyData.get("file"));
-    utilApi.checkImageFile(bodyData).then(data => {
-      console.log(data);
-      this.props.onClose();
-      postingPostModal.open(this.props.onUploadSuccess, data.data.data, file);
-    }).catch(err => {this.setState({error: err})});
+    utilApi
+      .checkImageFile(bodyData)
+      .then(data => {
+        console.log(data);
+        this.props.onClose();
+        postingPostModal.open(
+          this.props.onUploadSuccess,
+          { type: "Photo", src: data.data.data },
+          file
+        );
+      })
+      .catch(err => {
+        this.setState({ error: err });
+      });
   };
 
   handleUploadFromUrl = () => {
