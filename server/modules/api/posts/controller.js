@@ -9,8 +9,98 @@ const {
 
 //@TODO: Add API for change posts's votes
 
+const createPost = async (req, res, next) => {
+  const { title, tags, url, nsfw, category, type, attributeLink } = req.body;
+  let buffer = null;
+  let result = null;
+  let file = req.file;
+  try {
+    if (url) {
+      const index = url.indexOf("?");
+      let newUrl = url;
+      if (index !== -1) {
+        newUrl = url.slice(0, index);
+        console.log(newUrl);
+      }
+      const response = await axios.get(newUrl, {
+        responseType: "arraybuffer"
+      });
+      buffer = new Buffer(response.data, "binary");
+    } else if (file) {
+      buffer = file.buffer;
+    }
+    if (type === "Photo") {
+      const data = await saveImagesToMultipleSize(buffer);
+      const post = new Post({
+        _id: data._id,
+        title: title,
+        images: {
+          image460: {
+            height: data.height460,
+            width: data.width460,
+            url: `http://localhost:6969/images/${data._id}_460.jpg`,
+            webpUrl: `http://localhost:6969/images/${data._id}_460.webp`
+          },
+          image700: {
+            height: data.height700,
+            width: data.width700,
+            url: `http://localhost:6969/images/${data._id}_700.jpg`,
+            webpUrl: `http://localhost:6969/images/${data._id}_700.webp`
+          }
+        },
+        createdBy: req.userId,
+        categoryId: category,
+        tags: tags,
+        type: "Photo",
+        nsfw: nsfw
+      });
+      result = await post.save();
+    } else if (type === "Animated") {
+      const videoStream = streamifier.createReadStream(buffer);
+      const data = await saveVideoToStorage(videoStream);
+      const post = new Post({
+        ...data,
+        title: title,
+        createdBy: req.userId,
+        categoryId: category,
+        tags: tags,
+        type: "Animated",
+        nsfw: nsfw
+      });
+      result = await post.save();
+    }
+    res.status(200).json({
+      message: "Hail Hydra",
+      data: {
+        _id: result._id,
+        redirect: `/gag/${result._id}`
+      }
+    });
+    if (type === "Animated") {
+      try {
+        const vidUrl = await saveVideoToMultipleType(result._id);
+        let post = await Post.findById(result._id);
+        let newImages = { ...post.images };
+        newImages.image460sv = {
+          ...post.images.image460sv,
+          vp9Url: `${process.env.STATIC_DIR}/${vidUrl[0]}`,
+          h265Url: `${process.env.STATIC_DIR}/${vidUrl[1]}`
+        };
+        post.images = newImages;
+        await post.save();
+        console.log("[LAZY_CONVERTING_VIDEO_FINISHED]");
+      } catch (err) {
+        console.log("[LAZY_CONVERTING_VIDEO]", err);
+      }
+    }
+  } catch (err) {
+    console.log("[CREATE_POST_ERROR]", err);
+    next(err);
+  }
+};
+
 // @TODO: Find bugs
-const createPost = (req, res, next) => {
+const createPostOld = (req, res, next) => {
   const { title, tags, url, nsfw, category, type, attributeLink } = req.body;
   let _id = null;
   let newUrls = null;

@@ -143,7 +143,7 @@ const saveStreamToTempVid = (videoStream, _id) => {
     let command = new FfmpegCommand(videoStream)
       .output(`./uploads/images/${_id}_processing.mp4`)
       .on("error", function(err, stdout, stderr) {
-        reject(new Error("video_processing_faled"));
+        reject(new Error("[video_processing_failed]save_stream_to_temp_vid"));
       })
       .on("end", function() {
         resolve({
@@ -192,7 +192,7 @@ const resizeAndEncodeVideo = (dir, _id) => {
 
       .on("error", function(err, stdout, stderr) {
         console.log(err);
-        reject(new Error("video_converting_faled"));
+        reject(new Error("[video_converting_failed]resize_encode"));
       })
       .on("end", function() {
         fs.unlink(`./uploads/images/${_id}_processing.mp4`, () => {
@@ -220,7 +220,7 @@ const encodeVideo = (dir, _id, metadata) => {
 
     .on("error", function(err, stdout, stderr) {
       console.log(err);
-      reject(new Error("video_converting_faled"));
+      reject(new Error("[video_converting_failed]resize"));
     })
     .on("end", function() {
       fs.rename(
@@ -248,7 +248,7 @@ const saveVideoToMultipleType = _id => {
 
       .on("error", function(err, stdout, stderr) {
         console.log(err);
-        reject(new Error("video_converting_faled"));
+        reject(new Error("[video_converting_failed]lazy_convert"));
       })
       .on("end", function() {
         resolve({

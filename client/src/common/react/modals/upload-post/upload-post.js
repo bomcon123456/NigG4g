@@ -36,28 +36,25 @@ export class UploadPostModal extends KComponent {
   }
 
   handlePost = file => {
-    let imgExtensions = /(\.jpg|\.jpeg|\.png)$/i;
-    if (imgExtensions.exec(file.name)) {
-      const bodyData = new FormData();
-      bodyData.append("file", file.file);
-      utilApi
-        .checkImageFile(bodyData)
-        .then(data => {
-          console.log(data);
-          this.props.onClose();
-          postingPostModal.open(
-            this.props.onUploadSuccess,
-            { type: "Photo", src: data.data.data },
-            file
-          );
-        })
-        .catch(err => {
-          this.setState({ error: err });
-        });
-    } else {
-      // @TODO: VIDEO PROCESSING
-      // 1. Somehow to create a BLOB url for previewing the video
-    }
+    const bodyData = new FormData();
+    bodyData.append("file", file.file);
+    utilApi
+      .checkImageFile(bodyData)
+      .then(data => {
+        console.log(data);
+        this.props.onClose();
+        postingPostModal.open(
+          this.props.onUploadSuccess,
+          { type: "Photo", src: data.data.data },
+          file
+        );
+      })
+      .catch(err => {
+        this.setState({ error: err });
+      });
+
+    // @TODO: VIDEO PROCESSING
+    // 1. Somehow to create a BLOB url for previewing the video
   };
 
   handleUploadFromUrl = () => {
