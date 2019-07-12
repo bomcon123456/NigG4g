@@ -56,7 +56,7 @@ const createPost = (req, res, next) => {
             });
           } else if (type === "Animated") {
             const videoStream = streamifier.createReadStream(buffered);
-            return saveVideoToStorage(videoStream, buffered)
+            return saveVideoToStorage(videoStream)
               .then(data => {
                 const post = new Post({
                   ...data,
@@ -104,36 +104,78 @@ const createPost = (req, res, next) => {
         next(err);
       });
   } else if (file) {
-    return saveImagesToMultipleSize(file.buffer)
-      .then(data => {
-        const post = new Post({
-          _id: data._id,
-          title: title,
-          images: {
-            image460: {
-              height: data.height460,
-              width: data.width460,
-              url: `${process.env.STATIC_DIR}/${data._id}_460.jpg`
-            },
-            image700: {
-              height: data.height700,
-              width: data.width700,
-              url: `${process.env.STATIC_DIR}/${data._id}_700.jpg`
-            }
-          },
-          createdBy: req.userId,
-          categoryId: category,
-          tags: tags,
-          type: "Photo",
-          nsfw: nsfw
-        });
-        return post.save();
-      })
+    return new Promise((resolve, reject) => {
+      if (type === "Photo") {
+        return saveImagesToMultipleSize(file.buffer)
+          .then(data => {
+            const post = new Post({
+              _id: data._id,
+              title: title,
+              images: {
+                image460: {
+                  height: data.height460,
+                  width: data.width460,
+                  url: `${process.env.STATIC_DIR}/${data._id}_460.jpg`
+                },
+                image700: {
+                  height: data.height700,
+                  width: data.width700,
+                  url: `${process.env.STATIC_DIR}/${data._id}_700.jpg`
+                }
+              },
+              createdBy: req.userId,
+              categoryId: category,
+              tags: tags,
+              type: "Photo",
+              nsfw: nsfw
+            });
+            return post.save().then(res => resolve(res));
+          })
+          .catch(err => console.log(err));
+      } else if (type === "Animated") {
+        const videoStream = streamifier.createReadStream(file.buffer);
+        return saveVideoToStorage(videoStream)
+          .then(data => {
+            const post = new Post({
+              ...data,
+              title: title,
+              createdBy: req.userId,
+              categoryId: category,
+              tags: tags,
+              type: "Animated",
+              nsfw: nsfw
+            });
+            return post.save().then(res => resolve(res));
+          })
+          .catch(err => console.log(err));
+      }
+    })
       .then(result => {
         res.status(200).json({
           message: "Hail Hydra",
           data: { _id: result._id, redirect: `/gag/${result._id}` }
         });
+        if (type === "Animated") {
+          return saveVideoToMultipleType(result._id)
+            .then(data => {
+              newUrls = data.dir;
+              return Post.findById(_id);
+            })
+            .then(post => {
+              let newImages = { ...post.images };
+              newImages.image460sv = {
+                ...post.images.image460sv,
+                vp9Url: `${process.env.STATIC_DIR}/${newUrls[0]}`,
+                h265Url: `${process.env.STATIC_DIR}/${newUrls[1]}`
+              };
+              post.images = newImages;
+              return post.save();
+            })
+            .then(result => {
+              console.log("COMPLETE BITCHES");
+            })
+            .catch(err => console.log(err));
+        }
       })
       .catch(err => {
         console.log(err);
