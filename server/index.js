@@ -38,9 +38,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/', (req, res, next) => {
-  res.status(200).send('Fuck Minh')
-})
+app.get("/", (req, res, next) => {
+  res.status(200).send("Fuck Minh");
+});
 
 // Multer (file upload) middleware
 app.use(
@@ -74,24 +74,24 @@ mongoose
   .then(result => {
     const port = process.env.PORT;
     console.warn("Listening at port:", port);
-    app.listen(process.env.PORT);
-    /*
+    // app.listen(process.env.PORT);
+
     https
       .createServer(
         {
           key: fs.readFileSync(
             `./modules/common/keys/${process.env.NODE_ENV}/${
-            process.env.SSL_KEY_NAME
+              process.env.SSL_KEY_NAME
             }`
           ),
           cert: fs.readFileSync(
             `./modules/common/keys/${process.env.NODE_ENV}/${
-            process.env.SSL_CRT_NAME
+              process.env.SSL_CRT_NAME
             }`
           )
         },
         app
       )
-      .listen(port);*/
+      .listen(port);
   })
   .catch(err => console.log(err));
