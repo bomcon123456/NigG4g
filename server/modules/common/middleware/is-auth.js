@@ -11,7 +11,7 @@ module.exports = (req, res, next) => {
   let decodedToken;
   if (token != "infinityToken") {
     try {
-      decodedToken = jwt.verify(token, "TopSecretWebTokenKey");
+      decodedToken = jwt.verify(token, process.env.JWT_SECRET);
     } catch (error) {
       error.statusCode = 500;
       throw error;

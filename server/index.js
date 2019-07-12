@@ -1,3 +1,5 @@
+require("dotenv").config({ path: "./env/dev.env" });
+
 const path = require("path");
 const fs = require("fs");
 const https = require("https");
@@ -6,8 +8,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const multer = require("multer");
-
-const MONGODB_URI = "mongodb+srv://test:test@cloud-ejl26.mongodb.net/nigg4g";
 
 const authRoutes = require("./modules/api/auth/router");
 const userRoutes = require("./modules/api/users/router");
@@ -66,15 +66,23 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(MONGODB_URI)
+  .connect(process.env.MONGODB_URI)
   .then(result => {
-    const port = process.env.PORT || 6969;
+    const port = process.env.PORT;
     console.warn("Listening at port:", port);
     https
       .createServer(
         {
-          key: fs.readFileSync("./modules/common/keys/cert.key"),
-          cert: fs.readFileSync("./modules/common/keys/cert.pem")
+          key: fs.readFileSync(
+            `./modules/common/keys/${process.env.NODE_ENV}/${
+              process.env.SSL_KEY_NAME
+            }`
+          ),
+          cert: fs.readFileSync(
+            `./modules/common/keys/${process.env.NODE_ENV}/${
+              process.env.SSL_CRT_NAME
+            }`
+          )
         },
         app
       )

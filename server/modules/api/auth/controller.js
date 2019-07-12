@@ -60,7 +60,7 @@ exports.loginSocialUser = (req, res, next) => {
           email: result.email,
           userId: result._id.toString()
         },
-        "TopSecretWebTokenKey",
+        process.env.JWT_SECRET,
         { expiresIn: "12h" }
       );
       let resUser = omit(result, [
@@ -112,7 +112,7 @@ exports.login = (req, res, next) => {
           email: loadedUser.email,
           userId: loadedUser._id.toString()
         },
-        "TopSecretWebTokenKey",
+        process.env.JWT_SECRET,
         { expiresIn: "12h" }
       );
       let resUser = omit(loadedUser, [
