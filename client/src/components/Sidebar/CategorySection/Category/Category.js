@@ -9,7 +9,7 @@ class Category extends React.Component {
     this.handleToggleVisibility = this.handleToggleVisibility.bind(this);
     this.state = {
       visibility: false
-    }
+    };
   }
 
   setWrapperRef(node) {
@@ -18,12 +18,11 @@ class Category extends React.Component {
 
   handleToggleVisibility(event) {
     if (!this.state.visibility) {
-      document.addEventListener('click', this.handleClickOutside, false);
+      document.addEventListener("click", this.handleClickOutside, false);
     } else {
-      document.removeEventListener('click', this.handleClickOutside, false);
+      document.removeEventListener("click", this.handleClickOutside, false);
     }
-    this.setState((prevState) => ({ visibility: !prevState.visibility }));
-
+    this.setState(prevState => ({ visibility: !prevState.visibility }));
   }
 
   handleClickOutside(event) {
@@ -35,26 +34,25 @@ class Category extends React.Component {
 
   render() {
     return (
-      <li key={this.props.key}>
+      <li>
         <div className="div-button" onClick={null}>
-          <Link to="#" className="label" >
+          <Link to="#" className="label">
             <i className="icon hot">
-              <img className="icon hot" src={this.props.imageUrl} alt={this.props.name} />
+              <img
+                className="icon hot"
+                src={this.props.imageUrl}
+                alt={this.props.name}
+              />
             </i>
-
-
           </Link>
           <button className="my-button " onClick={this.handleToggleVisibility}>
-            <i className="icon icon-right star"></i>
+            <i className="icon icon-right star" />
           </button>
-          <p className="test">
-            {this.props.name}
-          </p>
-
+          <p className="test">{this.props.name}</p>
         </div>
       </li>
-    )
+    );
   }
-};
+}
 
 export default Category;

@@ -11,7 +11,7 @@ export class Modal extends Component {
     document.body.style.overflowY = "hidden";
   }
 
-  componentWillMount() {
+  componentWillUnmount() {
     setTimeout(() => {
       document.body.style.overflowY = null;
     }, 300);

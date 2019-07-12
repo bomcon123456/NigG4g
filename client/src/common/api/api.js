@@ -69,7 +69,7 @@ class API {
 }
 
 export const axiosApi = new API({
-  url: "http://localhost:6969/api",
+  url: "https://localhost:6969/api",
   onErrors: {
     token_expired: () => {
       console.log("token_expired");

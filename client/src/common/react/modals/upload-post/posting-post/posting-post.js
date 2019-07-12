@@ -95,7 +95,10 @@ export class PostingPostModal extends KComponent {
     if (isValidated || (!isValidated && this.tagArrays.length > length)) {
       const data = {
         title: this.descriptionRef.value,
-        url: this.props.fromUrl ? this.props.url : this.props.file.src,
+        url: this.props.fromUrl
+          ? this.props.dataFromPreviousModal.src
+          : this.props.file.src,
+        type: this.props.dataFromPreviousModal.type,
         file: this.props.file,
         tags: this.tagArrays,
         nsfw: this.sensitiveRef.checked,
@@ -110,7 +113,7 @@ export class PostingPostModal extends KComponent {
   }
 
   render() {
-    let { onClose, url } = this.props;
+    let { onClose, dataFromPreviousModal } = this.props;
     let { focusingImage } = this.state;
     return (
       <div
@@ -126,7 +129,8 @@ export class PostingPostModal extends KComponent {
         <FocusedImage
           hidden={!focusingImage}
           onDismiss={() => this.setState({ focusingImage: false })}
-          url={url}
+          type={dataFromPreviousModal.type}
+          src={dataFromPreviousModal.src}
         />
         <Fragment>
           <div className="modal-header posting-post-modal-header no-border">
@@ -150,12 +154,15 @@ export class PostingPostModal extends KComponent {
             )}
             <div className="spacer">
               <div className="field post-info">
-                <div className="preview">
-                  <img
-                    src={url}
-                    alt="Preview"
-                    onClick={() => this.setState({ focusingImage: true })}
-                  />
+                <div
+                  className="preview"
+                  onClick={() => this.setState({ focusingImage: true })}
+                >
+                  {dataFromPreviousModal.type === "Photo" ? (
+                    <img src={dataFromPreviousModal.src} alt="Preview" />
+                  ) : (
+                    <video src={dataFromPreviousModal.src} muted />
+                  )}
                 </div>
                 <textarea
                   type="text"
@@ -281,7 +288,13 @@ export class PostingPostModal extends KComponent {
 }
 
 export const postingPostModal = {
-  open(handlePost, url, file = null, fromUrl = false, savedData = null) {
+  open(
+    handlePost,
+    dataFromPreviousModal,
+    file = null,
+    fromUrl = false,
+    savedData = null
+  ) {
     const modal = modals.openModal({
       content: (
         <PostingPostModal
@@ -292,7 +305,7 @@ export const postingPostModal = {
           }}
           file={file}
           fromUrl={fromUrl}
-          url={url}
+          dataFromPreviousModal={dataFromPreviousModal}
           savedData={savedData}
         />
       )

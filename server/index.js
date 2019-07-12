@@ -1,4 +1,6 @@
 const path = require("path");
+const fs = require("fs");
+const https = require("https");
 
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -68,6 +70,14 @@ mongoose
   .then(result => {
     const port = process.env.PORT || 6969;
     console.warn("Listening at port:", port);
-    app.listen(port);
+    https
+      .createServer(
+        {
+          key: fs.readFileSync("./modules/common/keys/cert.key"),
+          cert: fs.readFileSync("./modules/common/keys/cert.pem")
+        },
+        app
+      )
+      .listen(port);
   })
   .catch(err => console.log(err));
