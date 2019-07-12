@@ -54,18 +54,28 @@ const createPost = (req, res, next) => {
           } else if (type === "Animated") {
             const videoStream = streamifier.createReadStream(buffered);
             return saveVideoToMultipleSize(videoStream, buffered)
-              .then(data => console.log(data))
+              .then(data => {
+                const post = new Post({
+                  ...data,
+                  title: title,
+                  createdBy: req.userId,
+                  categoryId: category,
+                  tags: tags,
+                  type: "Animated",
+                  nsfw: nsfw
+                });
+                return post.save();
+              })
               .catch(err => console.log(err));
           }
         }
       })
-
-      // .then(result => {
-      //   res.status(200).json({
-      //     message: "Hail Hydra",
-      //     data: { _id: result._id, redirect: `/gag/${result._id}` }
-      //   });
-      // })
+      .then(result => {
+        res.status(200).json({
+          message: "Hail Hydra",
+          data: { _id: result._id, redirect: `/gag/${result._id}` }
+        });
+      })
       .catch(err => {
         console.log(err);
         next(err);

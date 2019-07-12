@@ -120,9 +120,9 @@ const saveImagesToMultipleSize = buffer => {
     });
 };
 
-const getVideoInfoFromStreams = videoStream => {
+const getVideoInfoFromStreams = dir => {
   return new Promise((resolve, reject) => {
-    const command = FfmpegCommand.ffprobe(videoStream, function(err, metadata) {
+    const command = FfmpegCommand.ffprobe(dir, function(err, metadata) {
       if (metadata && metadata.streams) {
         let result = {
           hasAudio: metadata.streams.length >= 2 ? true : false,
@@ -132,39 +132,167 @@ const getVideoInfoFromStreams = videoStream => {
         };
         resolve(result);
       } else {
-        reject(new Error("file_not_found"));
+        reject(new Error("get_meta_file_not_found"));
       }
     });
   });
 };
 
-const saveStreamToTempVid = videoStream => {
+const saveStreamToTempVid = (videoStream, _id) => {
   return new Promise((resolve, reject) => {
     let command = new FfmpegCommand(videoStream)
-      .output("./uploads/images/processing.mp4")
+      .output(`./uploads/images/${_id}_processing.mp4`)
       .on("error", function(err, stdout, stderr) {
         reject(new Error("video_processing_faled"));
       })
       .on("end", function() {
         resolve({
-          dir: "./uploads/images/processing.mp4"
+          dir: `./uploads/images/${_id}_processing.mp4`
         });
       })
       .run();
   });
 };
 
+const takeOneFrameOfVid = (dir, _id) => {
+  return new Promise((resolve, reject) => {
+    let command = new FfmpegCommand(dir)
+      .takeFrames(1)
+      .output(`./uploads/images/${_id}_460.jpg`)
+      .on("error", function(err, stdout, stderr) {
+        reject(new Error("video_processing_faled"));
+      })
+      .on("end", function() {
+        resolve({
+          dir: `./uploads/images/${_id}_460.jpg`
+        });
+      })
+      .run();
+  });
+};
+
+const resizeAndEncodeVideo = (dir, _id) => {
+  return new Promise((resolve, reject) => {
+    let command = new FfmpegCommand(dir)
+
+      .takeFrames(1)
+      .output(`./uploads/images/${_id}_460s.jpg`)
+
+      .output(`./uploads/images/${_id}_460s.mp4`)
+      .videoCodec("libx264")
+      .size("460x?")
+
+      // .output(`./uploads/images/${_id}_460svh265.mp4`)
+      // .videoCodec("libx265")
+      // .size("460x?")
+
+      // .output(`./uploads/images/${_id}_460svvp9.webm`)
+      // .videoCodec("libvpx-vp9")
+      // .size("460x?")
+
+      .on("error", function(err, stdout, stderr) {
+        console.log(err);
+        reject(new Error("video_converting_faled"));
+      })
+      .on("end", function() {
+        fs.unlink(`./uploads/images/${_id}_processing.mp4`, () => {
+          console.log("file deleted");
+        });
+        resolve({
+          dir: [
+            `${_id}_460svh265.mp4`,
+            `${_id}_460svvp9.webm`,
+            `${_id}_460s.jpg`
+          ],
+          width: 460
+        });
+      })
+      .run();
+  });
+};
+
+const encodeVideo = (dir, _id, metadata) => {
+  let command = new FfmpegCommand(dir)
+    .takeFrames(1)
+    .output(`./uploads/images/${_id}_460s.jpg`)
+
+    // .output(`./uploads/images/${_id}_460svh265.mp4`)
+    // .videoCodec("libx265")
+
+    // .output(`./uploads/images/${_id}_460svvp9.webm`)
+    // .videoCodec("libvpx-vp9")
+
+    .on("error", function(err, stdout, stderr) {
+      console.log(err);
+      reject(new Error("video_converting_faled"));
+    })
+    .on("end", function() {
+      fs.rename(
+        `./uploads/images/${_id}_processing.mp4`,
+        `./uploads/images/${_id}_460s.mp4`
+      );
+      resolve({
+        dir: [
+          `${_id}_460svh265.mp4`,
+          `${_id}_460svvp9.webm`,
+          `${_id}_460sv.mp4`,
+          `${_id}_460s.jpg`
+        ],
+        width: metadata.width,
+        height: metadata.height
+      });
+    })
+    .run();
+};
+
 const saveVideoToMultipleSize = videoStream => {
-  let dir = null;
+  const _id = shortid.generate();
+  let directory = null;
   let metadata = null;
-  return saveStreamToTempVid(videoStream)
+
+  return saveStreamToTempVid(videoStream, _id)
     .then(({ dir }) => {
-      dir = dir;
+      console.log(dir);
+      directory = dir;
       return getVideoInfoFromStreams(dir);
     })
     .then(data => {
       metadata = data;
-      return data;
+      console.log(metadata);
+      if (metadata.width > 460) {
+        return resizeAndEncodeVideo(directory, _id);
+      } else {
+        return encodeVideo(directory, _id, metadata);
+      }
+    })
+    .then(result => {
+      const height = result.height
+        ? result.height
+        : (460 / metadata.width) * metadata.height;
+      return {
+        _id: _id,
+        images: {
+          image460: {
+            width: result.width,
+            height: height,
+            url: `${process.env.STATIC_DIR}/${result.dir[3]}`
+          },
+          image460sv: {
+            duration: metadata.duration,
+            hasAudio: metadata.hasAudio,
+            width: result.width,
+            height: height,
+            url: `${process.env.STATIC_DIR}/${result.dir[2]}`,
+            h265Url: `${process.env.STATIC_DIR}/${result.dir[0]}`,
+            vp9Url: `${process.env.STATIC_DIR}/${result.dir[1]}`
+          },
+          image700: {
+            width: result.width,
+            height: height,
+            url: `${process.env.STATIC_DIR}/${result.dir[3]}`
+          }
+        }
+      };
     })
     .catch(err => {
       throw err;

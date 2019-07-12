@@ -63,7 +63,7 @@ export class SelectCategoryModal extends KComponent {
     sendData.append("file", data.file ? data.file.file : null);
     sendData.append("attributeLink", data.attributeLink);
     sendData.append("nsfw", data.nsfw);
-
+    this.setState({ loading: true });
     // console.log(sendData.get("url"));
     postApi
       .postPost(sendData)
@@ -71,11 +71,12 @@ export class SelectCategoryModal extends KComponent {
         console.log(data);
         this.props.onClose();
         if (data.data && data.data.data.redirect) {
+          this.setState({ loading: false });
           this.props.onUploadSuccess(data.data.data.redirect);
         }
       })
       .catch(err => {
-        this.setState({ error: err });
+        this.setState({ loading: false, error: err });
       });
   };
 
@@ -115,7 +116,7 @@ export class SelectCategoryModal extends KComponent {
             </button>
             <button
               className="btn btn-primary"
-              disabled={currentCategory === null}
+              disabled={currentCategory === null || this.state.loading}
               onClick={() => this.handlePost()}
             >
               {loading ? "Loading" : "Next"}
