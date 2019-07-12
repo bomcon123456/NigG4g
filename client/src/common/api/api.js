@@ -69,7 +69,7 @@ class API {
 }
 
 export const axiosApi = new API({
-  url: "https://localhost:6969/api",
+  url: process.env.REACT_APP_API_URL,
   onErrors: {
     token_expired: () => {
       console.log("token_expired");

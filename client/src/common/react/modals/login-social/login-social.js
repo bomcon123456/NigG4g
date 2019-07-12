@@ -29,7 +29,7 @@ export class LoginSocial extends Component {
         className={classnames("login-social-container", this.props.className)}
       >
         <FacebookLogin
-          appId="2158998807742962"
+          appId={process.env.REACT_APP_FB_APPID}
           autoLoad={false}
           fields="name,email,picture,birthday"
           scope="public_profile, email, user_birthday"
@@ -42,7 +42,7 @@ export class LoginSocial extends Component {
           }}
         />
         <GoogleLogin
-          clientId="315323914416-kboqkv3ehemndnke8cumdbcbfqmvqa2d.apps.googleusercontent.com"
+          clientId={process.env.REACT_APP_GG_CLIENTID}
           scope="https://www.googleapis.com/auth/user.birthday.read"
           hello="test"
           render={props => (

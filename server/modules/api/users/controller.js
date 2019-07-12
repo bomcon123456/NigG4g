@@ -83,7 +83,7 @@ exports.createUser = (req, res, next) => {
           email: loadedUser.email,
           userId: loadedUser._id.toString()
         },
-        "TopSecretWebTokenKey",
+        process.env.JWT_SECRET,
         { expiresIn: "12h" }
       );
       resUser = omit(loadedUser, [
@@ -154,7 +154,7 @@ exports.verifyUser = (req, res, next) => {
           email: loadedUser.email,
           userId: loadedUser._id.toString()
         },
-        "TopSecretWebTokenKey",
+        process.env.JWT_SECRET,
         { expiresIn: "12h" }
       );
       resUser = omit(loadedUser, [
