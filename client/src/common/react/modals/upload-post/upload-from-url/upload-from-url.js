@@ -53,6 +53,7 @@ export class UploadFromUrlModal extends KComponent {
       : "Something bad happened.";
   };
 
+  // Go to older commit like (23d0384021277a62add16122f1fd1e979b8d5f99) to see LinkPreview Logic
   handleFileChanged = () => {
     if (this.form.isValid()) {
       const url = this.form.getData("url");
@@ -88,30 +89,6 @@ export class UploadFromUrlModal extends KComponent {
           .catch(err => {
             this.handleLoadFailed(err);
           });
-
-        /** Logic using LinkPreview API
-         * getMetaTags imported from common-util.js, remember to uncomment utilAPI + getmetatags
-        getMetaTags(url.url)
-          .then(data => {
-            if (data.error) {
-              const error = new Error("invalid_url");
-              throw error;
-            }
-            const { image } = data;
-            utilApi.checkImageSize(image).then(({ data }) => {
-              console.log(data);
-              if (data.message === "valid_picture") {
-                this.handleLoadSuccess(image);
-              } else {
-                const error = new Error("bad_error");
-                this.handleLoadFailed(error);
-              }
-            });
-          })
-          .catch(err => {
-            this.handleLoadFailed(err);
-          });
-          */
       }
     }
   };
