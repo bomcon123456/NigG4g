@@ -51,10 +51,8 @@ class GeneralFunction extends Component {
         <span ref={this.setWrapperRef}>
           {this.state.visibility && (
             <HeaderSearchDropdown />
-
           )}
         </span>
-
       </span>
     );
   }
