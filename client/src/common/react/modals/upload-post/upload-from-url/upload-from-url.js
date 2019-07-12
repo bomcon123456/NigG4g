@@ -53,7 +53,7 @@ export class UploadFromUrlModal extends KComponent {
       : "Something bad happened.";
   };
 
-  // Go to older commit like (23d0384021277a62add16122f1fd1e979b8d5f99) to see LinkPreview Logic
+  // Go to older commit like (23d0384021277a62add16122f1fd1e979b8d5f99) to see LinkPreview Logicq
   handleFileChanged = () => {
     if (this.form.isValid()) {
       const url = this.form.getData("url");

@@ -1,5 +1,5 @@
 import React from "react";
-import Category from "./Category/Category"
+import Category from "./Category/Category";
 import { categoryCache } from "../../../common/cache/api-cache/common-cache";
 
 class CategorySection extends React.Component {
@@ -9,13 +9,12 @@ class CategorySection extends React.Component {
     this.handleClickOutside = this.handleClickOutside.bind(this);
     this.handleToggleVisibility = this.handleToggleVisibility.bind(this);
     this.state = {
-      name: '',
+      name: "",
       visibility: false
-    }
+    };
 
     this.categories = categoryCache.syncGet();
   }
-
 
   setWrapperRef(node) {
     this.wrapperRef = node;
@@ -23,12 +22,11 @@ class CategorySection extends React.Component {
 
   handleToggleVisibility(event) {
     if (!this.state.visibility) {
-      document.addEventListener('click', this.handleClickOutside, false);
+      document.addEventListener("click", this.handleClickOutside, false);
     } else {
-      document.removeEventListener('click', this.handleClickOutside, false);
+      document.removeEventListener("click", this.handleClickOutside, false);
     }
-    this.setState((prevState) => ({ visibility: !prevState.visibility }));
-
+    this.setState(prevState => ({ visibility: !prevState.visibility }));
   }
 
   handleClickOutside(event) {
@@ -45,20 +43,18 @@ class CategorySection extends React.Component {
           <h3>Sections</h3>
         </header>
         <ul className="nav">
-          {
-            this.categories.map(category => (
-              <Category
-                key={category.name}
-                name={category.name}
-                description={category.description}
-                imageUrl={category.imageUrl}
-              />
-            ))
-          }
+          {this.categories.map(category => (
+            <Category
+              key={category.name}
+              name={category.name}
+              description={category.description}
+              imageUrl={category.imageUrl}
+            />
+          ))}
         </ul>
       </div>
     );
   }
-};
+}
 
 export default CategorySection;
