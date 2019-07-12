@@ -43,7 +43,7 @@ export class SelectCategoryModal extends KComponent {
     data.category = this.state.currentCategory;
     postingPostModal.open(
       this.props.onUploadSuccess,
-      this.props.data.url,
+      { type: this.props.data.type, src: this.props.data.url },
       this.props.data.file,
       true,
       data

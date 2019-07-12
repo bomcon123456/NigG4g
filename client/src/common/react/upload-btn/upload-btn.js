@@ -7,12 +7,11 @@ class UploadButton extends Component {
     // isMultiple = 0: upload single file
     // isMultiple = 1: upload multiple file
     this.isMultiple = this.props.isMultiple;
-    this.isUploadImage = this.props.isUploadImage;
     this.state = {};
     this.inputElement = null;
   }
 
-  handleImageUpload = e => {
+  handleUpload = e => {
     e.preventDefault();
     const files = [...e.target.files];
     e.target.value = "";
@@ -55,6 +54,7 @@ class UploadButton extends Component {
       });
     } else {
       const file = files[0];
+      console.log(file);
       if (file && file.type.indexOf("image") > -1) {
         let { value: currentImage, onChange, onError } = this.props;
         getBase64(file)
@@ -82,6 +82,11 @@ class UploadButton extends Component {
               onChange(data);
             }
           });
+      } else if (file && file.type.indexOf("video") > -1) {
+        let { onChange } = this.props;
+        const objectURL = URL.createObjectURL(file);
+
+        onChange({ file, src: objectURL });
       }
     }
   };
@@ -101,14 +106,12 @@ class UploadButton extends Component {
         <input
           className="upload-input"
           type="file"
-          onChange={
-            this.isUploadImage ? this.handleImageUpload : this.handleVideoUpload
-          }
-          accept={this.isUploadImage ? "image/*" : "video/*"}
+          onChange={this.handleUpload}
+          accept={"image/*,video/*"}
           style={{ width: 0, height: 0 }}
           ref={element => (this.inputElement = element)}
           multiple={this.isMultiple}
-          name={this.isUploadImage ? "uploadImg" : "uploadVid"}
+          name={"uploadBtn"}
         />
       </Fragment>
     );

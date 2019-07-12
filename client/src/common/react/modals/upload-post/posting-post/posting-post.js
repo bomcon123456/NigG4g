@@ -107,6 +107,7 @@ export class PostingPostModal extends KComponent {
           : "",
         category: this.props.savedData ? this.props.savedData.category : null
       };
+      console.log(data);
       this.props.onClose();
       selectCategoryModal.open(this.props.onPostSuccess, data);
     }
@@ -114,6 +115,7 @@ export class PostingPostModal extends KComponent {
 
   render() {
     let { onClose, dataFromPreviousModal } = this.props;
+    console.log(dataFromPreviousModal);
     let { focusingImage } = this.state;
     return (
       <div
