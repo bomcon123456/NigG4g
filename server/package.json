@@ -35,6 +35,7 @@
     "open-graph-scraper": "^3.6.1",
     "probe-image-size": "^4.0.1",
     "sharp": "^0.22.1",
-    "shortid": "^2.2.14"
+    "shortid": "^2.2.14",
+    "streamifier": "^0.1.1"
   }
 }

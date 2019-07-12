@@ -16,6 +16,24 @@ const checkImageSize = (width, height) => {
   }
 };
 
+const getVideoInfoFromStreams = buffer => {
+  return new Promise((resolve, reject) => {
+    const command = FfmpegCommand.ffprobe(buffer, function(err, metadata) {
+      if (metadata && metadata.streams) {
+        let result = {
+          hasAudio: metadata.streams.length >= 2 ? true : false,
+          duration: metadata.streams[0].duration,
+          width: metadata.streams[0].width,
+          height: metadata.streams[0].height
+        };
+        resolve(result);
+      } else {
+        reject(new Error("file_not_found"));
+      }
+    });
+  });
+};
+
 const validateImage = async (req, res, next) => {
   const { url } = req.body;
   const file = req.file;
@@ -64,34 +82,6 @@ const validateImage = async (req, res, next) => {
     error.statusCode = 406;
     throw error;
   }
-};
-
-const getVideoMetadata = async (req, res, next) => {
-  let hasAudio, duration, width, height;
-  // if stream array.length = 2 => audio
-  const command = FfmpegCommand.ffprobe("./uploads/images/porno.mp4", function(
-    err,
-    metadata
-  ) {
-    if (metadata && metadata.streams) {
-      const { streams } = metadata;
-      hasAudio = streams.length >= 2 ? true : false;
-      duration = streams[0].duration;
-      width = streams[0].width;
-      height = streams[0].height;
-      res.status(200).json({
-        message: "collect_video_metadata",
-        hasAudio,
-        duration,
-        width,
-        height
-      });
-    } else {
-      const error = new Error("No video found.");
-      error.statusCode = 404;
-      throw error;
-    }
-  });
 };
 
 //@TODO: Self-scraper
@@ -154,5 +144,5 @@ const getUrl = (req, res, next) => {
 module.exports = {
   validateImage,
   getUrl,
-  getVideoMetadata
+  getVideoInfoFromStreams
 };

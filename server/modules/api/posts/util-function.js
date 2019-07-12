@@ -1,5 +1,7 @@
 const sharp = require("sharp");
 const shortid = require("shortid");
+const FfmpegCommand = require("fluent-ffmpeg");
+const { getVideoInfoFromStreams } = require("../util/controller");
 
 //Resize then save to folder
 /**
@@ -118,6 +120,15 @@ const saveImagesToMultipleSize = buffer => {
     });
 };
 
+const saveVideoToMultipleSize = buffer => {
+  return getVideoInfoFromStreams(buffer)
+    .then(data => data)
+    .catch(err => {
+      throw err;
+    });
+};
+
 module.exports = {
-  saveImagesToMultipleSize
+  saveImagesToMultipleSize,
+  saveVideoToMultipleSize
 };

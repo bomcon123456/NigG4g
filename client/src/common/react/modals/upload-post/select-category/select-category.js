@@ -53,16 +53,18 @@ export class SelectCategoryModal extends KComponent {
   handlePost = () => {
     let data = { ...this.props.data };
     data.category = this.state.currentCategory._id;
+    console.log("[SEND_DATA]:", data);
     let sendData = new FormData();
     sendData.append("title", data.title);
     sendData.append("category", data.category);
     sendData.append("tags", data.tags);
     sendData.append("url", data.file ? "" : data.url);
+    sendData.append("type", data.type);
     sendData.append("file", data.file ? data.file.file : null);
     sendData.append("attributeLink", data.attributeLink);
     sendData.append("nsfw", data.nsfw);
 
-    // console.log(data.file.file);
+    // console.log(sendData.get("url"));
     postApi
       .postPost(sendData)
       .then(data => {
