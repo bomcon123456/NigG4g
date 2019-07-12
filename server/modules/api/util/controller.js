@@ -14,6 +14,7 @@ const checkImageSize = (width, height) => {
       return false;
     }
   }
+  return false;
 };
 
 const validateImage = async (req, res, next) => {
@@ -23,10 +24,8 @@ const validateImage = async (req, res, next) => {
     probe(url)
       .then(data => {
         const { width, height } = data;
-        if (width >= 200 && height >= 100) {
-          if (checkImageSize(width, height)) {
-            res.status(200).json({ message: "valid_picture" });
-          }
+        if (checkImageSize(width, height)) {
+          res.status(200).json({ message: "valid_picture" });
         } else {
           const error = new Error("invalid_picture");
           error.statusCode = 406;
@@ -40,6 +39,11 @@ const validateImage = async (req, res, next) => {
     image
       .metadata()
       .then(metadata => {
+        if (!checkImageSize(metadata.width, metadata.height)) {
+          const error = new Error("invalid_picture");
+          error.statusCode = 406;
+          throw error;
+        }
         if (
           metadata.width >= 600 &&
           metadata.width * metadata.height >= 600000
@@ -58,11 +62,11 @@ const validateImage = async (req, res, next) => {
         base64 = `data:image/${format};base64,` + base64;
         res.status(200).json({ message: "valid_picture", data: base64 });
       })
-      .catch(err => console.log(err));
+      .catch(err => next(err));
   } else if (!file) {
     const error = new Error("file_not_valid");
     error.statusCode = 406;
-    throw error;
+    next(error);
   }
 };
 

@@ -36,6 +36,7 @@ export class UploadPostModal extends KComponent {
   }
 
   handlePost = file => {
+    this.setState({ error: null });
     console.log(file);
     if (file.file && file.file.type.indexOf("image") > -1) {
       const bodyData = new FormData();
@@ -43,7 +44,7 @@ export class UploadPostModal extends KComponent {
       utilApi
         .checkImageFile(bodyData)
         .then(data => {
-          console.log(data);
+          console.log("[handle_post]", data);
           this.props.onClose();
           postingPostModal.open(
             this.props.onUploadSuccess,
@@ -52,6 +53,7 @@ export class UploadPostModal extends KComponent {
           );
         })
         .catch(err => {
+          console.log(err);
           this.setState({ error: err });
         });
     } else {
@@ -63,9 +65,6 @@ export class UploadPostModal extends KComponent {
         file
       );
     }
-
-    // @TODO: VIDEO PROCESSING
-    // 1. Somehow to create a BLOB url for previewing the video
   };
 
   handleUploadFromUrl = () => {
@@ -80,7 +79,7 @@ export class UploadPostModal extends KComponent {
     const { error } = this.state;
     const message = error.message;
     let errMatcher = {
-      account_found: "This email has been used for another user.",
+      invalid_picture: "Unsupported dimension",
       network_error: "Database is ded."
     };
     return errMatcher.hasOwnProperty(message)
@@ -92,7 +91,11 @@ export class UploadPostModal extends KComponent {
     let { onClose } = this.props;
 
     return (
-      <div className={classnames("upload-post-modal")}>
+      <div
+        className={classnames("upload-post-modal", {
+          "upload-post-modal-longer": this.state.error !== null
+        })}
+      >
         <Fragment>
           <div className="modal-header upload-header">
             <div className="modal-title upload-modal-header">
@@ -107,7 +110,9 @@ export class UploadPostModal extends KComponent {
             />
           </div>
           <div className="modal-body upload-modal-body">
-            {/* <LoadingInline /> */}
+            {this.state.error && (
+              <div className="server-error">{this.handleServerError()}</div>
+            )}{" "}
             <div className="spacer">
               <div
                 className="upload-image"

@@ -120,7 +120,7 @@ export class PostingPostModal extends KComponent {
     return (
       <div
         className={classnames("posting-post-modal", {
-          longer:
+          "posting-post-modal-longer":
             !!this.state.error ||
             (this.attributeRef && this.attributeRef.checked) ||
             (!this.attributeRef &&
