@@ -15,6 +15,8 @@ const postRoutes = require("./modules/api/posts/router");
 const categoryRoutes = require("./modules/api/category/router");
 const utilRoutes = require("./modules/api/util/router");
 
+const Post = require("./modules/api/posts/model");
+
 const {
   fileFilter,
   fileStorage
@@ -75,7 +77,6 @@ mongoose
     const port = process.env.PORT;
     console.warn("Listening at port:", port);
     // app.listen(process.env.PORT);
-
     https
       .createServer(
         {

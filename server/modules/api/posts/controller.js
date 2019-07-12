@@ -3,7 +3,8 @@ const axios = require("axios");
 const streamifier = require("streamifier");
 const {
   saveImagesToMultipleSize,
-  saveVideoToMultipleSize
+  saveVideoToStorage,
+  saveVideoToMultipleType
 } = require("./util-function");
 
 //@TODO: Add API for change posts's votes
@@ -11,6 +12,8 @@ const {
 // @TODO: Find bugs
 const createPost = (req, res, next) => {
   const { title, tags, url, nsfw, category, type, attributeLink } = req.body;
+  let _id = null;
+  let newUrls = null;
   let file = req.file;
   if (url) {
     const index = url.indexOf("?");
@@ -53,7 +56,7 @@ const createPost = (req, res, next) => {
             });
           } else if (type === "Animated") {
             const videoStream = streamifier.createReadStream(buffered);
-            return saveVideoToMultipleSize(videoStream, buffered)
+            return saveVideoToStorage(videoStream, buffered)
               .then(data => {
                 const post = new Post({
                   ...data,
@@ -71,10 +74,30 @@ const createPost = (req, res, next) => {
         }
       })
       .then(result => {
+        _id = result._id;
         res.status(200).json({
           message: "Hail Hydra",
           data: { _id: result._id, redirect: `/gag/${result._id}` }
         });
+        return saveVideoToMultipleType(result._id)
+          .then(data => {
+            newUrls = data.dir;
+            return Post.findById(_id);
+          })
+          .then(post => {
+            let newImages = { ...post.images };
+            newImages.image460sv = {
+              ...post.images.image460sv,
+              vp9Url: `${process.env.STATIC_DIR}/${newUrls[0]}`,
+              h265Url: `${process.env.STATIC_DIR}/${newUrls[1]}`
+            };
+            post.images = newImages;
+            return post.save();
+          })
+          .then(result => {
+            console.log("COMPLETE BITCHES");
+          })
+          .catch(err => console.log(err));
       })
       .catch(err => {
         console.log(err);
@@ -90,12 +113,12 @@ const createPost = (req, res, next) => {
             image460: {
               height: data.height460,
               width: data.width460,
-              url: `http://localhost:6969/images/${data._id}_460.jpg`
+              url: `${process.env.STATIC_DIR}/${data._id}_460.jpg`
             },
             image700: {
               height: data.height700,
               width: data.width700,
-              url: `http://localhost:6969/images/${data._id}_700.jpg`
+              url: `${process.env.STATIC_DIR}/${data._id}_700.jpg`
             }
           },
           createdBy: req.userId,

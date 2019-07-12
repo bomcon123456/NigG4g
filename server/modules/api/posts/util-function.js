@@ -178,7 +178,7 @@ const resizeAndEncodeVideo = (dir, _id) => {
       .takeFrames(1)
       .output(`./uploads/images/${_id}_460s.jpg`)
 
-      .output(`./uploads/images/${_id}_460s.mp4`)
+      .output(`./uploads/images/${_id}_460sv.mp4`)
       .videoCodec("libx264")
       .size("460x?")
 
@@ -199,11 +199,7 @@ const resizeAndEncodeVideo = (dir, _id) => {
           console.log("file deleted");
         });
         resolve({
-          dir: [
-            `${_id}_460svh265.mp4`,
-            `${_id}_460svvp9.webm`,
-            `${_id}_460s.jpg`
-          ],
+          dir: [`${_id}_460sv.mp4`, `${_id}_460s.jpg`],
           width: 460
         });
       })
@@ -229,15 +225,10 @@ const encodeVideo = (dir, _id, metadata) => {
     .on("end", function() {
       fs.rename(
         `./uploads/images/${_id}_processing.mp4`,
-        `./uploads/images/${_id}_460s.mp4`
+        `./uploads/images/${_id}_460sv.mp4`
       );
       resolve({
-        dir: [
-          `${_id}_460svh265.mp4`,
-          `${_id}_460svvp9.webm`,
-          `${_id}_460sv.mp4`,
-          `${_id}_460s.jpg`
-        ],
+        dir: [`${_id}_460sv.mp4`, `${_id}_460s.jpg`],
         width: metadata.width,
         height: metadata.height
       });
@@ -245,7 +236,30 @@ const encodeVideo = (dir, _id, metadata) => {
     .run();
 };
 
-const saveVideoToMultipleSize = videoStream => {
+const saveVideoToMultipleType = _id => {
+  return new Promise((resolve, reject) => {
+    let command = new FfmpegCommand(`./uploads/images/${_id}_460sv.mp4`)
+
+      .output(`./uploads/images/${_id}_460svh265.mp4`)
+      .videoCodec("libx265")
+
+      .output(`./uploads/images/${_id}_460svvp9.webm`)
+      .videoCodec("libvpx-vp9")
+
+      .on("error", function(err, stdout, stderr) {
+        console.log(err);
+        reject(new Error("video_converting_faled"));
+      })
+      .on("end", function() {
+        resolve({
+          dir: [`${_id}_460svh265.mp4`, `${_id}_460svvp9.webm`]
+        });
+      })
+      .run();
+  });
+};
+
+const saveVideoToStorage = videoStream => {
   const _id = shortid.generate();
   let directory = null;
   let metadata = null;
@@ -275,21 +289,19 @@ const saveVideoToMultipleSize = videoStream => {
           image460: {
             width: result.width,
             height: height,
-            url: `${process.env.STATIC_DIR}/${result.dir[3]}`
+            url: `${process.env.STATIC_DIR}/${result.dir[1]}`
           },
           image460sv: {
             duration: metadata.duration,
             hasAudio: metadata.hasAudio,
             width: result.width,
             height: height,
-            url: `${process.env.STATIC_DIR}/${result.dir[2]}`,
-            h265Url: `${process.env.STATIC_DIR}/${result.dir[0]}`,
-            vp9Url: `${process.env.STATIC_DIR}/${result.dir[1]}`
+            url: `${process.env.STATIC_DIR}/${result.dir[0]}`
           },
           image700: {
             width: result.width,
             height: height,
-            url: `${process.env.STATIC_DIR}/${result.dir[3]}`
+            url: `${process.env.STATIC_DIR}/${result.dir[1]}`
           }
         }
       };
@@ -303,5 +315,6 @@ const saveVideoToMultipleSize = videoStream => {
 
 module.exports = {
   saveImagesToMultipleSize,
-  saveVideoToMultipleSize
+  saveVideoToStorage,
+  saveVideoToMultipleType
 };
