@@ -16,24 +16,6 @@ const checkImageSize = (width, height) => {
   }
 };
 
-const getVideoInfoFromStreams = buffer => {
-  return new Promise((resolve, reject) => {
-    const command = FfmpegCommand.ffprobe(buffer, function(err, metadata) {
-      if (metadata && metadata.streams) {
-        let result = {
-          hasAudio: metadata.streams.length >= 2 ? true : false,
-          duration: metadata.streams[0].duration,
-          width: metadata.streams[0].width,
-          height: metadata.streams[0].height
-        };
-        resolve(result);
-      } else {
-        reject(new Error("file_not_found"));
-      }
-    });
-  });
-};
-
 const validateImage = async (req, res, next) => {
   const { url } = req.body;
   const file = req.file;
@@ -143,6 +125,5 @@ const getUrl = (req, res, next) => {
 
 module.exports = {
   validateImage,
-  getUrl,
-  getVideoInfoFromStreams
+  getUrl
 };

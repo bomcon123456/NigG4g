@@ -53,7 +53,7 @@ const createPost = (req, res, next) => {
             });
           } else if (type === "Animated") {
             const videoStream = streamifier.createReadStream(buffered);
-            return saveVideoToMultipleSize(videoStream)
+            return saveVideoToMultipleSize(videoStream, buffered)
               .then(data => console.log(data))
               .catch(err => console.log(err));
           }
