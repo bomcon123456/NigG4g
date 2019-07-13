@@ -20,9 +20,9 @@
     "yup": "^0.27.0"
   },
   "scripts": {
-    "build-css": "./style/shell/script.sh && stylus -c ./style/main.styl --out public/css/ && echo 'Compile stylus completed!'",
-    "watch-css": "npm run build-css && stylus -c -w ./style/main.styl --out public/css/",
-    "start-js": "HTTPS=true react-scripts start",
+    "build-css": "sh ./style/shell/script.sh&&stylus -c ./style/main.styl --out public/css/&&echo 'Compile stylus completed!'",
+    "watch-css": "npm run build-css&&stylus -c -w ./style/main.styl --out public/css/",
+    "start-js": "set HTTPS=true&&react-scripts start",
     "start": "npm-run-all -p watch-css start-js",
     "build-js": "react-scripts build",
     "build": "npm-run-all build-css build-js",
