@@ -8,7 +8,8 @@ class GeneralFunction extends Component {
     this.handleClickOutside = this.handleClickOutside.bind(this);
     this.handleToggleVisibility = this.handleToggleVisibility.bind(this);
     this.state = {
-      visibility: false
+      visibility: false,
+      clickedOutside: false
     };
   }
 
@@ -36,7 +37,7 @@ class GeneralFunction extends Component {
     return (
       <span>
         <div className="general-function">
-          <button id="header-darkmode-btn" className="darkmode-toggle">
+          <button id="header-darkmode-btn" className="darkmode-toggle" >
             Dark mode
           </button>
           <button
@@ -47,9 +48,11 @@ class GeneralFunction extends Component {
             Search
           </button>
         </div>
-        {this.state.visibility && (
-          <HeaderSearchDropdown ref={this.setWrapperRef} />
-        )}
+        <span ref={this.setWrapperRef}>
+          {this.state.visibility && (
+            <HeaderSearchDropdown />
+          )}
+        </span>
       </span>
     );
   }
