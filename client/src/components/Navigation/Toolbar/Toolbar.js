@@ -4,7 +4,7 @@ import FunctionWrap from "../FunctionWrap/FunctionWrap";
 
 const toolbar = props => {
   return (
-    <header id="top-nav">
+    <header className="top-nav">
       <div className="nav-wrap">
         <a className="my-logo" href="/">
           9GAG
