@@ -4,6 +4,7 @@ import { Switch, Route } from "react-router-dom";
 import { ModalsRegistry } from "./common/react/modals/modals";
 
 import MainPage from "./pages/MainPage/MainPage";
+import TestPage from "./pages/TestPage/TestPage";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import ConfirmResetPassword from "./pages/ConfirmResetPassword/ConfirmResetPassword";
 import Toolbar from "./components/Navigation/Toolbar/Toolbar";
@@ -22,6 +23,7 @@ class App extends Component {
             component={ConfirmResetPassword}
           />
           <Route path="/forgot-password" component={ForgotPassword} />
+          <Route path="/test" exact component={TestPage} />
           <Route path="/" exact component={MainPage} />
         </Switch>
       </div>
