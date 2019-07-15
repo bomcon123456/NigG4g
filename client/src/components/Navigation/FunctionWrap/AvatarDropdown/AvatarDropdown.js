@@ -10,7 +10,7 @@ class AvatarDropdown extends React.Component {
             <Link to="#" onClick={() => console.log("hihdsifd")}>My Profile</Link>
           </li>
           <li>
-            <Link to="#">Settings</Link>
+            <Link to="/settings">Settings</Link>
           </li>
           <li>
             <Link to="#">Logout</Link>
