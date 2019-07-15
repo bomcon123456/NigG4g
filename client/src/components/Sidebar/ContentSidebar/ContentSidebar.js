@@ -8,7 +8,7 @@ class ContentSidebar extends React.Component {
   render() {
     return (
       <div id="content-sidebar">
-        <div className="stealthy-scroll-container padding-top">
+        <div className="stealthy-scroll-container padding-top ">
           <div className="content">
             <div className="block-feature-cover">
               <ul>
