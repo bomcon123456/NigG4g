@@ -11,7 +11,7 @@ class Setting extends Component {
     console.log(this.props)
     return (
       <div>
-        huiuhu
+        {this.props.match.params.settingId}
       </div>
     );
   }

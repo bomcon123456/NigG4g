@@ -26,7 +26,7 @@ class SettingsPage extends Component {
               <Link to={`${this.props.match.url}/profile`}>Profile</Link>
             </li>
           </ul>
-          <Route path={`${this.props.match.path}/"topicId`} component={Setting} />
+          <Route path={`${this.props.match.path}/:settingId`} component={Setting} />
 
         </div>
       </LayoutWithoutSidebarRight>
