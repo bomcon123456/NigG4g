@@ -73,7 +73,8 @@ const timeDifference = date => {
   let mins = Math.floor(millisec / 60000);
   let hrs = Math.floor(mins / 60);
   let days = Math.floor(hrs / 24);
-  let yrs = Math.floor(days / 365);
+  console.log(date);
+  console.log({ millisec, sec, mins, hrs, days });
   if (days <= 0) {
     if (hrs <= 0) {
       if (mins <= 0) {
@@ -81,7 +82,7 @@ const timeDifference = date => {
       }
       return `${mins}m`;
     }
-    return `${hrs}m`;
+    return `${hrs}h`;
   } else if (days <= 30) {
     return `${days}d`;
   } else {

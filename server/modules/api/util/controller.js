@@ -129,17 +129,19 @@ const getUrl = (req, res, next) => {
       }
     })
     .then(data => {
-      const { width, height } = data;
-      if (width && height) {
-        if (checkImageSize(width, height)) {
-          res.status(200).json({
-            message: "valid_picture",
-            ...sendData
-          });
-        } else {
-          const error = new Error("invalid_picture");
-          error.statusCode = 406;
-          throw error;
+      if (data) {
+        const { width, height } = data;
+        if (width && height) {
+          if (checkImageSize(width, height)) {
+            res.status(200).json({
+              message: "valid_picture",
+              ...sendData
+            });
+          } else {
+            const error = new Error("invalid_picture");
+            error.statusCode = 406;
+            throw error;
+          }
         }
       }
     })

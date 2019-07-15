@@ -79,13 +79,13 @@ const createPost = async (req, res, next) => {
     });
     if (type === "Animated") {
       try {
-        const vidUrl = await saveVideoToMultipleType(result._id);
+        const { dir } = await saveVideoToMultipleType(result._id);
         let post = await Post.findById(result._id);
         let newImages = { ...post.images };
         newImages.image460sv = {
           ...post.images.image460sv,
-          vp9Url: `${process.env.STATIC_DIR}/${vidUrl[0]}`,
-          h265Url: `${process.env.STATIC_DIR}/${vidUrl[1]}`
+          vp9Url: `${process.env.IMAGE_DIR}/${dir[0]}`,
+          h265Url: `${process.env.IMAGE_DIR}/${dir[1]}`
         };
         post.images = newImages;
         await post.save();

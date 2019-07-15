@@ -208,32 +208,37 @@ const resizeAndEncodeVideo = (dir, _id) => {
 };
 
 const encodeVideo = (dir, _id, metadata) => {
-  let command = new FfmpegCommand(dir)
-    .takeFrames(1)
-    .output(`./uploads/images/${_id}_460s.jpg`)
+  return new Promise((resolve, reject) => {
+    let command = new FfmpegCommand(dir)
+      .takeFrames(1)
+      .output(`./uploads/images/${_id}_460s.jpg`)
 
-    // .output(`./uploads/images/${_id}_460svh265.mp4`)
-    // .videoCodec("libx265")
+      // .output(`./uploads/images/${_id}_460svh265.mp4`)
+      // .videoCodec("libx265")
 
-    // .output(`./uploads/images/${_id}_460svvp9.webm`)
-    // .videoCodec("libvpx-vp9")
+      // .output(`./uploads/images/${_id}_460svvp9.webm`)
+      // .videoCodec("libvpx-vp9")
 
-    .on("error", function(err, stdout, stderr) {
-      console.log(err);
-      reject(new Error("[video_converting_failed]resize"));
-    })
-    .on("end", function() {
-      fs.rename(
-        `./uploads/images/${_id}_processing.mp4`,
-        `./uploads/images/${_id}_460sv.mp4`
-      );
-      resolve({
-        dir: [`${_id}_460sv.mp4`, `${_id}_460s.jpg`],
-        width: metadata.width,
-        height: metadata.height
-      });
-    })
-    .run();
+      .on("error", function(err, stdout, stderr) {
+        console.log(err);
+        reject(new Error("[video_converting_failed]encode"));
+      })
+      .on("end", function() {
+        fs.rename(
+          `./uploads/images/${_id}_processing.mp4`,
+          `./uploads/images/${_id}_460sv.mp4`,
+          () => {
+            console.log("rename_successfully");
+          }
+        );
+        resolve({
+          dir: [`${_id}_460sv.mp4`, `${_id}_460s.jpg`],
+          width: metadata.width,
+          height: metadata.height
+        });
+      })
+      .run();
+  });
 };
 
 const saveVideoToMultipleType = _id => {
@@ -289,19 +294,19 @@ const saveVideoToStorage = videoStream => {
           image460: {
             width: result.width,
             height: height,
-            url: `${process.env.STATIC_DIR}/${result.dir[1]}`
+            url: `${process.env.IMAGE_DIR}/${result.dir[1]}`
           },
           image460sv: {
             duration: metadata.duration,
             hasAudio: metadata.hasAudio,
             width: result.width,
             height: height,
-            url: `${process.env.STATIC_DIR}/${result.dir[0]}`
+            url: `${process.env.IMAGE_DIR}/${result.dir[0]}`
           },
           image700: {
             width: result.width,
             height: height,
-            url: `${process.env.STATIC_DIR}/${result.dir[1]}`
+            url: `${process.env.IMAGE_DIR}/${result.dir[1]}`
           }
         }
       };

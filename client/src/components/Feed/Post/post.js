@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import classnames from "classnames";
 
-import sprite from "../../../assets/img/sprite.png";
-
 import { timeDifference } from "../../../common/utils/common-util";
 
 class Post extends Component {
@@ -12,6 +10,8 @@ class Post extends Component {
 
     this.state = {};
     this.pictureStyle = {};
+    this.videoStyle = {};
+    this.videoContainerStyle = {};
   }
 
   componentWillMount() {
@@ -20,13 +20,32 @@ class Post extends Component {
     const { image460, image460sv } = images;
     if (type === "Photo") {
       if (image460.width === image460.height) {
-        console.log("imere");
         this.pictureStyle = {
           minHeight: 500
         };
       } else {
         this.pictureStyle = {
           minHeight: (500 / image460.width) * image460.height
+        };
+      }
+    } else if (type === "Animated") {
+      if (image460.width === image460.height) {
+        this.videoStyle = {
+          minHeight: 500
+        };
+      } else if (image460.width > image460.height) {
+        this.videoStyle = {
+          minHeight: (500 / image460.width) * image460.height
+        };
+      } else {
+        let realWidth = (500 / image460.height) * image460.width;
+        this.videoStyle = {
+          width: realWidth,
+          height: 500,
+          maxWidth: 500
+        };
+        this.videoContainerStyle = {
+          paddingLeft: (500 - realWidth) / 2
         };
       }
     }
@@ -47,7 +66,26 @@ class Post extends Component {
       </picture>
     );
     if (type === "Animated") {
-      media = <video />;
+      media = (
+        <div style={this.videoContainerStyle}>
+          <video
+            preLoad="auto"
+            poster={image460.url ? image460.url : ""}
+            loop="loop"
+            style={this.videoStyle}
+          >
+            {image460sv.vp9Url ? (
+              <source src={image460sv.vp9Url} type="video/webm" />
+            ) : null}
+            {image460sv.h265Url ? (
+              <source src={image460sv.h265Url} type="video/mp4" />
+            ) : null}
+            {image460sv.url ? (
+              <source src={image460sv.url} type="video/mp4" />
+            ) : null}
+          </video>
+        </div>
+      );
     }
     return (
       <article
