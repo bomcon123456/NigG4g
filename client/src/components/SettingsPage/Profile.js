@@ -70,6 +70,7 @@ class Profile extends Component {
             <input className="day" type="text" name="dob_day" placeholder="DD" />
           </div>
         </div>
+
       </form>
     );
   }
