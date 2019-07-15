@@ -26,8 +26,8 @@ class App extends Component {
           />
           <Route path="/forgot-password" component={ForgotPassword} />
           <Route path="/test" exact component={TestPage} />
-          <Route path="/" exact component={MainPage} />
           <Route path="/settings" component={SettingsPage} />
+          <Route path="/" exact component={MainPage} />
           <Route component={ErrorPage} />
         </Switch>
       </div>

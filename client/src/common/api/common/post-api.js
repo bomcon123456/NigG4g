@@ -5,7 +5,10 @@ export const postApi = {
     return axiosApi.get("/posts/" + postId);
   },
   getPosts(page = null) {
-    return axiosApi.get("/posts" + page != null ? "/?page=" + page : null);
+    return axiosApi
+      .get("/posts" + (page != null ? "/?page=" + page : ""))
+      .then(data => data.data.post)
+      .catch(err => err);
   },
   postPost(data) {
     return axiosApi.post("/posts", data, {

@@ -49,4 +49,44 @@ const getMetaTags = url => {
     });
 };
 
-export { wait, getBase64, buildParams, getMetaTags };
+const getMonthName = (month, length) => {
+  let months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
+  return months[month].substring(0, length);
+};
+
+const timeDifference = date => {
+  let millisec = Math.abs(date - Date.now());
+  let sec = Math.floor(millisec / 1000);
+  let mins = Math.floor(millisec / 60000);
+  let hrs = Math.floor(mins / 60);
+  let days = Math.floor(hrs / 24);
+  let yrs = Math.floor(days / 365);
+  if (days <= 0) {
+    if (hrs <= 0) {
+      if (mins <= 0) {
+        return `${sec}s`;
+      }
+      return `${mins}m`;
+    }
+    return `${hrs}m`;
+  } else if (days <= 30) {
+    return `${days}d`;
+  } else {
+    return `${date.getDate()} ${getMonthName(date.getMonth(), 3)}`;
+  }
+};
+
+export { wait, getBase64, buildParams, getMetaTags, timeDifference };

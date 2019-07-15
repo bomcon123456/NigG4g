@@ -39,14 +39,14 @@ const createPost = async (req, res, next) => {
           image460: {
             height: data.height460,
             width: data.width460,
-            url: `http://localhost:6969/images/${data._id}_460.jpg`,
-            webpUrl: `http://localhost:6969/images/${data._id}_460.webp`
+            url: `${process.env.IMAGE_DIR}/${data._id}_460.jpg`,
+            webpUrl: `${process.env.IMAGE_DIR}/${data._id}_460.webp`
           },
           image700: {
             height: data.height700,
             width: data.width700,
-            url: `http://localhost:6969/images/${data._id}_700.jpg`,
-            webpUrl: `http://localhost:6969/images/${data._id}_700.webp`
+            url: `${process.env.IMAGE_DIR}/${data._id}_700.jpg`,
+            webpUrl: `${process.env.IMAGE_DIR}/${data._id}_700.webp`
           }
         },
         createdBy: req.userId,
@@ -110,6 +110,7 @@ const getPosts = (req, res, next) => {
     .skip((page - 1) * 20)
     .limit(20)
     .populate("createdBy", "username avatarURL")
+    .populate("categoryId")
     .exec()
     .then(data => {
       res.status(200).json({
