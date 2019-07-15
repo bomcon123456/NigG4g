@@ -37,8 +37,8 @@ class Feed extends Component {
     return (
       <div className={classnames("feed", className)}>
         {hasProfile ? <ProfileTag title="Area 51" /> : null}
-        {posts.map(each => (
-          <Post key={each._id} post={each} />
+        {posts.map((each, i) => (
+          <Post firstPost={i === 0} key={each._id} post={each} />
         ))}
       </div>
     );

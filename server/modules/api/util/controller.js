@@ -1,6 +1,5 @@
 const probe = require("probe-image-size");
 const sharp = require("sharp");
-const FfmpegCommand = require("fluent-ffmpeg");
 const ogs = require("open-graph-scraper");
 
 const checkImageSize = (width, height) => {
@@ -98,6 +97,7 @@ const validateImage = async (req, res, next) => {
 
 const getUrl = (req, res, next) => {
   var options = { url: req.body.url };
+  let sendData = {};
   ogs(options)
     .then(result => {
       if (result.success && result.data && result.data.ogUrl) {
@@ -109,6 +109,13 @@ const getUrl = (req, res, next) => {
             message = checkImageSize(width, height)
               ? "valid_picture"
               : "invalid_picture";
+          } else {
+            sendData = {
+              image: ogImage,
+              video: ogVideo,
+              type: ogType
+            };
+            return probe(ogImage.url);
           }
         } else if (ogVideo) {
           message = "valid_video";
@@ -121,8 +128,23 @@ const getUrl = (req, res, next) => {
         });
       }
     })
+    .then(data => {
+      const { width, height } = data;
+      if (width && height) {
+        if (checkImageSize(width, height)) {
+          res.status(200).json({
+            message: "valid_picture",
+            ...sendData
+          });
+        } else {
+          const error = new Error("invalid_picture");
+          error.statusCode = 406;
+          throw error;
+        }
+      }
+    })
     .catch(err => {
-      console.log("[Scrapper Error]", error);
+      console.log("[Scrapper Error]", err);
       next(err);
     });
 };

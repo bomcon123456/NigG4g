@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import classnames from "classnames";
+
+import sprite from "../../../assets/img/sprite.png";
 
 import { timeDifference } from "../../../common/utils/common-util";
 
@@ -21,22 +24,16 @@ class Post extends Component {
         this.pictureStyle = {
           minHeight: 500
         };
-      } else if (image460.width > image460.height) {
-        this.pictureStyle = {
-          minHeight: (500 / image460.width) * image460.height
-        };
       } else {
         this.pictureStyle = {
-          width: image460.width * (500 / image460.height),
-          height: 500,
-          maxWidth: 500
+          minHeight: (500 / image460.width) * image460.height
         };
       }
     }
   }
 
   render() {
-    const { post } = this.props;
+    const { post, firstPost } = this.props;
     const { images, type, createdAt } = post;
     const { image460, image460sv } = images;
     console.log(this.pictureStyle);
@@ -53,7 +50,11 @@ class Post extends Component {
       media = <video />;
     }
     return (
-      <article className="post">
+      <article
+        className={classnames("post", {
+          "no-pd-t": firstPost
+        })}
+      >
         <header>
           <div className="post-section">
             <img
@@ -78,12 +79,14 @@ class Post extends Component {
             {post.comments.length + " comments"}
           </Link>
         </p>
-        {/* <div className="post-after-bar">
-          <ul className="btn-vote left" />
-          <ul className="btn-vote left" />
-          <ul className="btn-vote left" />
-          <ul className="btn-vote left" />
-        </div> */}
+        <div className="post-after-bar">
+          <ul className="btn-vote left">
+            <li>
+              <div className="up" />
+            </li>
+          </ul>
+          <div className="clearfix" />
+        </div>
       </article>
     );
   }

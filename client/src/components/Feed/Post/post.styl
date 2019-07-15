@@ -1,4 +1,9 @@
 .post {
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 20px 0 24px 0;
+  box-sizing: border-box;
+
   header {
     margin-bottom: 8px;
 
@@ -50,8 +55,45 @@
       color: #999;
 
       &:hover {
-        color: #888;
+        color: #777;
       }
     }
+  }
+}
+
+.btn-vote {
+  overflow: hidden;
+
+  li {
+    margin: 0 8px 0 0;
+    float: left;
+    list-style: none;
+  }
+
+  div {
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    width: 44px;
+    height: 34px;
+    display: block;
+    text-indent: -999px;
+    position: relative;
+  }
+
+  .up:after, .down:after {
+    position: absolute;
+    content: ' ';
+    width: 30px;
+    height: 30px;
+    left: 50%;
+    top: 50%;
+    margin-top: -15px;
+    margin-left: -15px;
+  }
+
+  .up:after {
+    background: url('https://localhost:6969/images/sprite.png') -120px 0 no-repeat;
+    background-size: 510px 120px;
   }
 }

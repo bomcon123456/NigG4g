@@ -13,7 +13,8 @@ class CategorySection extends React.Component {
       visibility: false
     };
 
-    this.categories = categoryCache.syncGet();
+    const cachedCategory = categoryCache.syncGet();
+    this.categories = cachedCategory ? cachedCategory : [];
   }
 
   setWrapperRef(node) {
