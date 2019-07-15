@@ -1,5 +1,4 @@
 .post {
-  margin-bottom: 24px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   padding: 20px 0 24px 0;
   box-sizing: border-box;
@@ -59,6 +58,11 @@
       }
     }
   }
+
+  .post-after-bar {
+    position: relative;
+    width: 500px;
+  }
 }
 
 .btn-vote {
@@ -79,9 +83,14 @@
     display: block;
     text-indent: -999px;
     position: relative;
+    cursor: pointer;
+
+    &:hover {
+      border-color: #aaa;
+    }
   }
 
-  .up:after, .down:after {
+  .up:after, .down:after, .comment:after, .more:after {
     position: absolute;
     content: ' ';
     width: 30px;
@@ -95,5 +104,51 @@
   .up:after {
     background: url('https://localhost:6969/images/sprite.png') -120px 0 no-repeat;
     background-size: 510px 120px;
+  }
+
+  .down:after {
+    background: url('https://localhost:6969/images/sprite.png') -150px 0 no-repeat;
+    background-size: 510px 120px;
+  }
+
+  .comment:after {
+    background: url('https://localhost:6969/images/sprite.png') -180px 0 no-repeat;
+    background-size: 510px 120px;
+  }
+
+  .more:after {
+    background: url('https://localhost:6969/images/sprite.png') -300px 0 no-repeat;
+    background-size: 510px 120px;
+  }
+}
+
+.popup-viewshare {
+  left: 222px;
+  top: 24px;
+  position: absolute;
+  margin-left: -60px;
+  z-index: 15;
+  min-width: 160px;
+
+  ul {
+    list-style-type: none;
+    overflow: hidden;
+    padding: 4px 0;
+    background-color: white;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+
+    li {
+      display: block;
+      color: black;
+      line-height: 34px;
+      padding: 0 16px;
+      font-size: 14px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #eee;
+      }
+    }
   }
 }

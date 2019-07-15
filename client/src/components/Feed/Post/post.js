@@ -84,7 +84,28 @@ class Post extends Component {
             <li>
               <div className="up" />
             </li>
+            <li>
+              <div className="down" />
+            </li>
+            <li>
+              <div className="comment" />
+            </li>
           </ul>
+          <div>
+            <ul className="btn-vote left">
+              <li>
+                <div className="more" />
+              </li>
+            </ul>
+            <div className="popup-viewshare hide">
+              <ul>
+                <li>Twitter</li>
+                <li>Email</li>
+                <li>Report</li>
+                <li>I just don't like it</li>
+              </ul>
+            </div>
+          </div>
           <div className="clearfix" />
         </div>
       </article>

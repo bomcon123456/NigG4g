@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Setting from "../../components/SettingsPage/Setting";
 import Account from "../../components/SettingsPage/Account";
 
-import LayoutWithoutSidebarRight from "../../hoc/Layout/LayoutWithoutSidebarRight"
+import LayoutWithoutSidebarRight from "../../hoc/Layout/LayoutWithoutSidebarRight";
 
 import { Route, Link, Switch } from "react-router-dom";
 
@@ -29,7 +29,10 @@ class SettingsPage extends Component {
             </li>
           </ul>
           <Switch>
-            <Route path={`${this.props.match.path}/:settingId`} component={Setting} />
+            <Route
+              path={`${this.props.match.path}/:settingId`}
+              component={Setting}
+            />
             <Route path={`${this.props.match.path}`} component={Account} />
           </Switch>
         </div>

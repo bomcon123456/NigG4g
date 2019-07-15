@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 
 import Toolbar from "../../components/Navigation/Toolbar/Toolbar";
 import Sidebar1 from "../../components/Sidebar/Sidebar";
-import ContentSidebar from "../../components/Sidebar/ContentSidebar/ContentSidebar"
+import ContentSidebar from "../../components/Sidebar/ContentSidebar/ContentSidebar";
 
 class Layout extends Component {
   constructor(props) {
