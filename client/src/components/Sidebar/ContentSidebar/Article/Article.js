@@ -10,7 +10,7 @@ class Article extends React.Component {
   render() {
     return (
       <li>
-        <Link>
+        <Link to="/">
           <div className="article-img">
             <img src={this.props.img} alt="article-img" />
           </div>

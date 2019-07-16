@@ -3,7 +3,7 @@ import classnames from "classnames";
 
 import { postApi } from "../../common/api/common/post-api";
 import ProfileTag from "./ProfileTag/ProfileTag";
-import Post from "./Post/post";
+import Post from "./Post/Post";
 
 class Feed extends Component {
   constructor(props) {

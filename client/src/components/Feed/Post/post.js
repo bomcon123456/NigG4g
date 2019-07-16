@@ -55,12 +55,11 @@ class Post extends Component {
     const { post, firstPost } = this.props;
     const { images, type, createdAt } = post;
     const { image460, image460sv } = images;
-    console.log(this.pictureStyle);
     const time = timeDifference(new Date(createdAt));
     let media = (
       <picture style={this.pictureStyle}>
         {image460.webpUrl ? (
-          <source srcset={image460.webpUrl} type="image/webp" />
+          <source srcSet={image460.webpUrl} type="image/webp" />
         ) : null}
         <img src={image460.url} alt={post.name} style={this.pictureStyle} />
       </picture>
@@ -69,7 +68,7 @@ class Post extends Component {
       media = (
         <div style={this.videoContainerStyle}>
           <video
-            preLoad="auto"
+            preload="auto"
             poster={image460.url ? image460.url : ""}
             loop="loop"
             style={this.videoStyle}
