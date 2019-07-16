@@ -2,21 +2,63 @@ import React, { Component } from "react";
 import classnames from "classnames";
 import { Waypoint } from "react-waypoint";
 
+let hidden = null;
+let visibilityChange = null;
+if (typeof document.hidden !== "undefined") {
+  // Opera 12.10 and Firefox 18 and later support
+  hidden = "hidden";
+  visibilityChange = "visibilitychange";
+} else if (typeof document.msHidden !== "undefined") {
+  hidden = "msHidden";
+  visibilityChange = "msvisibilitychange";
+} else if (typeof document.webkitHidden !== "undefined") {
+  hidden = "webkitHidden";
+  visibilityChange = "webkitvisibilitychange";
+}
+
 //@TODO: Video handle click: (show length, click to play when switch tab)
 class VideoPlayer extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      firstTime: true,
+      showLength: true,
       playing: false,
-      sound: false
+      sound: false,
+      action: []
     };
     this.videoElement = null;
   }
 
+  componentDidMount() {
+    document.addEventListener(
+      visibilityChange,
+      this.handleVisibilityChange,
+      false
+    );
+  }
+
+  handleVisibilityChange = () => {
+    if (document[hidden]) {
+      this.videoElement && this.videoElement.pause();
+      this.setState({ showLength: true, firstTime: true, playing: false });
+    }
+  };
+
+  componentWillUnmount() {
+    document.removeEventListener(visibilityChange, this.handleVisibilityChange);
+  }
+
   handlePlay = () => {
     this.videoElement && this.videoElement.play();
+    if (this.state.firstTime) {
+      setTimeout(() => {
+        this.setState({ showLength: false });
+      }, 2000);
+    }
     this.setState({
+      firstTime: false,
       playing: true
     });
   };
@@ -27,10 +69,14 @@ class VideoPlayer extends Component {
   };
 
   togglePlay = (hasAudio, playing) => {
-    if (playing) {
-      this.handlePause();
+    if (hasAudio && !this.state.firstTime) {
+      this.toggleSound(this.state.sound);
     } else {
-      this.handlePlay();
+      if (playing) {
+        this.handlePause();
+      } else {
+        this.handlePlay();
+      }
     }
   };
 
@@ -91,7 +137,15 @@ class VideoPlayer extends Component {
                 />
               </div>
             )}
-            {hasAudio && <p className="length">0:30</p>}
+            {hasAudio && (
+              <p
+                className={classnames("length", {
+                  hide: !this.state.showLength
+                })}
+              >
+                0:30
+              </p>
+            )}
             <div
               className={classnames({
                 hide: playing === true,
