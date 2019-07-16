@@ -15,8 +15,6 @@ const postRoutes = require("./modules/api/posts/router");
 const categoryRoutes = require("./modules/api/category/router");
 const utilRoutes = require("./modules/api/util/router");
 
-// const Post = require("./modules/api/posts/model");
-
 const {
   fileFilter,
   fileStorage
