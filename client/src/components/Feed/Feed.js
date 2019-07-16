@@ -3,7 +3,6 @@ import classnames from "classnames";
 import InfiniteScroll from "react-infinite-scroller";
 
 import { postApi } from "../../common/api/common/post-api";
-import { LoadingInline } from "../../common/react/loading-inline/loading-inline";
 import ProfileTag from "./ProfileTag/ProfileTag";
 import Post from "./Post/Post";
 
