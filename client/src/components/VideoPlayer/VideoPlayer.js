@@ -32,11 +32,13 @@ class VideoPlayer extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener(
-      visibilityChange,
-      this.handleVisibilityChange,
-      false
-    );
+    if (this.props.video.image460sv.hasAudio) {
+      document.addEventListener(
+        visibilityChange,
+        this.handleVisibilityChange,
+        false
+      );
+    }
   }
 
   handleVisibilityChange = () => {
@@ -47,7 +49,12 @@ class VideoPlayer extends Component {
   };
 
   componentWillUnmount() {
-    document.removeEventListener(visibilityChange, this.handleVisibilityChange);
+    if (this.props.video.image460sv.hasAudio) {
+      document.removeEventListener(
+        visibilityChange,
+        this.handleVisibilityChange
+      );
+    }
   }
 
   handlePlay = () => {
