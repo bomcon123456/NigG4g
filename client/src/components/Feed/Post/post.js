@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import classnames from "classnames";
 
 import { timeDifference } from "../../../common/utils/common-util";
+import VideoPlayer from "../../../components/VideoPlayer/VideoPlayer";
 
 class Post extends Component {
   constructor(props) {
@@ -54,7 +55,7 @@ class Post extends Component {
   render() {
     const { post, firstPost } = this.props;
     const { images, type, createdAt } = post;
-    const { image460, image460sv } = images;
+    const { image460 } = images;
     const time = timeDifference(new Date(createdAt));
     let media = (
       <picture style={this.pictureStyle}>
@@ -66,24 +67,11 @@ class Post extends Component {
     );
     if (type === "Animated") {
       media = (
-        <div style={this.videoContainerStyle}>
-          <video
-            preload="auto"
-            poster={image460.url ? image460.url : ""}
-            loop="loop"
-            style={this.videoStyle}
-          >
-            {image460sv.vp9Url ? (
-              <source src={image460sv.vp9Url} type="video/webm" />
-            ) : null}
-            {image460sv.h265Url ? (
-              <source src={image460sv.h265Url} type="video/mp4" />
-            ) : null}
-            {image460sv.url ? (
-              <source src={image460sv.url} type="video/mp4" />
-            ) : null}
-          </video>
-        </div>
+        <VideoPlayer
+          video={images}
+          videoStyle={this.videoStyle}
+          containerStyle={this.videoContainerStyle}
+        />
       );
     }
     return (
