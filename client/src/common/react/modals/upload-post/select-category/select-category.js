@@ -57,7 +57,7 @@ export class SelectCategoryModal extends KComponent {
     let sendData = new FormData();
     sendData.append("title", data.title);
     sendData.append("category", data.category);
-    sendData.append("tags", data.tags);
+    sendData.append("tags", JSON.stringify(data.tags));
     sendData.append("url", data.file ? "" : data.url);
     sendData.append("type", data.type);
     sendData.append("file", data.file ? data.file.file : null);

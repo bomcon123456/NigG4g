@@ -88,4 +88,23 @@ const timeDifference = date => {
   }
 };
 
-export { wait, getBase64, buildParams, getMetaTags, timeDifference };
+const convertSecToMinSec = sec => {
+  let second = Math.floor(sec);
+
+  let min = Math.floor(second / 60);
+  second = second - min * 60;
+  second = second.toString();
+  if (second.length === 1) {
+    second = `0${second}`;
+  }
+  return `${min}:${second}`;
+};
+
+export {
+  wait,
+  getBase64,
+  buildParams,
+  getMetaTags,
+  timeDifference,
+  convertSecToMinSec
+};

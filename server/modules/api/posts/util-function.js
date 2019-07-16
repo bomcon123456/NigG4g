@@ -140,6 +140,7 @@ const getVideoInfoFromStreams = dir => {
 
 const saveStreamToTempVid = (videoStream, _id) => {
   return new Promise((resolve, reject) => {
+    console.log(`[PROCESSING_TEMP_VID]${_id}`);
     let command = new FfmpegCommand(videoStream)
       .output(`./uploads/images/${_id}_processing.mp4`)
       .on("error", function(err, stdout, stderr) {
@@ -173,6 +174,7 @@ const takeOneFrameOfVid = (dir, _id) => {
 
 const resizeAndEncodeVideo = (dir, _id) => {
   return new Promise((resolve, reject) => {
+    console.log(`[START_PROCESSING_RESIZE_ENCODE]${_id}`);
     let command = new FfmpegCommand(dir)
 
       .takeFrames(1)
@@ -196,7 +198,7 @@ const resizeAndEncodeVideo = (dir, _id) => {
       })
       .on("end", function() {
         fs.unlink(`./uploads/images/${_id}_processing.mp4`, () => {
-          console.log("file deleted");
+          console.log(`[PROCESSING_RESIZE_ENCODE_COMPLETE]${_id}`);
         });
         resolve({
           dir: [`${_id}_460sv.mp4`, `${_id}_460s.jpg`],
@@ -209,6 +211,7 @@ const resizeAndEncodeVideo = (dir, _id) => {
 
 const encodeVideo = (dir, _id, metadata) => {
   return new Promise((resolve, reject) => {
+    console.log(`[START_ENCODE_PROCESSING]${_id}`);
     let command = new FfmpegCommand(dir)
       .takeFrames(1)
       .output(`./uploads/images/${_id}_460s.jpg`)
@@ -228,7 +231,7 @@ const encodeVideo = (dir, _id, metadata) => {
           `./uploads/images/${_id}_processing.mp4`,
           `./uploads/images/${_id}_460sv.mp4`,
           () => {
-            console.log("rename_successfully");
+            console.log(`[ENCODE_PROCESSING_COMPLETE]${_id}`);
           }
         );
         resolve({
@@ -243,21 +246,30 @@ const encodeVideo = (dir, _id, metadata) => {
 
 const saveVideoToMultipleType = _id => {
   return new Promise((resolve, reject) => {
+    console.log(`[START_MULTIPLE_PROCESSING]${_id}`);
     let command = new FfmpegCommand(`./uploads/images/${_id}_460sv.mp4`)
 
-      .output(`./uploads/images/${_id}_460svh265.mp4`)
-      .videoCodec("libx265")
+      // .output(`./uploads/images/${_id}_460svh265.mp4`)
+      // .videoCodec("libx265")
 
       .output(`./uploads/images/${_id}_460svvp9.webm`)
       .videoCodec("libvpx-vp9")
+
+      .output(`./uploads/images/${_id}_460svwm.webm`)
+      .videoCodec("libvpx")
 
       .on("error", function(err, stdout, stderr) {
         console.log(err);
         reject(new Error("[video_converting_failed]lazy_convert"));
       })
       .on("end", function() {
+        console.log(`[MULTIPLE_PROCESSING_COMPLETE]${_id}`);
         resolve({
-          dir: [`${_id}_460svh265.mp4`, `${_id}_460svvp9.webm`]
+          dir: [
+            `${_id}_460svh265.mp4`,
+            `${_id}_460svvp9.webm`,
+            `${_id}_460svwm.webm`
+          ]
         });
       })
       .run();

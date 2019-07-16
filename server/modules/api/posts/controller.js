@@ -12,8 +12,12 @@ const {
 // @TODO: Check video upload by file -> OKEY BRO
 const createPost = async (req, res, next) => {
   const { title, tags, url, nsfw, category, type, attributeLink } = req.body;
-  let savedTags = tags;
-
+  let savedTags = JSON.parse(tags);
+  savedTags = savedTags.map(each => {
+    let lowercase = each.toLowerCase();
+    lowercase = lowercase.replace(/\s+/g, "-");
+    return lowercase;
+  });
   let buffer = null;
   let result = null;
   let file = req.file;
@@ -84,10 +88,14 @@ const createPost = async (req, res, next) => {
         const { dir } = await saveVideoToMultipleType(result._id);
         let post = await Post.findById(result._id);
         let newImages = { ...post.images };
+        newImages.image460svwm = {
+          ...post.images.image460sv
+        };
+        newImages.image460svwm.url = `${process.env.IMAGE_DIR}/${dir[2]}`;
         newImages.image460sv = {
           ...post.images.image460sv,
-          vp9Url: `${process.env.IMAGE_DIR}/${dir[0]}`,
-          h265Url: `${process.env.IMAGE_DIR}/${dir[1]}`
+          vp9Url: `${process.env.IMAGE_DIR}/${dir[1]}`
+          // h265Url: `${process.env.IMAGE_DIR}/${dir[0]}` -> @NOTE: Commented because convert takes longer
         };
         post.images = newImages;
         await post.save();
@@ -104,9 +112,20 @@ const createPost = async (req, res, next) => {
 
 const getPosts = (req, res, next) => {
   const page = req.query.page || 1;
-  return Post.find({
+  const tag = req.query.tag || null;
+
+  let options = {
     active: true
-  })
+  };
+  if (tag !== null) {
+    let lowercaseTag = tag.toLowerCase();
+    lowercaseTag = lowercaseTag.replace(/\s+/g, "-");
+    options = {
+      ...options,
+      tags: { $all: lowercaseTag }
+    };
+  }
+  return Post.find(options)
     .sort({ createdAt: -1 })
     .skip((page - 1) * 20)
     .limit(20)
@@ -151,6 +170,26 @@ const getPost = (req, res, next) => {
       next(err);
     });
 };
+
+// const getPostByTag = (req, res, next) => {
+//   return Post.find({ tags: { $tag: tag } })
+//     .then(data => {
+//       if (!data) {
+//         const error = new Error("post_not_found");
+//         error.statusCode = 406;
+//         throw error;
+//       }
+//       console.log(data);
+//       res.status(200).json({
+//         message: "fetched_posted_by_tag",
+//         data: data
+//       });
+//     })
+//     .catch(err => {
+//       console.log(err);
+//       next(err);
+//     });
+// };
 
 // @TODO: NEED VERY BIG REWORK!
 const updatePost = (req, res, next) => {};

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import classnames from "classnames";
 import { Waypoint } from "react-waypoint";
 
+import { convertSecToMinSec } from "../../common/utils/common-util";
+
 let hidden = null;
 let visibilityChange = null;
 if (typeof document.hidden !== "undefined") {
@@ -25,8 +27,7 @@ class VideoPlayer extends Component {
       firstTime: true,
       showLength: true,
       playing: false,
-      sound: false,
-      action: []
+      sound: false
     };
     this.videoElement = null;
   }
@@ -99,9 +100,10 @@ class VideoPlayer extends Component {
 
   render() {
     const { video, videoStyle, containerStyle } = this.props;
-    const { hasAudio } = video.image460sv;
-
+    const { hasAudio, duration } = video.image460sv;
+    let length = convertSecToMinSec(duration);
     const { playing, sound } = this.state;
+
     return (
       <Waypoint
         onEnter={this.handlePlay}
@@ -123,6 +125,9 @@ class VideoPlayer extends Component {
             >
               {video.image460sv.vp9Url ? (
                 <source src={video.image460sv.vp9Url} type="video/webm" />
+              ) : null}
+              {video.image460svwm && video.image460svwm.url ? (
+                <source src={video.image460svwm.url} type="video/webm" />
               ) : null}
               {video.image460sv.h265Url ? (
                 <source src={video.image460sv.h265Url} type="video/mp4" />
@@ -150,7 +155,7 @@ class VideoPlayer extends Component {
                   hide: !this.state.showLength
                 })}
               >
-                0:30
+                {length}
               </p>
             )}
             <div
