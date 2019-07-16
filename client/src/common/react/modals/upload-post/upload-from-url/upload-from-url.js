@@ -9,7 +9,7 @@ import { InputBase } from "../../../input-base/input-base";
 import { uploadPostModal } from "../upload-post";
 import { getMetaTags } from "../../../../utils/scrapper-util";
 // import { getMetaTags } from "../../../../utils/common-util";
-import { utilApi } from "../../../../api/common/util-api";
+// import { utilApi } from "../../../../api/common/util-api";
 import { postingPostModal } from "../posting-post/posting-post";
 
 import { LoadingInline } from "../../../loading-inline/loading-inline";

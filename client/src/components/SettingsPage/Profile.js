@@ -1,6 +1,6 @@
+/* eslint-disable jsx-a11y/accessible-emoji */
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-
 
 class Profile extends Component {
   constructor(props) {
@@ -9,7 +9,7 @@ class Profile extends Component {
   }
 
   render() {
-    console.log(this.props)
+    console.log(this.props);
     return (
       <form id="setting-form">
         <h2>Profile</h2>
@@ -19,7 +19,10 @@ class Profile extends Component {
           <div className="avatar-content">
             <div className="avatar-container">
               <div>
-                <img src="https://accounts-cdn.9gag.com/media/avatar/52335846_100_1.jpg" />
+                <img
+                  src="https://accounts-cdn.9gag.com/media/avatar/52335846_100_1.jpg"
+                  alt="avatar"
+                />
               </div>
             </div>
 
@@ -31,16 +34,21 @@ class Profile extends Component {
           </div>
         </div>
 
-
-
         <div className="field">
           <label>Your Name</label>
-          <input type="text" name="fullName" defaultValue="Minh Nguyen" maxlength="20" />
-          <p className="tips">This is the name that will be visible to other users on 9GAG.</p>
+          <input
+            type="text"
+            name="fullName"
+            defaultValue="Minh Nguyen"
+            maxlength="20"
+          />
+          <p className="tips">
+            This is the name that will be visible to other users on 9GAG.
+          </p>
         </div>
         <div className="field">
           <label>Status</label>
-          <select name="emojiStatus" >
+          <select name="emojiStatus">
             <option value="">None</option>
             <option value="🎃">🎃 Jack-O-Lantern</option>
             <option value="💀">💀 Skull</option>
@@ -48,7 +56,6 @@ class Profile extends Component {
             <option value="🧛">🧛 Vampire</option>
             <option value="🧟">🧟 Zombie</option>
             <option value="🦇">🦇 Bat</option>
-
           </select>
         </div>
 
@@ -65,12 +72,26 @@ class Profile extends Component {
         <div className="field">
           <label>Birthday</label>
           <div className="date-picker">
-            <input className="year" type="text" name="dob_year" placeholder="YYYY" />
-            <input className="month" type="text" name="dob_month" placeholder="MM" />
-            <input className="day" type="text" name="dob_day" placeholder="DD" />
+            <input
+              className="year"
+              type="text"
+              name="dob_year"
+              placeholder="YYYY"
+            />
+            <input
+              className="month"
+              type="text"
+              name="dob_month"
+              placeholder="MM"
+            />
+            <input
+              className="day"
+              type="text"
+              name="dob_day"
+              placeholder="DD"
+            />
           </div>
         </div>
-
       </form>
     );
   }

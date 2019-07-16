@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 
 import Toolbar from "../../components/Navigation/Toolbar/Toolbar";
 import Sidebar1 from "../../components/Sidebar/Sidebar";
-import ContentSidebar from "../../components/Sidebar/ContentSidebar/ContentSidebar"
+// import ContentSidebar from "../../components/Sidebar/ContentSidebar/ContentSidebar"
 
 class LayoutWithoutSidebarRight extends Component {
   constructor(props) {
@@ -27,9 +27,7 @@ class LayoutWithoutSidebarRight extends Component {
           <div className="sidebar-left">
             <Sidebar1 />
           </div>
-          <div className="page-container">
-            {this.props.children}
-          </div>
+          <div className="page-container">{this.props.children}</div>
         </div>
       </Fragment>
       // Add toolbar here

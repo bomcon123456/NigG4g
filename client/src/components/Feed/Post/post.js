@@ -29,16 +29,16 @@ class Post extends Component {
         };
       }
     } else if (type === "Animated") {
-      if (image460.width === image460.height) {
+      if (image460sv.width === image460sv.height) {
         this.videoStyle = {
           minHeight: 500
         };
-      } else if (image460.width > image460.height) {
+      } else if (image460sv.width > image460sv.height) {
         this.videoStyle = {
-          minHeight: (500 / image460.width) * image460.height
+          minHeight: (500 / image460sv.width) * image460sv.height
         };
       } else {
-        let realWidth = (500 / image460.height) * image460.width;
+        let realWidth = (500 / image460sv.height) * image460sv.width;
         this.videoStyle = {
           width: realWidth,
           height: 500,

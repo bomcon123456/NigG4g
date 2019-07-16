@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import Account from "./Account"
-import Profile from "./Profile"
-import Password from "./Password"
-
+import Account from "./Account";
+import Profile from "./Profile";
+import Password from "./Password";
 
 class Setting extends Component {
   constructor(props) {
@@ -11,15 +10,12 @@ class Setting extends Component {
   }
 
   render() {
-    console.log(this.props)
+    console.log(this.props);
     return (
       <div>
-        {(this.props.match.params.settingId == "account") &&
-          <Account />}
-        {(this.props.match.params.settingId == "password") &&
-          <Password />}
-        {(this.props.match.params.settingId == "profile") &&
-          <Profile />}
+        {this.props.match.params.settingId === "account" && <Account />}
+        {this.props.match.params.settingId === "password" && <Password />}
+        {this.props.match.params.settingId === "profile" && <Profile />}
       </div>
     );
   }

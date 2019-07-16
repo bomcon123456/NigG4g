@@ -22,7 +22,9 @@
   "scripts": {
     "build-css": "sh ./style/shell/script.sh&&stylus -c ./style/main.styl --out public/css/&&echo 'Compile stylus completed!'",
     "watch-css": "npm run build-css&&stylus -c -w ./style/main.styl --out public/css/",
-    "start-js": "set HTTPS=true&&react-scripts start",
+    "start-js-window": "set HTTPS=true&&react-scripts start",
+    "start-js": "HTTPS=true react-scripts start",
+    "start-w": "npm-run-all -p watch-css start-js-window",
     "start": "npm-run-all -p watch-css start-js",
     "build-js": "react-scripts build",
     "build": "npm-run-all build-css build-js",
