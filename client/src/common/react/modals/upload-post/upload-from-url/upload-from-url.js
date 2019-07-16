@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import classnames from "classnames";
 import * as yup from "yup";
+import debounce from "lodash/debounce";
 
 import { KComponent } from "../../../../../components/KComponent";
 import { modals } from "../../modals";
@@ -14,7 +15,6 @@ import { postingPostModal } from "../posting-post/posting-post";
 
 import { LoadingInline } from "../../../loading-inline/loading-inline";
 
-//@TODO: Debounce
 export class UploadFromUrlModal extends KComponent {
   constructor(props) {
     super(props);
@@ -104,6 +104,8 @@ export class UploadFromUrlModal extends KComponent {
     }
   };
 
+  debounceCheckFileChanged = debounce(this.handleFileChanged, 1000);
+
   handleLoadSuccess = data => {
     this.setState({
       loading: false,
@@ -163,7 +165,7 @@ export class UploadFromUrlModal extends KComponent {
                   onChange={e => {
                     onChange(e);
                     this.setState({ error: null });
-                    this.handleFileChanged();
+                    this.debounceCheckFileChanged();
                   }}
                   type={"url"}
                   {...other}

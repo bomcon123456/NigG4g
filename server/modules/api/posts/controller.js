@@ -9,9 +9,11 @@ const {
 
 //@TODO: Add API for change posts's votes
 
-// @TODO: Check video upload by file
+// @TODO: Check video upload by file -> OKEY BRO
 const createPost = async (req, res, next) => {
   const { title, tags, url, nsfw, category, type, attributeLink } = req.body;
+  let savedTags = tags;
+
   let buffer = null;
   let result = null;
   let file = req.file;
@@ -64,7 +66,7 @@ const createPost = async (req, res, next) => {
         title: title,
         createdBy: req.userId,
         categoryId: category,
-        tags: tags,
+        tags: savedTags,
         type: "Animated",
         nsfw: nsfw
       });
@@ -100,7 +102,6 @@ const createPost = async (req, res, next) => {
   }
 };
 
-// @TODO: Return image460* only
 const getPosts = (req, res, next) => {
   const page = req.query.page || 1;
   return Post.find({

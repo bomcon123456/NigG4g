@@ -52,7 +52,7 @@ export class PostingPostModal extends KComponent {
     if (this.tagArrays.length <= 2) {
       const tag = text.slice(0, text.length);
       if (tag.length >= 1) {
-        if (/^[a-zA-Z0-9]+$/.test(tag)) {
+        if (/^[a-zA-Z0-9 ]+$/.test(tag)) {
           this.tagArrays.push(tag);
           this.tagInputRef.value = "";
           this.forceUpdate();

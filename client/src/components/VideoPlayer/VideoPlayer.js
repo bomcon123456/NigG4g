@@ -91,7 +91,7 @@ class VideoPlayer extends Component {
                 />
               </div>
             )}
-            {hasAudio && <p class="length">0:30</p>}
+            {hasAudio && <p className="length">0:30</p>}
             <div
               className={classnames({
                 hide: playing === true,
