@@ -12,7 +12,7 @@
     "react-dom": "^16.8.6",
     "react-facebook-login": "^4.1.1",
     "react-google-login": "^5.0.4",
-    "react-player": "^1.11.1",
+    "react-infinite-scroller": "^1.2.4",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",

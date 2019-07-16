@@ -133,9 +133,17 @@ const getPosts = (req, res, next) => {
     .populate("categoryId")
     .exec()
     .then(data => {
+      let nextPage = page ? +page + 1 : 2;
+      let hasMoreItems = true;
+      if (data.length < 20) {
+        hasMoreItems = false;
+      }
+      let nextLink = hasMoreItems ? nextPage : null;
       res.status(200).json({
         message: "fetch_posts_successfully",
-        post: data
+        post: data,
+        nextLink,
+        hasMoreItems
       });
     })
     .catch(err => {

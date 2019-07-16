@@ -7,7 +7,7 @@ export const postApi = {
   getPosts(page = null) {
     return axiosApi
       .get("/posts" + (page != null ? "/?page=" + page : ""))
-      .then(data => data.data.post)
+      .then(data => data.data)
       .catch(err => err);
   },
   postPost(data) {

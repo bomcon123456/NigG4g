@@ -12,6 +12,8 @@ import ConfirmResetPassword from "./pages/ConfirmResetPassword/ConfirmResetPassw
 import Toolbar from "./components/Navigation/Toolbar/Toolbar";
 import VerifyAccount from "./pages/VerifyAccount/VerifyAccount";
 
+import Feed from "./components/Feed/Feed";
+
 class App extends Component {
   render() {
     return (
@@ -19,6 +21,7 @@ class App extends Component {
         <ModalsRegistry />
         <Switch>
           <Route path="/test-nav-bar" component={Toolbar} />
+          <Route path="/test-feed" component={Feed} />
           <Route path="/verify-user" component={VerifyAccount} />
           <Route
             path="/confirm-reset-password"
