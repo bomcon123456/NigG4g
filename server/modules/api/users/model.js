@@ -36,7 +36,27 @@ const userModel = new Schema(
     posts: {
       type: [
         {
-          type: Schema.Types.ObjectId,
+          type: String,
+          ref: "Post"
+        }
+      ],
+      required: false,
+      default: []
+    },
+    upVotes: {
+      type: [
+        {
+          type: String,
+          ref: "Post"
+        }
+      ],
+      required: false,
+      default: []
+    },
+    downVotes: {
+      type: [
+        {
+          type: String,
           ref: "Post"
         }
       ],

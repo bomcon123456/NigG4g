@@ -1,4 +1,5 @@
 const Post = require("./model");
+const User = require("../users/model");
 const axios = require("axios");
 const streamifier = require("streamifier");
 const {
@@ -76,6 +77,7 @@ const createPost = async (req, res, next) => {
       });
       result = await post.save();
     }
+    await User.findByIdAndUpdate(req.userId, { $push: { posts: result._id } });
     res.status(200).json({
       message: "Hail Hydra",
       data: {
@@ -179,9 +181,77 @@ const getPost = (req, res, next) => {
     });
 };
 
-const updatePostVote = (req, res, next) => {
+/**
+ * upVote - boolean
+ * postId - ObjectId (String)
+ */
+const updatePostVote = async (req, res, next) => {
   const postId = req.params.postId;
+  const { upvote } = req.query;
+  console.log(upvote);
   const userId = req.userId;
+  try {
+    const user = await User.findById(userId);
+    const post = await Post.findById(postId);
+    if (!post) {
+      const error = new Error("post_not_found");
+      error.statusCode = 400;
+      throw error;
+    }
+    if (!user) {
+      const error = new Error("not_authenticated");
+      error.statusCode = 401;
+      throw error;
+    }
+    let downVotes = [...user.downVotes];
+    let upVotes = [...user.upVotes];
+    let downIndex = downVotes.findIndex(each => each === postId);
+    let upIndex = upVotes.findIndex(each => each === postId);
+
+    // If user is up-voting this post
+    if (+upvote === 1) {
+      console.log("im here");
+      // If user down-voted this post before
+      if (downIndex !== -1) {
+        post.downVoteCount -= 1;
+        downVotes.splice(downIndex, 1);
+      }
+      // up-vote
+      if (upIndex === -1) {
+        upVotes.push(postId);
+        post.upVoteCount += 1;
+      } else if (upIndex !== -1) {
+        post.upVoteCount -= 1;
+        upVotes.splice(upIndex, 1);
+      }
+    }
+    // down-voting
+    else {
+      if (upIndex !== -1) {
+        post.upVoteCount -= 1;
+        upVotes.splice(upIndex, 1);
+      }
+      if (downIndex === -1) {
+        downVotes.push(postId);
+        post.downVoteCount += 1;
+      } else if (downIndex !== -1) {
+        post.downVoteCount -= 1;
+        downVotes.splice(downIndex, 1);
+      }
+    }
+    user.upVotes = upVotes;
+    user.downVotes = downVotes;
+
+    await post.save();
+    await user.save();
+    res.status(200).json({
+      message: "update_vote_successfully",
+      postId: postId
+    });
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
 };
 
 // @TODO: NEED VERY BIG REWORK!
@@ -660,6 +730,7 @@ module.exports = {
   getPost,
   updatePost,
   deletePost,
+  updatePostVote,
   addComment,
   getPostComments,
   getComment,
