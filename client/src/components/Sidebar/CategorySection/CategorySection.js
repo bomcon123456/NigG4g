@@ -39,7 +39,7 @@ class CategorySection extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="category-div">
         <header>
           <h3>Sections</h3>
         </header>
