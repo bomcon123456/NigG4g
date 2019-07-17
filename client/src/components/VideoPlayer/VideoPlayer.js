@@ -136,7 +136,7 @@ class VideoPlayer extends Component {
                 <source src={video.image460sv.url} type="video/mp4" />
               ) : null}
             </video>
-            {hasAudio && (
+            {hasAudio ? (
               <div
                 className="sound-toggle"
                 onClick={() => this.toggleSound(sound)}
@@ -148,8 +148,8 @@ class VideoPlayer extends Component {
                   })}
                 />
               </div>
-            )}
-            {hasAudio && (
+            ) : null}
+            {hasAudio ? (
               <p
                 className={classnames("length", {
                   hide: !this.state.showLength
@@ -157,22 +157,29 @@ class VideoPlayer extends Component {
               >
                 {length}
               </p>
-            )}
+            ) : null}
             <div
               className={classnames({
                 hide: playing === true,
                 presenting: playing === false
               })}
             >
-              {!hasAudio && <span className="play">GIF</span>}
-              {hasAudio && (
+              {!hasAudio ? (
+                <span
+                  className="play"
+                  onClick={() => this.togglePlay(hasAudio, playing)}
+                >
+                  GIF
+                </span>
+              ) : null}
+              {hasAudio ? (
                 <span
                   className="playVideo"
                   onClick={() => this.togglePlay(hasAudio, playing)}
                 >
                   Play
                 </span>
-              )}
+              ) : null}
             </div>
           </div>
         </div>

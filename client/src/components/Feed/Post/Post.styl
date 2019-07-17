@@ -15,12 +15,21 @@
         width: 20px;
         height: 20px;
         margin-right: 8px;
+        cursor: pointer;
       }
 
       .post-section__message {
         font-size: 12px;
         vertical-align: bottom;
         color: #999;
+
+        span {
+          cursor: pointer;
+
+          &:hover {
+            color: #555;
+          }
+        }
       }
     }
 
@@ -28,6 +37,11 @@
       word-wrap: break-word;
       color: black;
       font-size: 20px;
+      cursor: pointer;
+
+      &:hover {
+        color: rgb(0, 145, 255);
+      }
     }
   }
 
