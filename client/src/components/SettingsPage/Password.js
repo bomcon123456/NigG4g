@@ -15,13 +15,13 @@ class Password extends Component {
 
         <div className="field">
           <label>New Password</label>
-          <input type="password" name="new_password" maxlength="32" autocomplete="off" />
+          <input type="password" name="new_password" maxLength="32" autoComplete="off" />
         </div>
         <div className="field">
           <label>Re-type New Password</label>
-          <input type="password" name="new_password_repeat" maxlength="32" autocomplete="off" />
+          <input type="password" name="new_password_repeat" maxLength="32" autoComplete="off" />
         </div>
-        <div className="btn-save-container">
+        <div className="btn-setting-container">
           <input type="submit" value="Save Changes" />
         </div>
       </form>
