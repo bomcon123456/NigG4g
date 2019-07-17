@@ -188,7 +188,6 @@ const getPost = (req, res, next) => {
 const updatePostVote = async (req, res, next) => {
   const postId = req.params.postId;
   const { upvote } = req.query;
-  console.log(upvote);
   const userId = req.userId;
   try {
     const user = await User.findById(userId);
@@ -210,7 +209,6 @@ const updatePostVote = async (req, res, next) => {
 
     // If user is up-voting this post
     if (+upvote === 1) {
-      console.log("im here");
       // If user down-voted this post before
       if (downIndex !== -1) {
         post.downVoteCount -= 1;

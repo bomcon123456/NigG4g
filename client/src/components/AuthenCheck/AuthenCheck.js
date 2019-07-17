@@ -10,6 +10,7 @@ class AuthenCheck extends KComponent {
     this.onUnmount(
       userInfo.onChange((newState, oldState) => {
         if (!newState || !oldState) {
+          console.log("im changing");
           props.history.push("/");
         }
       })

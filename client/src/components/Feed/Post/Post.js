@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
+import { KComponent } from "../../KComponent";
 import { Link } from "react-router-dom";
 import classnames from "classnames";
 
@@ -8,7 +9,7 @@ import { registerModal } from "../../../common/react/modals/register/register";
 import { timeDifference } from "../../../common/utils/common-util";
 import VideoPlayer from "../../../components/VideoPlayer/VideoPlayer";
 
-class Post extends Component {
+class Post extends KComponent {
   constructor(props) {
     super(props);
 
@@ -22,13 +23,37 @@ class Post extends Component {
     this.videoStyle = {};
     this.videoContainerStyle = {};
     this.timeout = null;
+
+    this.onUnmount(
+      userInfo.onChange((newState, oldState) => {
+        if (!newState) {
+          this.setState({ currentVote: "" });
+        } else if (!oldState) {
+          const { upVotes, downVotes } = newState;
+          const postId = this.props.post._id;
+          let index = upVotes.findIndex(each => each === postId);
+          if (index !== -1) {
+            this.setState({ currentVote: "UP" });
+          } else {
+            index = downVotes.findIndex(each => each === postId);
+            if (index !== -1) {
+              this.setState({ currentVote: "DOWN" });
+            }
+          }
+        }
+      })
+    );
   }
 
   handleVote = async upVote => {
-    console.log(upVote);
     const info = userInfo.getState();
     if (!info) {
-      registerModal.open(() => this.props.history.push("/"));
+      registerModal.open(
+        () => this.props.history.push("/"),
+        () => {
+          this.handleVote(upVote);
+        }
+      );
     } else {
       const { currentVote, upVoteCount, downVoteCount } = this.state;
       if (currentVote === "UP") {
@@ -75,7 +100,6 @@ class Post extends Component {
           } else {
             result = await postApi.updateVotePost(this.props.post._id, 0);
           }
-          console.log(result);
           let { upVoteCount, downVoteCount } = result.data;
           this.setState({
             upVoteCount: upVoteCount,
