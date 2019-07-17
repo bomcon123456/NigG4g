@@ -8,7 +8,6 @@ import { registerModal } from "../../../common/react/modals/register/register";
 import { timeDifference } from "../../../common/utils/common-util";
 import VideoPlayer from "../../../components/VideoPlayer/VideoPlayer";
 
-//@TODO: Render in client first
 class Post extends Component {
   constructor(props) {
     super(props);
@@ -16,6 +15,7 @@ class Post extends Component {
     this.state = {
       upVoteCount: this.props.post.upVoteCount,
       downVoteCount: this.props.post.downVoteCount,
+      currentVote: "",
       error: null
     };
     this.pictureStyle = {};
@@ -25,11 +25,46 @@ class Post extends Component {
   }
 
   handleVote = async upVote => {
-    console.log("lol");
+    console.log(upVote);
     const info = userInfo.getState();
     if (!info) {
       registerModal.open(() => this.props.history.push("/"));
     } else {
+      const { currentVote, upVoteCount, downVoteCount } = this.state;
+      if (currentVote === "UP") {
+        let upVoteC = upVoteCount - 1 < 0 ? 0 : upVoteCount - 1;
+        if (upVote) {
+          this.setState({ currentVote: "", upVoteCount: upVoteC });
+        } else {
+          let downVote = downVoteCount + 1;
+          this.setState({
+            currentVote: "DOWN",
+            upVoteCount: upVoteC,
+            downVoteCount: downVote
+          });
+        }
+      } else if (currentVote === "DOWN") {
+        let downVote = downVoteCount - 1 < 0 ? 0 : downVoteCount - 1;
+
+        if (upVote) {
+          let upVoteC = upVoteCount + 1;
+          this.setState({
+            currentVote: "UP",
+            downVoteCount: downVote,
+            upVoteCount: upVoteC
+          });
+        } else {
+          this.setState({ currentVote: "", downVoteCount: downVote });
+        }
+      } else {
+        if (upVote) {
+          let upVoteC = upVoteCount + 1;
+          this.setState({ currentVote: "UP", upVoteCount: upVoteC });
+        } else {
+          let downVote = downVoteCount + 1;
+          this.setState({ currentVote: "DOWN", downVoteCount: downVote });
+        }
+      }
       let result = null;
 
       clearTimeout(this.timeout);
@@ -86,6 +121,20 @@ class Post extends Component {
         this.videoContainerStyle = {
           paddingLeft: (500 - realWidth) / 2
         };
+      }
+    }
+  }
+
+  componentDidMount() {
+    const info = userInfo.getState();
+    if (info) {
+      const postId = this.props.post._id;
+      let upIndex = info.upVotes.findIndex(each => each === postId);
+      let downIndex = info.downVotes.findIndex(each => each === postId);
+      if (upIndex !== -1) {
+        this.setState({ currentVote: "UP" });
+      } else if (downIndex !== -1) {
+        this.setState({ currentVote: "DOWN" });
       }
     }
   }
@@ -147,10 +196,20 @@ class Post extends Component {
         <div className="post-after-bar">
           <ul className="btn-vote left">
             <li>
-              <div className="up" onClick={() => this.handleVote(true)} />
+              <div
+                className={classnames("up", {
+                  selected: this.state.currentVote === "UP"
+                })}
+                onClick={() => this.handleVote(true)}
+              />
             </li>
             <li>
-              <div className="down" onClick={() => this.handleVote(false)} />
+              <div
+                className={classnames("down", {
+                  selected: this.state.currentVote === "DOWN"
+                })}
+                onClick={() => this.handleVote(false)}
+              />
             </li>
             <li>
               <div className="comment" />

@@ -236,8 +236,15 @@ const updatePostVote = async (req, res, next) => {
         post.downVoteCount += 1;
       } else if (downIndex !== -1) {
         post.downVoteCount -= 1;
+
         downVotes.splice(downIndex, 1);
       }
+    }
+    if (post.downVoteCount < 0) {
+      post.downVoteCount = 0;
+    }
+    if (post.upVoteCount < 0) {
+      post.upVoteCount = 0;
     }
     user.upVotes = upVotes;
     user.downVotes = downVotes;
