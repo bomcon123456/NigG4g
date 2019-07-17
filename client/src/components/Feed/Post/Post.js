@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import classnames from "classnames";
 
+import { userInfo } from "../../../common/states/user-info";
+import { registerModal } from "../../../common/react/modals/register/register";
 import { timeDifference } from "../../../common/utils/common-util";
 import VideoPlayer from "../../../components/VideoPlayer/VideoPlayer";
 
@@ -14,6 +16,14 @@ class Post extends Component {
     this.videoStyle = {};
     this.videoContainerStyle = {};
   }
+
+  handleVote = () => {
+    const info = userInfo.getState();
+    if (!info) {
+      registerModal.open(() => this.props.history.push("/"));
+    } else {
+    }
+  };
 
   componentWillMount() {
     const { post } = this.props;
@@ -107,10 +117,10 @@ class Post extends Component {
         <div className="post-after-bar">
           <ul className="btn-vote left">
             <li>
-              <div className="up" />
+              <div className="up" onClick={this.handleVote} />
             </li>
             <li>
-              <div className="down" />
+              <div className="down" onClick={this.handleVote} />
             </li>
             <li>
               <div className="comment" />

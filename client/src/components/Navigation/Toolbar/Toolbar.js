@@ -11,8 +11,8 @@ const toolbar = props => {
         </a>
         <nav className="nav-menu">{<NavItems />}</nav>
         <FunctionWrap
-          handleLoginSuccess={props.handleLoginSuccess}
           history={props.history}
+          handleLogOut={props.handleLogOut}
         />
       </div>
     </header>

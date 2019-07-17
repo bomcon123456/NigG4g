@@ -15,7 +15,7 @@ class MainPage extends Component {
   render() {
     return (
       <Layout>
-        <Feed hasProfile />
+        <Feed hasProfile history={this.props.history} />
       </Layout>
     );
   }

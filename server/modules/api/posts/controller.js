@@ -179,25 +179,10 @@ const getPost = (req, res, next) => {
     });
 };
 
-// const getPostByTag = (req, res, next) => {
-//   return Post.find({ tags: { $tag: tag } })
-//     .then(data => {
-//       if (!data) {
-//         const error = new Error("post_not_found");
-//         error.statusCode = 406;
-//         throw error;
-//       }
-//       console.log(data);
-//       res.status(200).json({
-//         message: "fetched_posted_by_tag",
-//         data: data
-//       });
-//     })
-//     .catch(err => {
-//       console.log(err);
-//       next(err);
-//     });
-// };
+const updatePostVote = (req, res, next) => {
+  const postId = req.params.postId;
+  const userId = req.userId;
+};
 
 // @TODO: NEED VERY BIG REWORK!
 const updatePost = (req, res, next) => {};
