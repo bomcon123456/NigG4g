@@ -1,19 +1,116 @@
-import React, { Component } from "react";
+import React from "react";
+import { KComponent } from "../../KComponent";
 import { Link } from "react-router-dom";
 import classnames from "classnames";
 
+import { userInfo } from "../../../common/states/user-info";
+import { postApi } from "../../../common/api/common/post-api";
+import { registerModal } from "../../../common/react/modals/register/register";
 import { timeDifference } from "../../../common/utils/common-util";
 import VideoPlayer from "../../../components/VideoPlayer/VideoPlayer";
 
-class Post extends Component {
+class Post extends KComponent {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      upVoteCount: this.props.post.upVoteCount,
+      downVoteCount: this.props.post.downVoteCount,
+      currentVote: "",
+      error: null
+    };
     this.pictureStyle = {};
     this.videoStyle = {};
     this.videoContainerStyle = {};
+    this.timeout = null;
+
+    this.onUnmount(
+      userInfo.onChange((newState, oldState) => {
+        if (!newState) {
+          this.setState({ currentVote: "" });
+        } else if (!oldState) {
+          const { upVotes, downVotes } = newState;
+          const postId = this.props.post._id;
+          let index = upVotes.findIndex(each => each === postId);
+          if (index !== -1) {
+            this.setState({ currentVote: "UP" });
+          } else {
+            index = downVotes.findIndex(each => each === postId);
+            if (index !== -1) {
+              this.setState({ currentVote: "DOWN" });
+            }
+          }
+        }
+      })
+    );
   }
+
+  handleVote = async upVote => {
+    const info = userInfo.getState();
+    if (!info) {
+      registerModal.open(
+        () => this.props.history.push("/"),
+        () => {
+          this.handleVote(upVote);
+        }
+      );
+    } else {
+      const { currentVote, upVoteCount, downVoteCount } = this.state;
+      if (currentVote === "UP") {
+        let upVoteC = upVoteCount - 1 < 0 ? 0 : upVoteCount - 1;
+        if (upVote) {
+          this.setState({ currentVote: "", upVoteCount: upVoteC });
+        } else {
+          let downVote = downVoteCount + 1;
+          this.setState({
+            currentVote: "DOWN",
+            upVoteCount: upVoteC,
+            downVoteCount: downVote
+          });
+        }
+      } else if (currentVote === "DOWN") {
+        let downVote = downVoteCount - 1 < 0 ? 0 : downVoteCount - 1;
+
+        if (upVote) {
+          let upVoteC = upVoteCount + 1;
+          this.setState({
+            currentVote: "UP",
+            downVoteCount: downVote,
+            upVoteCount: upVoteC
+          });
+        } else {
+          this.setState({ currentVote: "", downVoteCount: downVote });
+        }
+      } else {
+        if (upVote) {
+          let upVoteC = upVoteCount + 1;
+          this.setState({ currentVote: "UP", upVoteCount: upVoteC });
+        } else {
+          let downVote = downVoteCount + 1;
+          this.setState({ currentVote: "DOWN", downVoteCount: downVote });
+        }
+      }
+      let result = null;
+
+      clearTimeout(this.timeout);
+      this.timeout = setTimeout(async () => {
+        try {
+          if (upVote) {
+            result = await postApi.updateVotePost(this.props.post._id, 1);
+          } else {
+            result = await postApi.updateVotePost(this.props.post._id, 0);
+          }
+          let { upVoteCount, downVoteCount } = result.data;
+          this.setState({
+            upVoteCount: upVoteCount,
+            downVoteCount: downVoteCount
+          });
+        } catch (err) {
+          this.setState({ error: err });
+        }
+      }, 1000);
+    }
+  };
 
   componentWillMount() {
     const { post } = this.props;
@@ -52,10 +149,26 @@ class Post extends Component {
     }
   }
 
+  componentDidMount() {
+    const info = userInfo.getState();
+    if (info) {
+      const postId = this.props.post._id;
+      let upIndex = info.upVotes.findIndex(each => each === postId);
+      let downIndex = info.downVotes.findIndex(each => each === postId);
+      if (upIndex !== -1) {
+        this.setState({ currentVote: "UP" });
+      } else if (downIndex !== -1) {
+        this.setState({ currentVote: "DOWN" });
+      }
+    }
+  }
+
   render() {
     const { post, firstPost } = this.props;
     const { images, type, createdAt } = post;
     const { image460 } = images;
+    const { downVoteCount, upVoteCount } = this.state;
+
     const time = timeDifference(new Date(createdAt));
     let media = (
       <picture style={this.pictureStyle}>
@@ -97,7 +210,7 @@ class Post extends Component {
         <div className="post-containter">{media}</div>
         <p className="post-meta">
           <Link to="/" className="post-meta__text">
-            {post.upVoteCount + post.downVoteCount + " points"}
+            {upVoteCount - downVoteCount + " points"}
           </Link>
           {" · "}
           <Link to="/" className="post-meta__text">
@@ -107,10 +220,20 @@ class Post extends Component {
         <div className="post-after-bar">
           <ul className="btn-vote left">
             <li>
-              <div className="up" />
+              <div
+                className={classnames("up", {
+                  selected: this.state.currentVote === "UP"
+                })}
+                onClick={() => this.handleVote(true)}
+              />
             </li>
             <li>
-              <div className="down" />
+              <div
+                className={classnames("down", {
+                  selected: this.state.currentVote === "DOWN"
+                })}
+                onClick={() => this.handleVote(false)}
+              />
             </li>
             <li>
               <div className="comment" />

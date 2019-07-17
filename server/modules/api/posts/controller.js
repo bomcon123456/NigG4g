@@ -1,4 +1,5 @@
 const Post = require("./model");
+const User = require("../users/model");
 const axios = require("axios");
 const streamifier = require("streamifier");
 const {
@@ -76,6 +77,7 @@ const createPost = async (req, res, next) => {
       });
       result = await post.save();
     }
+    await User.findByIdAndUpdate(req.userId, { $push: { posts: result._id } });
     res.status(200).json({
       message: "Hail Hydra",
       data: {
@@ -179,25 +181,84 @@ const getPost = (req, res, next) => {
     });
 };
 
-// const getPostByTag = (req, res, next) => {
-//   return Post.find({ tags: { $tag: tag } })
-//     .then(data => {
-//       if (!data) {
-//         const error = new Error("post_not_found");
-//         error.statusCode = 406;
-//         throw error;
-//       }
-//       console.log(data);
-//       res.status(200).json({
-//         message: "fetched_posted_by_tag",
-//         data: data
-//       });
-//     })
-//     .catch(err => {
-//       console.log(err);
-//       next(err);
-//     });
-// };
+/**
+ * upVote - boolean
+ * postId - ObjectId (String)
+ */
+const updatePostVote = async (req, res, next) => {
+  const postId = req.params.postId;
+  const { upvote } = req.query;
+  const userId = req.userId;
+  try {
+    const user = await User.findById(userId);
+    const post = await Post.findById(postId);
+    if (!post) {
+      const error = new Error("post_not_found");
+      error.statusCode = 400;
+      throw error;
+    }
+    if (!user) {
+      const error = new Error("not_authenticated");
+      error.statusCode = 401;
+      throw error;
+    }
+    let downVotes = [...user.downVotes];
+    let upVotes = [...user.upVotes];
+    let downIndex = downVotes.findIndex(each => each === postId);
+    let upIndex = upVotes.findIndex(each => each === postId);
+
+    // If user is up-voting this post
+    if (+upvote === 1) {
+      // If user down-voted this post before
+      if (downIndex !== -1) {
+        post.downVoteCount -= 1;
+        downVotes.splice(downIndex, 1);
+      }
+      // up-vote
+      if (upIndex === -1) {
+        upVotes.push(postId);
+        post.upVoteCount += 1;
+      } else if (upIndex !== -1) {
+        post.upVoteCount -= 1;
+        upVotes.splice(upIndex, 1);
+      }
+    }
+    // down-voting
+    else {
+      if (upIndex !== -1) {
+        post.upVoteCount -= 1;
+        upVotes.splice(upIndex, 1);
+      }
+      if (downIndex === -1) {
+        downVotes.push(postId);
+        post.downVoteCount += 1;
+      } else if (downIndex !== -1) {
+        post.downVoteCount -= 1;
+
+        downVotes.splice(downIndex, 1);
+      }
+    }
+    if (post.downVoteCount < 0) {
+      post.downVoteCount = 0;
+    }
+    if (post.upVoteCount < 0) {
+      post.upVoteCount = 0;
+    }
+    user.upVotes = upVotes;
+    user.downVotes = downVotes;
+
+    let result = await post.save();
+    await user.save();
+    res.status(200).json({
+      message: "update_vote_successfully",
+      upVoteCount: result.upVoteCount,
+      downVoteCount: result.downVoteCount
+    });
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+};
 
 // @TODO: NEED VERY BIG REWORK!
 const updatePost = (req, res, next) => {};
@@ -675,6 +736,7 @@ module.exports = {
   getPost,
   updatePost,
   deletePost,
+  updatePostVote,
   addComment,
   getPostComments,
   getComment,

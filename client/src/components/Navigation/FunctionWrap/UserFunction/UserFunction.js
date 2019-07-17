@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { userInfo } from "../../../../common/states/user-info";
 import { uploadPostModal } from "../../../../common/react/modals/upload-post/upload-post";
-import AvatarDropdown from "../AvatarDropdown/AvatarDropdown"
+import AvatarDropdown from "../AvatarDropdown/AvatarDropdown";
 class UserFunction extends React.Component {
   constructor(props) {
     super(props);
@@ -34,9 +34,11 @@ class UserFunction extends React.Component {
     this.handleToggleVisibility();
   }
 
+  componentWillUnmount() {
+    document.removeEventListener("click", this.handleClickOutside, false);
+  }
+
   render() {
-    
-    
     const { avatarURL } = userInfo.getState();
 
     return (
@@ -45,7 +47,11 @@ class UserFunction extends React.Component {
           <button className="bell" to="/" />
         </div>
         <div className="avatar">
-          <Link className="avatar-container" onClick={this.handleToggleVisibility} to="#">
+          <Link
+            className="avatar-container"
+            onClick={this.handleToggleVisibility}
+            to="#"
+          >
             <img
               id="avatar"
               src={
@@ -68,14 +74,14 @@ class UserFunction extends React.Component {
             }}
           >
             Upload
-        </button>
+          </button>
         </div>
         {this.state.visibility && (
-          <AvatarDropdown/>
+          <AvatarDropdown handleLogOut={this.props.handleLogOut} />
         )}
       </div>
-    )
+    );
   }
-};
+}
 
 export default UserFunction;

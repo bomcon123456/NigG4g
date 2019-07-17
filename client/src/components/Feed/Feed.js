@@ -58,7 +58,14 @@ class Feed extends Component {
     const { posts } = this.state;
     let items = [];
     items = posts.map((each, i) => {
-      return <Post firstPost={i === 0} key={each._id} post={each} />;
+      return (
+        <Post
+          firstPost={i === 0}
+          key={each._id}
+          post={each}
+          history={this.props.history}
+        />
+      );
     });
     return (
       <div className={classnames("feed", className)}>

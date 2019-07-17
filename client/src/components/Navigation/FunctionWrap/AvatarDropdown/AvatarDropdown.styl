@@ -17,20 +17,26 @@
   box-sizing: border-box;
 }
 
-.popup-menu a {
-  display: block;
-  color: #000;
-  line-height: 34px;
-  padding: 0 16px;
-  font-size: 14px;
-}
+.popup-menu {
+  button {
+    display: block;
+    width: 100%;
+    border: none;
+    text-align: left;
+    color: #000;
+    line-height: 34px;
+    padding: 0 16px;
+    font-size: 14px;
+    cursor: pointer;
 
-.popup-menu a:hover {
-  background-color: rgba(0, 0, 0, 0.03);
-  color: #000;
-}
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.03);
+      color: #000;
+    }
 
-.popup-menu a:active {
-  background-color: rgba(0, 0, 0, 0.05);
-  color: #000;
+    &:active {
+      background-color: rgba(0, 0, 0, 0.05);
+      color: #000;
+    }
+  }
 }

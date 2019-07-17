@@ -9,9 +9,8 @@ const VisitorFunction = props => (
       id="login-btn"
       className="my-btn-mute"
       onClick={() => {
-        loginModal.open(props.handleLoginSuccess);
+        loginModal.open();
       }}
-      to="/"
     >
       Login
     </button>
@@ -22,11 +21,10 @@ const VisitorFunction = props => (
         console.log(props);
         registerModal.open(() => props.history.push("/"));
       }}
-      to="/"
     >
       Sign up
     </button>
   </div>
 );
 
-export default withRouter(VisitorFunction);
+export default VisitorFunction;

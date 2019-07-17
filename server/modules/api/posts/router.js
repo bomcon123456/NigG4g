@@ -13,6 +13,9 @@ router.put("/:postId", isAuth, postController.updatePost);
 
 router.delete("/:postId", isAuth, postController.deletePost);
 
+// Vote API
+router.get("/:postId/votes", isAuth, postController.updatePostVote);
+
 /// Comment API
 router.get("/:postId/comments", postController.getPostComments);
 

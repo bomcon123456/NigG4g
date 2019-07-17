@@ -289,7 +289,7 @@ export class RegisterModal extends KComponent {
               className="register-text-link"
               onClick={() => {
                 onClose();
-                loginModal.open(onRegisterSuccess);
+                loginModal.open(this.props.handleLogin);
               }}
             >
               Login
@@ -407,11 +407,12 @@ export class RegisterModal extends KComponent {
 }
 
 export const registerModal = {
-  open(handleRegister) {
+  open(handleRegister, handleLogin = null) {
     const modal = modals.openModal({
       content: (
         <RegisterModal
           onClose={() => modal.close()}
+          handleLogin={handleLogin}
           onRegisterSuccess={() => {
             modal.close();
             handleRegister();

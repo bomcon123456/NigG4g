@@ -9,10 +9,13 @@ const FunctionWrap = props => {
   return (
     <div className="function-wrap">
       <GeneralFuntion />
-      {!isLogin && (
-        <VisitorFunction handleLoginSuccess={props.handleLoginSuccess} />
+      {!isLogin && <VisitorFunction history={props.history} />}
+      {isLogin && (
+        <UserFunction
+          history={props.history}
+          handleLogOut={props.handleLogOut}
+        />
       )}
-      {isLogin && <UserFunction history={props.history} />}
     </div>
   );
 };

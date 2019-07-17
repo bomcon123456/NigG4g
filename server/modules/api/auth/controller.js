@@ -61,7 +61,7 @@ exports.loginSocialUser = (req, res, next) => {
           userId: result._id.toString()
         },
         process.env.JWT_SECRET,
-        { expiresIn: "12h" }
+        { expiresIn: "24h" }
       );
       let resUser = omit(result, [
         "password",

@@ -27,6 +27,10 @@ export const postApi = {
   deletePost(postId) {
     return axiosApi.delete("/posts/" + postId);
   },
+  //Vote API
+  updateVotePost(postId, upVote) {
+    return axiosApi.get("/posts/" + postId + "/votes?upvote=" + upVote);
+  },
   /// Comment API
   getComment(postId, commentId) {
     return axiosApi.get("/posts/" + postId + "/comments/" + commentId);

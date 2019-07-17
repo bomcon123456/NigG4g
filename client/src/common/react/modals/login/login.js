@@ -260,14 +260,14 @@ export class LoginModal extends KComponent {
 }
 
 export const loginModal = {
-  open(handleLogin) {
+  open(onLoginSuccess = null) {
     const modal = modals.openModal({
       content: (
         <LoginModal
           onClose={() => modal.close()}
           onLoginSuccess={() => {
             modal.close();
-            handleLogin();
+            onLoginSuccess && onLoginSuccess();
             console.log(userInfo.getState());
           }}
         />

@@ -1,23 +1,28 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 class AvatarDropdown extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {};
+  }
+
   render() {
     return (
       <div id="header-avatar-dropdown" className="popup-menu user">
         <ul>
           <li>
-            <Link to="#" onClick={() => console.log("hihdsifd")}>My Profile</Link>
+            <button onClick={() => console.log("hihdsifd")}>My Profile</button>
           </li>
           <li>
-            <Link to="/settings">Settings</Link>
+            <button>Settings</button>
           </li>
           <li>
-            <Link to="#">Logout</Link>
+            <button onClick={this.props.handleLogOut}>Logout</button>
           </li>
         </ul>
       </div>
-    )
+    );
   }
 }
 
