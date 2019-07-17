@@ -3,25 +3,53 @@ import { Link } from "react-router-dom";
 import classnames from "classnames";
 
 import { userInfo } from "../../../common/states/user-info";
+import { postApi } from "../../../common/api/common/post-api";
 import { registerModal } from "../../../common/react/modals/register/register";
 import { timeDifference } from "../../../common/utils/common-util";
 import VideoPlayer from "../../../components/VideoPlayer/VideoPlayer";
 
+//@TODO: Render in client first
 class Post extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      upVoteCount: this.props.post.upVoteCount,
+      downVoteCount: this.props.post.downVoteCount,
+      error: null
+    };
     this.pictureStyle = {};
     this.videoStyle = {};
     this.videoContainerStyle = {};
+    this.timeout = null;
   }
 
-  handleVote = () => {
+  handleVote = async upVote => {
+    console.log("lol");
     const info = userInfo.getState();
     if (!info) {
       registerModal.open(() => this.props.history.push("/"));
     } else {
+      let result = null;
+
+      clearTimeout(this.timeout);
+      this.timeout = setTimeout(async () => {
+        try {
+          if (upVote) {
+            result = await postApi.updateVotePost(this.props.post._id, 1);
+          } else {
+            result = await postApi.updateVotePost(this.props.post._id, 0);
+          }
+          console.log(result);
+          let { upVoteCount, downVoteCount } = result.data;
+          this.setState({
+            upVoteCount: upVoteCount,
+            downVoteCount: downVoteCount
+          });
+        } catch (err) {
+          this.setState({ error: err });
+        }
+      }, 1000);
     }
   };
 
@@ -66,6 +94,8 @@ class Post extends Component {
     const { post, firstPost } = this.props;
     const { images, type, createdAt } = post;
     const { image460 } = images;
+    const { downVoteCount, upVoteCount } = this.state;
+
     const time = timeDifference(new Date(createdAt));
     let media = (
       <picture style={this.pictureStyle}>
@@ -107,7 +137,7 @@ class Post extends Component {
         <div className="post-containter">{media}</div>
         <p className="post-meta">
           <Link to="/" className="post-meta__text">
-            {post.upVoteCount + post.downVoteCount + " points"}
+            {upVoteCount - downVoteCount + " points"}
           </Link>
           {" · "}
           <Link to="/" className="post-meta__text">
@@ -117,10 +147,10 @@ class Post extends Component {
         <div className="post-after-bar">
           <ul className="btn-vote left">
             <li>
-              <div className="up" onClick={this.handleVote} />
+              <div className="up" onClick={() => this.handleVote(true)} />
             </li>
             <li>
-              <div className="down" onClick={this.handleVote} />
+              <div className="down" onClick={() => this.handleVote(false)} />
             </li>
             <li>
               <div className="comment" />

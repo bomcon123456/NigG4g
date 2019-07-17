@@ -242,11 +242,12 @@ const updatePostVote = async (req, res, next) => {
     user.upVotes = upVotes;
     user.downVotes = downVotes;
 
-    await post.save();
+    let result = await post.save();
     await user.save();
     res.status(200).json({
       message: "update_vote_successfully",
-      postId: postId
+      upVoteCount: result.upVoteCount,
+      downVoteCount: result.downVoteCount
     });
   } catch (err) {
     console.log(err);
