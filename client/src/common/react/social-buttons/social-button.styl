@@ -52,3 +52,52 @@
     width: calc(100% - 50px);
   }
 }
+
+.btn-social-packed {
+  height: 34px;
+  position: relative;
+  text-align: left;
+  font-size: 15px;
+  white-space: nowrap;
+  flex-grow: 2;
+  border-radius: 2px;
+  padding: 0;
+
+  &.btn-facebook-share {
+    background-color: #3b5998;
+    color: white;
+
+    &:hover {
+      background-color: darken(#3b5998, 15%);
+    }
+  }
+
+  &.btn-pinterest-share {
+    background-color: #bd081c;
+    color: white;
+
+    &:hover {
+      background-color: darken(#bd081c, 15%);
+    }
+  }
+
+  .social-icon {
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    text-align: center;
+
+    i {
+      font-size: 20px;
+    }
+  }
+
+  .btn-text {
+    text-align: center;
+    font-weight: 700;
+    display: inline-block;
+    line-height: 34px;
+    padding: 0 15px 0 0;
+    font-size: 14px;
+  }
+}

@@ -2,6 +2,10 @@ import React from "react";
 import { KComponent } from "../KComponent";
 import { Link } from "react-router-dom";
 import classnames from "classnames";
+import {
+  FacebookShareButton,
+  PinterestShareButton
+} from "../../common/react/social-buttons/social-button";
 
 import { userInfo } from "../../common/states/user-info";
 import { postApi } from "../../common/api/common/post-api";
@@ -238,12 +242,15 @@ class FullPost extends KComponent {
                 onClick={() => this.handleVote(false)}
               />
             </li>
-            <li>
-              <div className="comment" />
-            </li>
           </ul>
           <div>
             <ul className="btn-vote left">
+              <li>
+                <FacebookShareButton />
+              </li>
+              <li>
+                <PinterestShareButton />
+              </li>
               <li>
                 <div className="more" />
               </li>

@@ -14,6 +14,7 @@ class FullPostPage extends Component {
     };
   }
   componentDidMount() {
+    window.scrollTo(0, 0);
     const { postId } = this.props.match.params;
     postApi
       .getPost(postId)

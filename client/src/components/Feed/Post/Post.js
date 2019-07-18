@@ -8,6 +8,11 @@ import { postApi } from "../../../common/api/common/post-api";
 import { registerModal } from "../../../common/react/modals/register/register";
 import { timeDifference } from "../../../common/utils/common-util";
 import VideoPlayer from "../../../components/VideoPlayer/VideoPlayer";
+import {
+  FacebookLoginButton,
+  FacebookShareButton,
+  PinterestShareButton
+} from "../../../common/react/social-buttons/social-button";
 
 class Post extends KComponent {
   constructor(props) {
@@ -258,6 +263,16 @@ class Post extends KComponent {
                 <li>I just don't like it</li>
               </ul>
             </div>
+          </div>
+          <div className="share right">
+            <ul>
+              <li>
+                <FacebookShareButton />
+              </li>
+              <li>
+                <PinterestShareButton />
+              </li>
+            </ul>
           </div>
           <div className="clearfix" />
         </div>

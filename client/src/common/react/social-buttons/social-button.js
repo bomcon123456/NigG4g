@@ -1,5 +1,33 @@
 import React from "react";
 
+export const FacebookShareButton = props => {
+  return (
+    <button
+      className="btn btn-facebook-share btn-social-packed"
+      onClick={props.onClick}
+    >
+      <span className="fb-icon social-icon">
+        <i className="fab fa-facebook-f" />
+      </span>
+      <span className="btn-text">Facebook</span>
+    </button>
+  );
+};
+
+export const PinterestShareButton = props => {
+  return (
+    <button
+      className="btn btn-pinterest-share btn-social-packed"
+      onClick={props.onClick}
+    >
+      <span className="fb-icon social-icon">
+        <i class="fab fa-pinterest" />
+      </span>
+      <span className="btn-text">Pinterest</span>
+    </button>
+  );
+};
+
 export const FacebookLoginButton = props => {
   return (
     <button
