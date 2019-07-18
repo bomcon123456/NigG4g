@@ -35,7 +35,6 @@ class App extends Component {
     //     title: "Modal Show up!"
     //   })
     //   .then(() => {
-    //     console.log("hehehe");
     //   });
   }
 

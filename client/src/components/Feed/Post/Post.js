@@ -2,6 +2,7 @@ import React from "react";
 import { KComponent } from "../../KComponent";
 import { Link } from "react-router-dom";
 import classnames from "classnames";
+import { FacebookShareButton, PinterestShareButton } from "react-share";
 
 import { userInfo } from "../../../common/states/user-info";
 import { postApi } from "../../../common/api/common/post-api";
@@ -9,9 +10,8 @@ import { registerModal } from "../../../common/react/modals/register/register";
 import { timeDifference } from "../../../common/utils/common-util";
 import VideoPlayer from "../../../components/VideoPlayer/VideoPlayer";
 import {
-  FacebookLoginButton,
-  FacebookShareButton,
-  PinterestShareButton
+  FacebookSharingButton,
+  PinterestSharingButton
 } from "../../../common/react/social-buttons/social-button";
 
 class Post extends KComponent {
@@ -22,7 +22,8 @@ class Post extends KComponent {
       upVoteCount: this.props.post.upVoteCount,
       downVoteCount: this.props.post.downVoteCount,
       currentVote: "",
-      error: null
+      error: null,
+      showMore: false
     };
     this.pictureStyle = {};
     this.videoStyle = {};
@@ -172,7 +173,7 @@ class Post extends KComponent {
     const { post, firstPost } = this.props;
     const { images, type, createdAt } = post;
     const { image460 } = images;
-    const { downVoteCount, upVoteCount } = this.state;
+    const { downVoteCount, upVoteCount, showMore } = this.state;
 
     const time = timeDifference(new Date(createdAt));
     let media = (
@@ -231,7 +232,7 @@ class Post extends KComponent {
           <ul className="btn-vote left">
             <li>
               <div
-                className={classnames("up", {
+                className={classnames("btn-border up", {
                   selected: this.state.currentVote === "UP"
                 })}
                 onClick={() => this.handleVote(true)}
@@ -239,23 +240,34 @@ class Post extends KComponent {
             </li>
             <li>
               <div
-                className={classnames("down", {
+                className={classnames("btn-border down", {
                   selected: this.state.currentVote === "DOWN"
                 })}
                 onClick={() => this.handleVote(false)}
               />
             </li>
             <li>
-              <div className="comment" />
+              <div className="btn-border comment" />
             </li>
           </ul>
           <div>
             <ul className="btn-vote left">
               <li>
-                <div className="more" />
+                <div
+                  className="btn-border more"
+                  onClick={() => {
+                    this.setState((prevState, props) => ({
+                      showMore: !prevState.showMore
+                    }));
+                  }}
+                />
               </li>
             </ul>
-            <div className="popup-viewshare hide">
+            <div
+              className={classnames("popup-viewshare", {
+                hide: !showMore
+              })}
+            >
               <ul>
                 <li>Twitter</li>
                 <li>Email</li>
@@ -264,13 +276,20 @@ class Post extends KComponent {
               </ul>
             </div>
           </div>
-          <div className="share right">
+          <div className="btn-border share right">
             <ul>
               <li>
-                <FacebookShareButton />
+                <FacebookShareButton url={"https://github.com"}>
+                  <FacebookSharingButton text={"Facebook"} />
+                </FacebookShareButton>{" "}
               </li>
               <li>
-                <PinterestShareButton />
+                <PinterestShareButton
+                  url={"https://github.com"}
+                  media={post.images.image700.url}
+                >
+                  <PinterestSharingButton text={"Pinterest"} />
+                </PinterestShareButton>
               </li>
             </ul>
           </div>

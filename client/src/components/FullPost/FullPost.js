@@ -2,9 +2,11 @@ import React from "react";
 import { KComponent } from "../KComponent";
 import { Link } from "react-router-dom";
 import classnames from "classnames";
+import { FacebookShareButton, PinterestShareButton } from "react-share";
+
 import {
-  FacebookShareButton,
-  PinterestShareButton
+  FacebookSharingButton,
+  PinterestSharingButton
 } from "../../common/react/social-buttons/social-button";
 
 import { userInfo } from "../../common/states/user-info";
@@ -228,7 +230,7 @@ class FullPost extends KComponent {
           <ul className="btn-vote left">
             <li>
               <div
-                className={classnames("up", {
+                className={classnames("btn-border up", {
                   selected: this.state.currentVote === "UP"
                 })}
                 onClick={() => this.handleVote(true)}
@@ -236,7 +238,7 @@ class FullPost extends KComponent {
             </li>
             <li>
               <div
-                className={classnames("down", {
+                className={classnames("btn-border down", {
                   selected: this.state.currentVote === "DOWN"
                 })}
                 onClick={() => this.handleVote(false)}
@@ -246,13 +248,20 @@ class FullPost extends KComponent {
           <div>
             <ul className="btn-vote left">
               <li>
-                <FacebookShareButton />
+                <FacebookShareButton url={"https://github.com"}>
+                  <FacebookSharingButton text={"Facebook"} />
+                </FacebookShareButton>
               </li>
               <li>
-                <PinterestShareButton />
+                <PinterestShareButton
+                  url={"https://github.com"}
+                  media={post.images.image700.url}
+                >
+                  <PinterestSharingButton text={"Pinterest"} />
+                </PinterestShareButton>
               </li>
               <li>
-                <div className="more" />
+                <div className="btn-border more" />
               </li>
             </ul>
             <div className="popup-viewshare hide">
@@ -267,6 +276,30 @@ class FullPost extends KComponent {
           <div className="clearfix" />
         </div>
         <div className="full-post-container">{media}</div>
+        <div style={{ display: "flex" }}>
+          <FacebookShareButton
+            url={"https://github.com"}
+            style={{ flexGrow: "2", display: "flex" }}
+          >
+            <FacebookSharingButton
+              text={"Share on Facebook"}
+              height={44}
+              fontSize={15}
+              marginRight={8}
+            />
+          </FacebookShareButton>{" "}
+          <PinterestShareButton
+            url={"https://github.com"}
+            media={post.images.image700.url}
+            style={{ flexGrow: "2", display: "flex" }}
+          >
+            <PinterestSharingButton
+              text={"Share on Pinterest"}
+              height={44}
+              fontSize={15}
+            />
+          </PinterestShareButton>
+        </div>
       </article>
     );
   }

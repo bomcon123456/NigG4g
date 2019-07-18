@@ -90,7 +90,6 @@ export class RegisterModal extends KComponent {
         password: "testonly"
       })
     ) {
-      console.log("eee");
       this.setState({ loading: true });
       console.log("Start querying");
       this.debounceCheckEmailExisted(email);
@@ -242,7 +241,7 @@ export class RegisterModal extends KComponent {
   };
 
   render() {
-    let { onClose, onRegisterSuccess } = this.props;
+    let { onClose } = this.props;
     let { modalType, loading, loadingRegister, validated } = this.state;
     const isSignup = modalType === MODALTYPE.SIGNUP;
     let isSubmittable = false;

@@ -1,29 +1,54 @@
 import React from "react";
 
-export const FacebookShareButton = props => {
+export const FacebookSharingButton = props => {
+  console.log(props);
   return (
     <button
       className="btn btn-facebook-share btn-social-packed"
+      style={{
+        marginRight: props.marginRight ? `${props.marginRight}px` : "",
+        height: props.height ? `${props.height}px` : ""
+      }}
       onClick={props.onClick}
     >
       <span className="fb-icon social-icon">
         <i className="fab fa-facebook-f" />
       </span>
-      <span className="btn-text">Facebook</span>
+      <span
+        className="btn-text"
+        style={{
+          fontSize: props.marginRight ? `${props.fontSize}px` : "",
+          width: `calc(100% - 50px)`
+        }}
+      >
+        {props.text}
+      </span>
     </button>
   );
 };
 
-export const PinterestShareButton = props => {
+export const PinterestSharingButton = props => {
   return (
     <button
       className="btn btn-pinterest-share btn-social-packed"
       onClick={props.onClick}
+      style={{
+        marginRight: props.marginRight ? `${props.marginRight}px` : "",
+        height: props.height ? `${props.height}px` : ""
+      }}
     >
       <span className="fb-icon social-icon">
-        <i class="fab fa-pinterest" />
+        <i className="fab fa-pinterest" />
       </span>
-      <span className="btn-text">Pinterest</span>
+      <span
+        className="btn-text"
+        style={{
+          fontSize: props.marginRight ? `${props.fontSize}px` : "",
+          width: `calc(100% - 50px)`
+        }}
+      >
+        {props.text}
+      </span>
     </button>
   );
 };

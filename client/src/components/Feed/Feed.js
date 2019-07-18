@@ -21,7 +21,6 @@ class Feed extends Component {
   }
 
   loadItems(page) {
-    console.log("Im called");
     if (this.state.nextLink !== null) {
       postApi.getPosts(page).then(data => {
         console.log(data);
