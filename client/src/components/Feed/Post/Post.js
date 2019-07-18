@@ -205,11 +205,16 @@ class Post extends KComponent {
               {" · " + time}
             </p>
           </div>
-          <h1>{post.title}</h1>
+          <h1
+            className="linked-title"
+            onClick={() => this.props.history.push(`/gag/${post._id}`)}
+          >
+            {post.title}
+          </h1>
         </header>
         <div className="post-containter">{media}</div>
         <p className="post-meta">
-          <Link to="/" className="post-meta__text">
+          <Link to={`/gag/${post._id}`} className="post-meta__text">
             {upVoteCount - downVoteCount + " points"}
           </Link>
           {" · "}

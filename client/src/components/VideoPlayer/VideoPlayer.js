@@ -30,6 +30,7 @@ class VideoPlayer extends Component {
       sound: false
     };
     this.videoElement = null;
+    this.lengthTimeOut = null;
   }
 
   componentDidMount() {
@@ -50,6 +51,7 @@ class VideoPlayer extends Component {
   };
 
   componentWillUnmount() {
+    clearTimeout(this.lengthTimeOut);
     if (this.props.video.image460sv.hasAudio) {
       document.removeEventListener(
         visibilityChange,
@@ -61,7 +63,7 @@ class VideoPlayer extends Component {
   handlePlay = () => {
     this.videoElement && this.videoElement.play();
     if (this.state.firstTime) {
-      setTimeout(() => {
+      this.lengthTimeOut = setTimeout(() => {
         this.setState({ showLength: false });
       }, 2000);
     }
