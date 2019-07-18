@@ -1,15 +1,15 @@
 import React from "react";
-import { KComponent } from "../../KComponent";
+import { KComponent } from "../KComponent";
 import { Link } from "react-router-dom";
 import classnames from "classnames";
 
-import { userInfo } from "../../../common/states/user-info";
-import { postApi } from "../../../common/api/common/post-api";
-import { registerModal } from "../../../common/react/modals/register/register";
-import { timeDifference } from "../../../common/utils/common-util";
-import VideoPlayer from "../../../components/VideoPlayer/VideoPlayer";
+import { userInfo } from "../../common/states/user-info";
+import { postApi } from "../../common/api/common/post-api";
+import { registerModal } from "../../common/react/modals/register/register";
+import { timeDifference } from "../../common/utils/common-util";
+import VideoPlayer from "../../components/VideoPlayer/VideoPlayer";
 
-class Post extends KComponent {
+class FullPost extends KComponent {
   constructor(props) {
     super(props);
 
@@ -115,35 +115,36 @@ class Post extends KComponent {
   componentWillMount() {
     const { post } = this.props;
     const { images, type } = post;
-    const { image460, image460sv } = images;
+    const { image460sv, image700 } = images;
     if (type === "Photo") {
-      if (image460.width === image460.height) {
+      if (image700.width === image700.height) {
         this.pictureStyle = {
-          minHeight: 500
+          width: 600,
+          minHeight: 600
         };
       } else {
         this.pictureStyle = {
-          minHeight: (500 / image460.width) * image460.height
+          width: 600,
+          minHeight: (600 / image700.width) * image700.height
         };
       }
     } else if (type === "Animated") {
       if (image460sv.width === image460sv.height) {
         this.videoStyle = {
-          minHeight: 500
+          minHeight: 600
         };
       } else if (image460sv.width > image460sv.height) {
         this.videoStyle = {
-          minHeight: (500 / image460sv.width) * image460sv.height
+          minHeight: (600 / image460sv.width) * image460sv.height
         };
       } else {
-        let realWidth = (500 / image460sv.height) * image460sv.width;
+        let realWidth = (640 / image460sv.height) * image460sv.width;
         this.videoStyle = {
           width: realWidth,
-          height: 500,
-          maxWidth: 500
+          minHeight: 640
         };
         this.videoContainerStyle = {
-          paddingLeft: (500 - realWidth) / 2
+          paddingLeft: (600 - realWidth) / 2
         };
       }
     }
@@ -164,19 +165,26 @@ class Post extends KComponent {
   }
 
   render() {
-    const { post, firstPost } = this.props;
+    const { post } = this.props;
     const { images, type, createdAt } = post;
-    const { image460 } = images;
+    const { image700 } = images;
     const { downVoteCount, upVoteCount } = this.state;
 
     const time = timeDifference(new Date(createdAt));
     let media = (
-      <picture style={this.pictureStyle}>
-        {image460.webpUrl ? (
-          <source srcSet={image460.webpUrl} type="image/webp" />
-        ) : null}
-        <img src={image460.url} alt={post.name} style={this.pictureStyle} />
-      </picture>
+      <div
+        style={{
+          margin: "0 auto",
+          width: "600px"
+        }}
+      >
+        <picture style={this.pictureStyle}>
+          {image700.webpUrl ? (
+            <source srcSet={image700.webpUrl} type="image/webp" />
+          ) : null}
+          <img src={image700.url} alt={post.name} style={this.pictureStyle} />
+        </picture>
+      </div>
     );
     if (type === "Animated") {
       media = (
@@ -188,11 +196,7 @@ class Post extends KComponent {
       );
     }
     return (
-      <article
-        className={classnames("post", {
-          "no-pd-t": firstPost
-        })}
-      >
+      <article className={classnames("full-post")}>
         <header className="post-header">
           <div className="post-section">
             <img
@@ -206,18 +210,17 @@ class Post extends KComponent {
             </p>
           </div>
           <h1>{post.title}</h1>
+          <p className="post-meta">
+            <Link to="/" className="post-meta__text">
+              {upVoteCount - downVoteCount + " points"}
+            </Link>
+            {" · "}
+            <Link to="/" className="post-meta__text">
+              {post.comments.length + " comments"}
+            </Link>
+          </p>
         </header>
-        <div className="post-containter">{media}</div>
-        <p className="post-meta">
-          <Link to="/" className="post-meta__text">
-            {upVoteCount - downVoteCount + " points"}
-          </Link>
-          {" · "}
-          <Link to="/" className="post-meta__text">
-            {post.comments.length + " comments"}
-          </Link>
-        </p>
-        <div className="post-after-bar">
+        <div className="full-post-after-bar">
           <ul className="btn-vote left">
             <li>
               <div
@@ -256,9 +259,10 @@ class Post extends KComponent {
           </div>
           <div className="clearfix" />
         </div>
+        <div className="full-post-container">{media}</div>
       </article>
     );
   }
 }
 
-export default Post;
+export default FullPost;

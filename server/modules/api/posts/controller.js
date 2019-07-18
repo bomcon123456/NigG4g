@@ -162,6 +162,7 @@ const getPost = (req, res, next) => {
     _id: postId
   })
     .populate("comments.createdBy", "username avatarURL")
+    .populate("categoryId")
     .populate("createdBy", "username avatarURL")
     .exec()
     .then(post => {

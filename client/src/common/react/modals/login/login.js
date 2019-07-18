@@ -114,10 +114,10 @@ export class LoginModal extends KComponent {
   };
 
   handleSocialResponse = async (res, type) => {
-    console.log(type, res);
     let strategy = this.socialStrategies[type];
     let { isValid, getData, errorMsg } = strategy;
     if (!isValid(res)) {
+      console.log(type, res);
       this.setState({ error: errorMsg, loading: false });
     } else {
       let rawData = getData(res);
@@ -146,7 +146,10 @@ export class LoginModal extends KComponent {
             this.props.onLoginSuccess();
           });
         })
-        .catch(err => this.setState({ error: err, loading: false }));
+        .catch(err => {
+          console.log(err);
+          this.setState({ error: err, loading: false });
+        });
     }
   };
 
