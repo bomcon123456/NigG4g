@@ -16,6 +16,7 @@
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
+    "react-share": "^3.0.0",
     "react-transition-group": "^4.2.0",
     "react-waypoint": "^9.0.2",
     "stylus": "^0.54.5",
