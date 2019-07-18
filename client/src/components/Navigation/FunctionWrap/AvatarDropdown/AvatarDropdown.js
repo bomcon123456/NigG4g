@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom"
 
 class AvatarDropdown extends React.Component {
   constructor(props) {
@@ -12,13 +13,13 @@ class AvatarDropdown extends React.Component {
       <div id="header-avatar-dropdown" className="popup-menu user">
         <ul>
           <li>
-            <button onClick={() => console.log("hihdsifd")}>My Profile</button>
+            <Link to="#" onClick={() => console.log("hihdsifd")}>My Profile</Link>
           </li>
           <li>
-            <button>Settings</button>
+            <Link to="/settings">Settings</Link>
           </li>
           <li>
-            <button onClick={this.props.handleLogOut}>Logout</button>
+            <Link to="#" onClick={this.props.handleLogOut}>Logout</Link>
           </li>
         </ul>
       </div>
