@@ -354,14 +354,14 @@ class Profile extends Component {
           <div className="connection">
             <div className="field social">
               <p className="label">Facebook connected</p>
-              <button className="my-button">Connect now</button>
+              <button className="my-blue-button">Connect now</button>
             </div>
           </div>
 
           <div className="connection">
             <div className="field">
               <p className="label">Google not connected</p>
-              <button className="my-button">Connect now</button>
+              <button className="my-blue-button">Connect now</button>
             </div>
           </div>
         </div>
