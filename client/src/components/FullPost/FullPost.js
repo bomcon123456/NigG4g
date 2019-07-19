@@ -273,10 +273,14 @@ class FullPost extends KComponent {
               </ul>
             </div>
           </div>
+          <div className="btn-next right">
+            <span className="btn-next-body">Next Post</span>
+            <span className="btn-next-arrow" />
+          </div>
           <div className="clearfix" />
         </div>
         <div className="full-post-container">{media}</div>
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex", marginTop: "16px" }}>
           <FacebookShareButton
             url={"https://github.com"}
             style={{ flexGrow: "2", display: "flex" }}
