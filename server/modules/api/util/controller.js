@@ -38,11 +38,6 @@ const validateImage = async (req, res, next) => {
     image
       .metadata()
       .then(metadata => {
-        if (!checkImageSize(metadata.width, metadata.height)) {
-          const error = new Error("invalid_picture");
-          error.statusCode = 406;
-          throw error;
-        }
         if (
           metadata.width >= 600 &&
           metadata.width * metadata.height >= 600000

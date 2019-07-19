@@ -12,6 +12,7 @@ import Layout from "../../hoc/Layout/Layout";
 import { userInfo } from "../../common/states/user-info";
 
 import logo from "../../logo.svg";
+import { reportModal } from "../../common/react/modals/report/report";
 
 class App extends Component {
   constructor(props) {
@@ -21,52 +22,34 @@ class App extends Component {
     };
   }
   componentDidMount() {
-    // selectCategoryModal.open(this.handleLogin);
-    // loginModal.open(this.handleLogin);
-    // postingPostModal.open(
-    //   this.handleLogin,
-    //   "https://i.imgur.com/Te0p8LS.jpg?fb"
-    // );
-    // uploadPostModal.open(this.handleLogin);
-    // uploadFromUrlModal.open(this.handleLogin);
-    // appModal
-    //   .alert({
-    //     text: "This is a freaking modal bitch",
-    //     title: "Modal Show up!"
-    //   })
-    //   .then(() => {
-    //   });
+    reportModal.open();
   }
 
-  handleLogin = () => {
-    this.forceUpdate();
-  };
   render() {
-    const info = userInfo.getState();
-    let loginCSS = info ? "App-login" : null;
     return (
-      <Layout>
-        <div className="App">
-          <main className={classnames("App-header", loginCSS)}>
-            <img src={logo} className="App-logo" alt="logo" />
-            {info ? (
-              `Welcome back, ${info.username}`
-            ) : (
-              <p>
-                Edit <code>src/App.js</code> and save to reload.
-              </p>
-            )}
-            <a
-              className="App-link"
-              href="https://reactjs.org"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn React
-            </a>
-          </main>
-        </div>
-      </Layout>
+      // <Layout>
+      //   <div className="App">
+      //     <main className={classnames("App-header", loginCSS)}>
+      //       <img src={logo} className="App-logo" alt="logo" />
+      //       {info ? (
+      //         `Welcome back, ${info.username}`
+      //       ) : (
+      //         <p>
+      //           Edit <code>src/App.js</code> and save to reload.
+      //         </p>
+      //       )}
+      //       <a
+      //         className="App-link"
+      //         href="https://reactjs.org"
+      //         target="_blank"
+      //         rel="noopener noreferrer"
+      //       >
+      //         Learn React
+      //       </a>
+      //     </main>
+      //   </div>
+      // </Layout>
+      <div>hehe</div>
     );
   }
 }

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start-client": "cd client && npm start",
-    "start-client-w": "cd client && npm start-w",
+    "start-client-w": "cd client && npm run start-w",
     "start-server": "cd server && npm start",
     "start": "npm-run-all -p start-client start-server",
     "start-w": "npm-run-all -p start-client-w start-server"
