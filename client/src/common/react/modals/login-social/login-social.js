@@ -31,8 +31,8 @@ export class LoginSocial extends Component {
         <FacebookLogin
           appId={process.env.REACT_APP_FB_APPID}
           autoLoad={false}
-          fields="name,email,picture,birthday"
-          scope="public_profile, email, user_birthday"
+          fields="name,email,picture"
+          scope="public_profile, email"
           onClick={() => this.props.handleClickSocialBtn()}
           callback={this.handleFacebookResponse}
           render={props => {
