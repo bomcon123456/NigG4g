@@ -6,6 +6,7 @@ import SectionPicker from "../../../react/section-picker/section-picker";
 import { modals } from "../modals";
 
 import { LoadingInline } from "../../loading-inline/loading-inline";
+import reportShit from "./report.json";
 
 export class ReportModal extends KComponent {
   constructor(props) {
@@ -44,8 +45,24 @@ export class ReportModal extends KComponent {
         name: "Pornography",
         description: [
           {
-            type: "",
-            content: ""
+            type: "p",
+            content: "Report as spam?"
+          },
+          {
+            type: "p",
+            content: "We remove:"
+          },
+          {
+            type: "ul",
+            content: [
+              "Photos or videos of sexual intercourse",
+              "Posts showing sexual intercourse, genitals or close-ups of fully-nude buttocks"
+            ]
+          },
+          {
+            type: "p",
+            content:
+              "If you report someone's post, 9GAG doesn't tell them who reported it."
           }
         ]
       },
@@ -53,8 +70,26 @@ export class ReportModal extends KComponent {
         name: "Hatred and bullying",
         description: [
           {
-            type: "",
-            content: ""
+            type: "p",
+            content: "Report as hatred and bullying?"
+          },
+          {
+            type: "p",
+            content: "We remove:"
+          },
+          {
+            type: "ul",
+            content: [
+              "Posts that contain credible threat",
+              "Posts that target people to degrade or shame them",
+              "Personal information shared to blackmail or harass",
+              "Posts or threats to post nude photo of you"
+            ]
+          },
+          {
+            type: "p",
+            content:
+              "If you report someone's post, 9GAG doesn't tell them who reported it."
           }
         ]
       },
@@ -62,8 +97,22 @@ export class ReportModal extends KComponent {
         name: "Self-Harm",
         description: [
           {
-            type: "",
-            content: ""
+            type: "p",
+            content: "Report as self injury?"
+          },
+          {
+            type: "p",
+            content: "We remove:"
+          },
+          {
+            type: "p",
+            content:
+              "We remove posts encouraging or promoting self injury, which includes suicide, cutting and eating disorders. We may also remove posts identifying victims of self injury if the post attacks or makes fun of them."
+          },
+          {
+            type: "p",
+            content:
+              "If you report someone's post, 9GAG doesn't tell them who reported it."
           }
         ]
       },
@@ -71,8 +120,25 @@ export class ReportModal extends KComponent {
         name: "Violent, gory and harmful content",
         description: [
           {
-            type: "",
-            content: ""
+            type: "p",
+            content: "Report as violent, gory and harmful content?"
+          },
+          {
+            type: "p",
+            content: "We remove:"
+          },
+          {
+            type: "ul",
+            content: [
+              "Photos or videos of extreme graphic violence",
+              "Posts that encourage violence or attack anyone based on their religious, ethnic or sexual background",
+              "Specific threats of physical harm, theft, vandalism or financial harm."
+            ]
+          },
+          {
+            type: "p",
+            content:
+              "If you report someone's post, 9GAG doesn't tell them who reported it."
           }
         ]
       },
@@ -80,8 +146,24 @@ export class ReportModal extends KComponent {
         name: "Child Porn",
         description: [
           {
-            type: "",
-            content: ""
+            type: "p",
+            content: "Report as child porn?"
+          },
+          {
+            type: "p",
+            content: "We remove:"
+          },
+          {
+            type: "ul",
+            content: [
+              "Photos or videos of sexual intercourse with children",
+              "Posts of nude or partially nude children"
+            ]
+          },
+          {
+            type: "p",
+            content:
+              "If you report someone's post, 9GAG doesn't tell them who reported it."
           }
         ]
       },
@@ -89,8 +171,24 @@ export class ReportModal extends KComponent {
         name: "Illegal activities e.g. Drug Uses",
         description: [
           {
-            type: "",
-            content: ""
+            type: "p",
+            content: "Report as illegal activities?"
+          },
+          {
+            type: "p",
+            content: "We remove and may report to legal entity about:"
+          },
+          {
+            type: "ul",
+            content: [
+              "Posts promoting illegal activities, e.g. the use of hard drugs",
+              "Posts intended to sell or distribute drugs"
+            ]
+          },
+          {
+            type: "p",
+            content:
+              "If you report someone's post, 9GAG doesn't tell them who reported it."
           }
         ]
       },
@@ -98,8 +196,24 @@ export class ReportModal extends KComponent {
         name: "Deceptive content",
         description: [
           {
-            type: "",
-            content: ""
+            type: "p",
+            content: "Report as deceptive content?"
+          },
+          {
+            type: "p",
+            content: "We remove:"
+          },
+          {
+            type: "ul",
+            content: [
+              "Purposefully fake or deceitful news",
+              "Hoax disproved by a reputable source"
+            ]
+          },
+          {
+            type: "p",
+            content:
+              "If you report someone's post, 9GAG doesn't tell them who reported it."
           }
         ]
       },
@@ -107,12 +221,19 @@ export class ReportModal extends KComponent {
         name: "Copyright and trademark infringement",
         description: [
           {
-            type: "",
-            content: ""
+            type: "p",
+            content:
+              "We provides an online platform to allows users to upload and share images, videos, and other content. We take the rights of intellectual property owners very seriously and comply as a service provider with all applicable provisions of the United States Digital Millennium Copyright Act."
+          },
+          {
+            type: "p",
+            content:
+              "If you want to report content that you believe violates or infringes your copyright, please tap continue and fill out the 9GAG DMCA Copyright Infringement Notification form. Note that a report alleging infringement or violation of legal rights must come from the rights owner or someone authorized to report on their behalf (e.g. attorney, agent). If you are not the rights owner or their authorized representative, we will not be able to process your report."
           }
         ]
       }
     ];
+
     this.reasons = this.reportData.map(each => {
       return {
         name: each.name
