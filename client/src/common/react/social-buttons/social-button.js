@@ -1,7 +1,6 @@
 import React from "react";
 
 export const FacebookSharingButton = props => {
-  console.log(props);
   return (
     <button
       className="btn btn-facebook-share btn-social-packed"
