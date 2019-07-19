@@ -14,6 +14,7 @@ import { postApi } from "../../common/api/common/post-api";
 import { registerModal } from "../../common/react/modals/register/register";
 import { timeDifference } from "../../common/utils/common-util";
 import VideoPlayer from "../../components/VideoPlayer/VideoPlayer";
+import { reportModal } from "../../common/react/modals/report/report";
 
 class FullPost extends KComponent {
   constructor(props) {
@@ -303,6 +304,14 @@ class FullPost extends KComponent {
               fontSize={15}
             />
           </PinterestShareButton>
+        </div>
+        <div style={{ marginTop: "8px" }}>
+          <p
+            className="full-post-report-text"
+            onClick={() => reportModal.open()}
+          >
+            REPORT
+          </p>
         </div>
       </article>
     );

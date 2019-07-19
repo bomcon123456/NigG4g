@@ -25,19 +25,38 @@ class SectionPicker extends Component {
               <li key={each.name} className="section">
                 <div
                   className="section-container"
+                  style={{
+                    height: each.imageUrl ? "" : "20px"
+                  }}
                   onClick={() => {
                     handleClick(each);
                     this.setState({ currentSection: each });
                   }}
                 >
-                  <img
-                    className="section-icon"
-                    src={each.imageUrl}
-                    alt="icon"
-                  />
-                  <div className="section-text">
-                    <h3 className="section-title">{each.name}</h3>
-                    <p className="section-subtitle">{each.description}</p>
+                  {each.imageUrl ? (
+                    <img
+                      className="section-icon"
+                      src={each.imageUrl}
+                      alt="icon"
+                    />
+                  ) : null}
+                  <div
+                    className="section-text"
+                    style={{
+                      margin: each.imageUrl ? "" : "0px"
+                    }}
+                  >
+                    <h3
+                      className="section-title"
+                      style={{
+                        fontWeight: each.imageUrl ? "" : "bold"
+                      }}
+                    >
+                      {each.name}
+                    </h3>
+                    {each.description ? (
+                      <p className="section-subtitle">{each.description}</p>
+                    ) : null}
                   </div>
                   {currentSection !== each ? (
                     <div className="section-selector" />

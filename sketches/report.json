@@ -1,0 +1,94 @@
+[{
+  "name" :"Spam",
+  "description": [
+    {
+      "type": "p",
+      "content":"Report as spam?"
+    },
+    {
+      "type": "p",
+      "content":"We remove:"
+    },
+    {
+      "type": "ul",
+      "content": ["Clickbait","Advertising","Scam","Script bot"]
+    },
+    {
+      "type": "p",
+      "content":"If you report someone's post, 9GAG doesn't tell them who reported it."
+    }
+  ]
+},
+{
+  "name" :"Pornography",
+  "description": [
+    {
+      "type": "",
+      "content":""
+    }
+  ]
+},
+{
+  "name" :"Hatred and bullying",
+  "description": [
+    {
+      "type": "",
+      "content":""
+    }
+  ]
+},
+{
+  "name" :"Self-Harm",
+  "description": [
+    {
+      "type": "",
+      "content":""
+    }
+  ]
+},
+{
+  "name" :"Violent, gory and harmful content",
+  "description": [
+    {
+      "type": "",
+      "content":""
+    }
+  ]
+},
+{
+  "name" :"Child Porn",
+  "description": [
+    {
+      "type": "",
+      "content":""
+    }
+  ]
+},
+{
+  "name" :"Illegal activities e.g. Drug Uses",
+  "description": [
+    {
+      "type": "",
+      "content":""
+    }
+  ]
+},
+{
+  "name" :"Deceptive content",
+  "description": [
+    {
+      "type": "",
+      "content":""
+    }
+  ]
+},
+{
+  "name" :"Copyright and trademark infringement",
+  "description": [
+    {
+      "type": "",
+      "content":""
+    }
+  ]
+}
+]

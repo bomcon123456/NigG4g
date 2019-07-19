@@ -8,14 +8,14 @@ import * as serviceWorker from "./serviceWorker";
 
 import { authenLoader } from "./common/authentication/authen-loader";
 
-authenLoader.init().then(() =>
-  ReactDOM.render(
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>,
-    document.getElementById("root")
-  )
+// authenLoader.init().then(() =>
+ReactDOM.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
+  document.getElementById("root")
 );
+// );
 
 // ReactDOM.render(<App />, document.getElementById("root"));
 
