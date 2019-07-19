@@ -297,6 +297,12 @@ export class ReportModal extends KComponent {
         className={classnames("report-modal", {
           shorter: proceed
         })}
+        style={{
+          height:
+            proceed && currentReason === "Copyright and trademark infringement"
+              ? "530px"
+              : ""
+        }}
       >
         <Fragment>
           <div className="modal-header report-modal-header no-border">

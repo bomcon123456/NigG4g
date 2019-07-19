@@ -313,6 +313,32 @@ class FullPost extends KComponent {
             REPORT
           </p>
         </div>
+
+        <div className="full-post-comments">
+          <div className="full-post-comments__top-bar">
+            <div className="full-post-comments__cmts">{`${
+              post.comments.length
+            } Comments`}</div>
+            <div className="full-post-comments__filter">
+              <ul>
+                <li
+                  className={classnames({
+                    active: true
+                  })}
+                >
+                  Hot
+                </li>
+                <li
+                  className={classnames({
+                    active: false
+                  })}
+                >
+                  Fresh
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </article>
     );
   }

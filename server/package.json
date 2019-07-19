@@ -32,7 +32,7 @@
     "multer": "^1.4.1",
     "nodemailer": "^6.2.1",
     "nodemailer-express-handlebars": "^3.0.0",
-    "open-graph-scraper": "^3.6.1",
+    "open-graph-scraper": "^3.6.2",
     "probe-image-size": "^4.0.1",
     "sharp": "^0.22.1",
     "shortid": "^2.2.14",
