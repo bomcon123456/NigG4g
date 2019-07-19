@@ -9,6 +9,8 @@ const VerifyToken = require("./VerifyToken/model");
 
 const { sendEmail } = require("../../common/util/email/email");
 
+const bcrypt = require("bcryptjs");
+
 exports.checkEmailExisted = (req, res, next) => {
   const { email } = req.body;
   const errors = validationResult(req);
@@ -277,7 +279,7 @@ exports.requireResetPassword = (req, res, next) => {
           appUrl: "https://localhost:3000/",
           redirect: `https://localhost:3000/confirm-reset-password?token=${
             token.token
-          }`,
+            }`,
           name: myUser.username
         }
       });
@@ -334,3 +336,58 @@ exports.updatePassword = (req, res, next) => {
     })
     .catch(err => next(err));
 };
+
+exports.changePassword = (req, res, next) => {
+  const userId = req.userId;
+  const currentPassword = req.body.currentPassword;
+  const newPassword = req.body.newPassword;
+  return User.findById(userId)
+    .then(user => {
+      if (!user || (user && !user.active)) {
+        const error = new Error("User not found");
+        error.statusCode = 400;
+        throw error;
+      }
+
+      bcrypt.compare(currentPassword, user.password)
+        .then(result => {
+          if (!result) {
+            const error = new Error("Incorrect password");
+            error.statusCode = 400;
+            throw error;
+          }
+          user.password = newPassword;
+
+          res.status(200).json({
+            message: "changed password successfully",
+            userId: userId,
+          });
+          return user.save();
+        })
+        .catch(err => {
+          console.log(err);
+          next(err);
+        })
+    })
+    .catch(err => {
+      console.log(err);
+      next(err);
+    });
+}
+
+// bcrypt.compare(currentPassword, user.password)
+//         .then(result => {
+//           if (result) {
+//             console.log(true);
+//           } else {
+//             res.status(501).send({
+//               "huhu": "huhu",
+//               "user": user.password,
+//               "currentPass": currentPassword
+//             })
+//           }
+//         })
+//         .catch(err => {
+//           console.log(err);
+//           next(err);
+//         })
