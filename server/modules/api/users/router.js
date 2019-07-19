@@ -33,7 +33,11 @@ const emailValidator = [
 router.get("/:userId", userController.getUser);
 
 router.post("/", createUserBodyValidator, userController.createUser);
-
+router.put(
+  "/change-password",
+  isAuth,
+  userController.changePassword
+);
 router.delete("/:userId", isAuth, userController.deleteUser);
 router.put("/:userId", isAuth, userController.updateUserInformation);
 
@@ -56,5 +60,8 @@ router.post(
   ],
   userController.updatePassword
 );
+
+
+
 
 module.exports = router;
