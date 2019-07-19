@@ -342,23 +342,52 @@ exports.changePassword = (req, res, next) => {
   const currentPassword = req.body.currentPassword;
   const newPassword = req.body.newPassword;
   return User.findById(userId)
-    .then(user =>
+    .then(user => {
+      if (!user || (user && !user.active)) {
+        const error = new Error("User not found");
+        error.statusCode = 400;
+        throw error;
+      }
 
-      bcrypt.compare(user.password, currentPassword)
+      bcrypt.compare(currentPassword, user.password)
         .then(result => {
-          if (result) {
-            console.log(true);
-          } else {
-            res.status(501).send({ "huhu": "huhu" })
+          if (!result) {
+            const error = new Error("Incorrect password");
+            error.statusCode = 400;
+            throw error;
           }
+          user.password = newPassword;
+
+          res.status(200).json({
+            message: "changed password successfully",
+            userId: userId,
+          });
+          return user.save();
         })
         .catch(err => {
           console.log(err);
           next(err);
         })
-    )
+    })
     .catch(err => {
       console.log(err);
       next(err);
     });
 }
+
+// bcrypt.compare(currentPassword, user.password)
+//         .then(result => {
+//           if (result) {
+//             console.log(true);
+//           } else {
+//             res.status(501).send({
+//               "huhu": "huhu",
+//               "user": user.password,
+//               "currentPass": currentPassword
+//             })
+//           }
+//         })
+//         .catch(err => {
+//           console.log(err);
+//           next(err);
+//         })
