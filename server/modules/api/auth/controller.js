@@ -37,7 +37,7 @@ exports.loginSocialUser = (req, res, next) => {
       if (!user) {
         const email = req.body.email;
         const username = req.body.username;
-        const password = crypto.randomBytes(16).toString("hex");
+        const password = process.env.DEFAULT_PASSWORD;
         const avatarURL = req.body.avatarURL;
         const birthday = req.body.birthday;
         const user = new User({
