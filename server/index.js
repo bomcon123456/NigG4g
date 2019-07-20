@@ -13,6 +13,7 @@ const authRoutes = require("./modules/api/auth/router");
 const userRoutes = require("./modules/api/users/router");
 const postRoutes = require("./modules/api/posts/router");
 const categoryRoutes = require("./modules/api/category/router");
+const countryRoutes = require("./modules/api/country/router");
 const utilRoutes = require("./modules/api/util/router");
 
 const {
@@ -52,6 +53,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/categories", categoryRoutes);
+app.use("/api/countries", countryRoutes);
 app.use("/api/util", utilRoutes);
 
 // Error-handling Middleware

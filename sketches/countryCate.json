@@ -1,0 +1,452 @@
+[
+  {
+    "name": "Algeria 🇩🇿",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Algeria "
+  },
+  {
+    "name": "Argentina 🇦🇷",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Argentina "
+  },
+  {
+    "name": "Australia 🇦🇺",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Australia "
+  },
+  {
+    "name": "Austria 🇦🇹",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Austria "
+  },
+  {
+    "name": "B &amp; H 🇧🇦",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about B &amp; H "
+  },
+  {
+    "name": "Bahrain 🇧🇭",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Bahrain "
+  },
+  {
+    "name": "Belgium 🇧🇪",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Belgium "
+  },
+  {
+    "name": "Bolivia 🇧🇴",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Bolivia "
+  },
+  {
+    "name": "Brazil 🇧🇷",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Brazil "
+  },
+  {
+    "name": "Bulgaria 🇧🇬",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Bulgaria "
+  },
+  {
+    "name": "Canada 🇨🇦",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Canada "
+  },
+  {
+    "name": "Chile 🇨🇱",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Chile "
+  },
+  {
+    "name": "Colombia 🇨🇴",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Colombia "
+  },
+  {
+    "name": "Costa Rica 🇨🇷",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Costa Rica "
+  },
+  {
+    "name": "Croatia 🇭🇷",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Croatia "
+  },
+  {
+    "name": "Cyprus 🇨🇾",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Cyprus "
+  },
+  {
+    "name": "Czechia 🇨🇿",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Czechia "
+  },
+  {
+    "name": "Denmark 🇩🇰",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Denmark "
+  },
+  {
+    "name": "Dominican Republic 🇩🇴",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Dominican Republic "
+  },
+  {
+    "name": "Ecuador 🇪🇨",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Ecuador "
+  },
+  {
+    "name": "Egypt 🇪🇬",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Egypt "
+  },
+  {
+    "name": "Estonia 🇪🇪",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Estonia "
+  },
+  {
+    "name": "Finland 🇫🇮",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Finland "
+  },
+  {
+    "name": "France 🇫🇷",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about France "
+  },
+  {
+    "name": "Georgia 🇬🇪",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Georgia "
+  },
+  {
+    "name": "Germany 🇩🇪",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Germany "
+  },
+  {
+    "name": "Ghana 🇬🇭",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Ghana "
+  },
+  {
+    "name": "Greece 🇬🇷",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Greece "
+  },
+  {
+    "name": "Guatemala 🇬🇹",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Guatemala "
+  },
+  {
+    "name": "Hong Kong 🇭🇰",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Hong Kong "
+  },
+  {
+    "name": "Hungary 🇭🇺",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Hungary "
+  },
+  {
+    "name": "Iceland 🇮🇸",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Iceland "
+  },
+  {
+    "name": "India 🇮🇳",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about India "
+  },
+  {
+    "name": "Indonesia 🇮🇩",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Indonesia "
+  },
+  {
+    "name": "Iraq 🇮🇶",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Iraq "
+  },
+  {
+    "name": "Ireland 🇮🇪",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Ireland "
+  },
+  {
+    "name": "Israel 🇮🇱",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Israel "
+  },
+  {
+    "name": "Italy 🇮🇹",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Italy "
+  },
+  {
+    "name": "Japan 🇯🇵",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Japan "
+  },
+  {
+    "name": "Jordan 🇯🇴",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Jordan "
+  },
+  {
+    "name": "Kenya 🇰🇪",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Kenya "
+  },
+  {
+    "name": "Kuwait 🇰🇼",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Kuwait "
+  },
+  {
+    "name": "Latvia 🇱🇻",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Latvia "
+  },
+  {
+    "name": "Lebanon 🇱🇧",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Lebanon "
+  },
+  {
+    "name": "Lithuania 🇱🇹",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Lithuania "
+  },
+  {
+    "name": "Luxembourg 🇱🇺",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Luxembourg "
+  },
+  {
+    "name": "Malaysia 🇲🇾",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Malaysia "
+  },
+  {
+    "name": "Mexico 🇲🇽",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Mexico "
+  },
+  {
+    "name": "Montenegro 🇲🇪",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Montenegro "
+  },
+  {
+    "name": "Morocco 🇲🇦",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Morocco "
+  },
+  {
+    "name": "Nepal 🇳🇵",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Nepal "
+  },
+  {
+    "name": "Netherlands 🇳🇱",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Netherlands "
+  },
+  {
+    "name": "New Zealand 🇳🇿",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about New Zealand "
+  },
+  {
+    "name": "Nigeria 🇳🇬",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Nigeria "
+  },
+  {
+    "name": "Norway 🇳🇴",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Norway "
+  },
+  {
+    "name": "Oman 🇴🇲",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Oman "
+  },
+  {
+    "name": "Pakistan 🇵🇰",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Pakistan "
+  },
+  {
+    "name": "Peru 🇵🇪",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Peru "
+  },
+  {
+    "name": "Philippines 🇵🇭",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Philippines "
+  },
+  {
+    "name": "Poland 🇵🇱",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Poland "
+  },
+  {
+    "name": "Portugal 🇵🇹",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Portugal "
+  },
+  {
+    "name": "Puerto Rico 🇵🇷",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Puerto Rico "
+  },
+  {
+    "name": "Qatar 🇶🇦",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Qatar "
+  },
+  {
+    "name": "Romania 🇷🇴",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Romania "
+  },
+  {
+    "name": "Russia 🇷🇺",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Russia "
+  },
+  {
+    "name": "Saudi Arabia 🇸🇦",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Saudi Arabia "
+  },
+  {
+    "name": "Senegal 🇸🇳",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Senegal "
+  },
+  {
+    "name": "Serbia 🇷🇸",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Serbia "
+  },
+  {
+    "name": "Singapore 🇸🇬",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Singapore "
+  },
+  {
+    "name": "Slovakia 🇸🇰",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Slovakia "
+  },
+  {
+    "name": "Slovenia 🇸🇮",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Slovenia "
+  },
+  {
+    "name": "South Africa 🇿🇦",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about South Africa "
+  },
+  {
+    "name": "South Korea 🇰🇷",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about South Korea "
+  },
+  {
+    "name": "Spain 🇪🇸",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Spain "
+  },
+  {
+    "name": "Sri Lanka 🇱🇰",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Sri Lanka "
+  },
+  {
+    "name": "Sweden 🇸🇪",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Sweden "
+  },
+  {
+    "name": "Switzerland 🇨🇭",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Switzerland "
+  },
+  {
+    "name": "Taiwan 🇹🇼",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Taiwan "
+  },
+  {
+    "name": "Tanzania 🇹🇿",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Tanzania "
+  },
+  {
+    "name": "Thailand 🇹🇭",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Thailand "
+  },
+  {
+    "name": "Tunisia 🇹🇳",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Tunisia "
+  },
+  {
+    "name": "Turkey 🇹🇷",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Turkey "
+  },
+  {
+    "name": "UAE 🇦🇪",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about UAE "
+  },
+  {
+    "name": "USA 🇺🇸",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about USA "
+  },
+  {
+    "name": "Ukraine 🇺🇦",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Ukraine "
+  },
+  {
+    "name": "United Kingdom 🇬🇧",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about United Kingdom "
+  },
+  {
+    "name": "Uruguay 🇺🇾",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Uruguay "
+  },
+  {
+    "name": "Vietnam 🇻🇳",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Vietnam "
+  },
+  {
+    "name": "Yemen 🇾🇪",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Yemen "
+  },
+  {
+    "name": "Zimbabwe 🇿🇼",
+    "imageUrl": "https://localhost:6969/assets/0_country_100.jpg",
+    "description": "Everything about Zimbabwe "
+  }
+]
