@@ -24,5 +24,8 @@ export const userApi = {
   },
   getVerifyUser(token) {
     return axiosApi.get("/users/verify/" + token);
+  },
+  putChangePassword(data) {
+    return axiosApi.put("/users/change-password", data);
   }
 };

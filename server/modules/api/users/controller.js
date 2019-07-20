@@ -345,7 +345,7 @@ exports.updatePassword = (req, res, next) => {
 exports.changePassword = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    const error = new Error("new password length < 6");
+    const error = new Error("user_validation_faied");
     error.statusCode = 422;
     error.data = errors.array();
     throw error;
@@ -356,7 +356,7 @@ exports.changePassword = (req, res, next) => {
   return User.findById(userId)
     .then(user => {
       if (!user || (user && !user.active)) {
-        const error = new Error("User not found");
+        const error = new Error("account_not_found");
         error.statusCode = 400;
         throw error;
       }
@@ -366,8 +366,9 @@ exports.changePassword = (req, res, next) => {
           if (result) {
             console.log("hihi")
             user.password = newPassword;
+            user.isChangePassword = true;
             res.status(200).json({
-              message: "changed password the first time successfully",
+              message: "changed_password_the_1st_time_successfully",
               userId: userId,
             });
             return user.save();
@@ -375,14 +376,14 @@ exports.changePassword = (req, res, next) => {
             bcrypt.compare(currentPassword, user.password)
               .then(result => {
                 if (!result) {
-                  const error = new Error("Incorrect password");
+                  const error = new Error("incorrect_password");
                   error.statusCode = 400;
                   throw error;
                 }
                 user.password = newPassword;
-
+                user.isChangePassword = true;
                 res.status(200).json({
-                  message: "changed password successfully",
+                  message: "changed_password_successfully",
                   userId: userId,
                 });
                 return user.save();
