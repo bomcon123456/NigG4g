@@ -19,7 +19,7 @@ form#setting-form {
   font-size: 14px;
 }
 
-input[type=email], input[type=password], input[type=text], input[type=url] {
+#setting-form input[type=email], #setting-form input[type=password], #setting-form input[type=text], #setting-form input[type=url] {
   line-height: 20px;
   box-sizing: content-box;
   padding: 9px;
@@ -58,7 +58,7 @@ input[type=email], input[type=password], input[type=text], input[type=url] {
   overflow: hidden;
 }
 
-input[type=submit] {
+#setting-form input[type=submit] {
   color: #fff;
   background-color: #09f;
   padding: 8px 16px;
@@ -75,7 +75,7 @@ input[type=submit] {
   box-sizing: content-box;
 }
 
-input[type=submit]:hover {
+#setting-form input[type=submit]:hover {
   background-color: #33adff;
   color: #fff;
 }
@@ -123,11 +123,11 @@ input[type=submit]:hover {
 }
 
 .date-picker input.year {
-  width: 37%;
+  width: 37% !important;
 }
 
 .date-picker input.month, .date-picker input.day {
-  width: 20%;
+  width: 20% !important;
   margin-left: 2%;
 }
 
@@ -140,7 +140,7 @@ input[type=submit]:hover {
   display: block;
 }
 
-textarea {
+#setting-form textarea {
   border-radius: 2px;
   padding: 9px;
   resize: none;
