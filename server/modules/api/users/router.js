@@ -20,7 +20,7 @@ const createUserBodyValidator = [
     .normalizeEmail(),
   body("password")
     .trim()
-    .isLength({ min: 6 })
+    .isLength({ min: 6 }),
 ];
 
 const emailValidator = [
@@ -30,11 +30,18 @@ const emailValidator = [
     .normalizeEmail()
 ];
 
+const newPasswordValidator = [
+  body("newPassword")
+    .trim()
+    .isLength({ min: 6 })
+];
+
 router.get("/:userId", userController.getUser);
 
 router.post("/", createUserBodyValidator, userController.createUser);
 router.put(
   "/change-password",
+  newPasswordValidator,
   isAuth,
   userController.changePassword
 );

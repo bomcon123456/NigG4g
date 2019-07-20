@@ -338,6 +338,13 @@ exports.updatePassword = (req, res, next) => {
 };
 
 exports.changePassword = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const error = new Error("new password length < 6");
+    error.statusCode = 422;
+    error.data = errors.array();
+    throw error;
+  }
   const userId = req.userId;
   const currentPassword = req.body.currentPassword;
   const newPassword = req.body.newPassword;
@@ -348,24 +355,40 @@ exports.changePassword = (req, res, next) => {
         error.statusCode = 400;
         throw error;
       }
-
-      bcrypt.compare(currentPassword, user.password)
+      console.log("hihi")
+      bcrypt.compare(process.env.DEFAULT_PASSWORD, user.password)
         .then(result => {
-          if (!result) {
-            const error = new Error("Incorrect password");
-            error.statusCode = 400;
-            throw error;
-          }
-          user.password = newPassword;
+          if (result) {
+            console.log("hihi")
+            user.password = newPassword;
+            res.status(200).json({
+              message: "changed password the first time successfully",
+              userId: userId,
+            });
+            return user.save();
+          } else {
+            bcrypt.compare(currentPassword, user.password)
+              .then(result => {
+                if (!result) {
+                  const error = new Error("Incorrect password");
+                  error.statusCode = 400;
+                  throw error;
+                }
+                user.password = newPassword;
 
-          res.status(200).json({
-            message: "changed password successfully",
-            userId: userId,
-          });
-          return user.save();
+                res.status(200).json({
+                  message: "changed password successfully",
+                  userId: userId,
+                });
+                return user.save();
+              })
+              .catch(err => {
+                console.log(err);
+                next(err);
+              })
+          }
         })
         .catch(err => {
-          console.log(err);
           next(err);
         })
     })
