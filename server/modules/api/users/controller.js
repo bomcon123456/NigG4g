@@ -65,11 +65,16 @@ exports.createUser = (req, res, next) => {
   let resUser = null;
   let token = null;
   const email = req.body.email;
-  const username = req.body.username;
+  const name = req.body.name;
   const password = req.body.password;
   const avatarURL = req.body.avatarURL;
   const birthday = req.body.birthday;
+  let username = null;
+  let atIndex = email.indexOf("@");
+  username = email.substring(0, atIndex);
+
   const user = new User({
+    name: name,
     username: username,
     password: password,
     email: email,
@@ -279,7 +284,7 @@ exports.requireResetPassword = (req, res, next) => {
           appUrl: "https://localhost:3000/",
           redirect: `https://localhost:3000/confirm-reset-password?token=${
             token.token
-            }`,
+          }`,
           name: myUser.username
         }
       });
@@ -349,7 +354,8 @@ exports.changePassword = (req, res, next) => {
         throw error;
       }
 
-      bcrypt.compare(currentPassword, user.password)
+      bcrypt
+        .compare(currentPassword, user.password)
         .then(result => {
           if (!result) {
             const error = new Error("Incorrect password");
@@ -360,20 +366,20 @@ exports.changePassword = (req, res, next) => {
 
           res.status(200).json({
             message: "changed password successfully",
-            userId: userId,
+            userId: userId
           });
           return user.save();
         })
         .catch(err => {
           console.log(err);
           next(err);
-        })
+        });
     })
     .catch(err => {
       console.log(err);
       next(err);
     });
-}
+};
 
 // bcrypt.compare(currentPassword, user.password)
 //         .then(result => {

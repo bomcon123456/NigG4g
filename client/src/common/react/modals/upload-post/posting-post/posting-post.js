@@ -115,7 +115,6 @@ export class PostingPostModal extends KComponent {
 
   render() {
     let { onClose, dataFromPreviousModal } = this.props;
-    console.log(dataFromPreviousModal);
     let { focusingImage } = this.state;
     return (
       <div
@@ -242,7 +241,6 @@ export class PostingPostModal extends KComponent {
                   <input
                     type="checkbox"
                     onChange={() => {
-                      console.log(this.attributeRef.checked);
                       this.forceUpdate();
                     }}
                     ref={element => (this.attributeRef = element)}
