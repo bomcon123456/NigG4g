@@ -38,7 +38,6 @@ exports.loginSocialUser = (req, res, next) => {
   const birthday = req.body.birthday;
   const social = req.body.social;
   return User.findOne({ email: email })
-    .lean()
     .then(user => {
       if (!user) {
         let username = null;
@@ -59,7 +58,7 @@ exports.loginSocialUser = (req, res, next) => {
       } else {
         let socialUser = user.social;
         let isLinked = false;
-        social.map(each => {
+        user.social.map(each => {
           if (each.type === social.type) {
             isLinked = true;
           }
@@ -73,6 +72,7 @@ exports.loginSocialUser = (req, res, next) => {
       }
     })
     .then(result => {
+      result = result.toObject();
       const token = jwt.sign(
         {
           email: result.email,
