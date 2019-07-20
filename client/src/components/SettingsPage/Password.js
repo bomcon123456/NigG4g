@@ -3,6 +3,7 @@ import { KComponent } from "../KComponent";
 
 import * as yup from "yup";
 import { createFormWithValidator } from "../../common/react/form-validator/form-validator";
+import { InputBase } from "../../common/react/input-base/input-base";
 
 
 class Password extends KComponent {
@@ -48,6 +49,20 @@ class Password extends KComponent {
         <div className="field">
           <label>New Password</label>
           <input type="password" name="new_password" maxLength="32" autoComplete="off" />
+          {this.form.enhancedComponent(
+            "newPassword",
+            ({ error, onChange, ...other }) => (
+              <InputBase
+                className=""
+                error={error}
+                onChange={e => {
+                  onChange(e)
+                }}
+                type={"password"}
+              />
+            ),
+            true
+          )}
         </div>
         <div className="field">
           <label>Re-type New Password</label>
