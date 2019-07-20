@@ -1,10 +1,42 @@
-import React, { Component } from "react";
+import React from "react";
+import { KComponent } from "../KComponent";
+
+import * as yup from "yup";
+import { createFormWithValidator } from "../../common/react/form-validator/form-validator";
 
 
-class Password extends Component {
+class Password extends KComponent {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      loading: false,
+      error: ""
+    };
+    this.passwordSchema = yup.object().shape({
+      currentPassword: yup
+        .string()
+        .min(6, "Password must be at least 6-char long.")
+        .required("Password should not be empty"),
+      newPassword: yup
+        .string()
+        .min(6, "New password must be at least 6-char long.")
+        .required("New password should not be empty"),
+      comfirmNewPassword: yup
+        .string()
+        .equalTo(yup.ref("newPassword"), "New password must match")
+        .required("Confirmed new password should not be empty"),
+    });
+
+    this.form = createFormWithValidator(this.passwordSchema, {
+      initData: {
+        currentPassword: "",
+        newPassword: "",
+        comfirmNewPassword: ""
+      }
+    });
+    this.onUnmount(this.form.on("change", () => this.forceUpdate()));
+
+    this.form.validateData();
   }
 
   render() {
