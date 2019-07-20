@@ -163,7 +163,8 @@ export const createFormWithValidator = (schema, _options) => {
         2. This function will:
           2.1. CALL the componentCreatorFunc, which is the ({error, onChange,...} => <Component />), with the following params
           2.2. Return that component, with the props assigned, with the value from the params ({error, onchange ,...})
-     */
+     cac
+          */
     enhancedComponent: (
       path,
       componentCreatorFunc,
