@@ -39,6 +39,7 @@ export class RegisterModal extends KComponent {
   }
 
   checkEmailExisted = email => {
+    this.setState({ loading: true });
     userApi
       .checkEmail({ email })
       .then(res => {
@@ -76,7 +77,7 @@ export class RegisterModal extends KComponent {
       });
   };
 
-  debounceCheckEmailExisted = debounce(this.checkEmailExisted, 2000);
+  debounceCheckEmailExisted = debounce(this.checkEmailExisted, 1500);
 
   handleChange = email => {
     if (!this.state.checking) {
@@ -90,9 +91,8 @@ export class RegisterModal extends KComponent {
         password: "testonly"
       })
     ) {
-      this.setState({ loading: true });
-      console.log("Start querying");
       this.debounceCheckEmailExisted(email);
+      console.log("Start querying");
     } else {
       this.setState({ loading: false });
     }
@@ -117,7 +117,7 @@ export class RegisterModal extends KComponent {
     this.setState({ loadingRegister: true });
     userApi
       .post({
-        username: username,
+        name: username,
         email: email,
         password: password
       })
@@ -143,7 +143,7 @@ export class RegisterModal extends KComponent {
         let { accessToken } = res;
         return {
           email,
-          username: name,
+          name: name,
           avatarURL: imageUrl,
           accessToken,
           social: { id: googleId, type: "GOOGLE" }
@@ -181,7 +181,7 @@ export class RegisterModal extends KComponent {
         let imageUrl = picture.data.url;
         return {
           email,
-          username: name,
+          name: name,
           avatarURL: imageUrl,
           birthday: birthday ? new Date(birthday).toISOString() : null,
           social: { id: userID, type: "FACEBOOK" }
@@ -213,14 +213,13 @@ export class RegisterModal extends KComponent {
         sendData = omit(rawData, "accessToken");
         sendData.birthday = birthday.birthday;
       }
-      console.log(sendData);
+      console.log("[SEND_DATA_REGISTER]", sendData);
       authApi
         .postSocial(sendData)
         .then(data => {
           console.log(data);
           authenCache.setAuthen(data.data.token, { expire: 1 });
           userInfo.setState(data.data.user).then(() => {
-            console.log("[USER_STATE]", userInfo);
             this.props.onRegisterSuccess();
           });
         })
@@ -331,7 +330,6 @@ export class RegisterModal extends KComponent {
             ({ error, onChange, onEnter, ...others }) => (
               <InputBase
                 className="forgot-password-input"
-                autoFocus
                 error={error}
                 success={this.state.validated}
                 id={"email"}

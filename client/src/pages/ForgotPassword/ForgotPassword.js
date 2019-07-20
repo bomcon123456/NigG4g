@@ -63,6 +63,7 @@ export default class ForgotPassword extends KComponent {
   };
 
   checkEmailExisted = email => {
+    this.setState({ loading: true });
     userApi
       .checkEmail({ email })
       .then(res => {
@@ -100,7 +101,7 @@ export default class ForgotPassword extends KComponent {
       });
   };
 
-  debounceCheckEmailExisted = debounce(this.checkEmailExisted, 2000);
+  debounceCheckEmailExisted = debounce(this.checkEmailExisted, 1500);
 
   handleServerError = () => {
     const { error } = this.state;
@@ -121,7 +122,6 @@ export default class ForgotPassword extends KComponent {
     }
     this.setState({ error: "", email });
     if (this.forgotPasswordSchema.isValidSync({ email })) {
-      this.setState({ loading: true });
       console.log("Start querying");
       this.debounceCheckEmailExisted(email);
     } else {
@@ -157,7 +157,6 @@ export default class ForgotPassword extends KComponent {
                   ({ error, onChange, onEnter, ...others }) => (
                     <InputBase
                       className="forgot-password-input"
-                      autoFocus
                       error={error}
                       success={this.state.validated}
                       id={"email"}

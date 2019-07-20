@@ -5,6 +5,7 @@ import { KComponent } from "../../../../../components/KComponent";
 import SectionPicker from "../../../../react/section-picker/section-picker";
 import { modals } from "../../modals";
 import { categoryCache } from "../../../../cache/api-cache/common-cache";
+import { userInfo } from "../../../../states/user-info";
 import { postingPostModal } from "../posting-post/posting-post";
 import { postApi } from "../../../../api/common/post-api";
 
@@ -18,6 +19,19 @@ export class SelectCategoryModal extends KComponent {
       error: null,
       currentCategory: this.props.data ? this.props.data.category : null
     };
+    let categoryCached = categoryCache.syncGet();
+    let info = userInfo.getState();
+    let { homeCountry } = info;
+    this.categoryData = categoryCached.filter(each => {
+      if (each.description.includes("Everything about")) {
+        if (each.name.includes(homeCountry.name)) {
+          return true;
+        }
+        return false;
+      } else {
+        return true;
+      }
+    });
   }
 
   handleServerError = () => {
@@ -83,6 +97,7 @@ export class SelectCategoryModal extends KComponent {
   render() {
     let { onClose } = this.props;
     let { loading, currentCategory } = this.state;
+
     return (
       <div className={classnames("selecting-category-modal")}>
         <Fragment>
@@ -99,7 +114,7 @@ export class SelectCategoryModal extends KComponent {
           <div className="modal-body selecting-category-modal-body">
             {loading ? <LoadingInline /> : null}
             <SectionPicker
-              data={categoryCache.syncGet()}
+              data={this.categoryData}
               handleClick={this.handleSectionClick}
               defaultSection={currentCategory}
             />

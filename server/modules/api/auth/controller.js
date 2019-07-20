@@ -9,6 +9,7 @@ const { validationResult } = require("express-validator/check");
 exports.getAuthenUser = (req, res, next) => {
   const userId = req.userId;
   return User.findById(userId)
+    .populate("homeCountry", "name")
     .then(user => {
       if (!user || (user && !user.active)) {
         const error = new Error("account_not_found");
@@ -30,28 +31,45 @@ exports.loginSocialUser = (req, res, next) => {
     error.data = errors.array();
     throw error;
   }
+  const email = req.body.email;
+  const name = req.body.name;
+  const password = process.env.DEFAULT_PASSWORD;
+  const avatarURL = req.body.avatarURL;
+  const birthday = req.body.birthday;
   const social = req.body.social;
-  return User.findOne({ "social.id": social.id })
+  return User.findOne({ email: email })
     .lean()
     .then(user => {
       if (!user) {
-        const email = req.body.email;
-        const username = req.body.username;
-        const password = process.env.DEFAULT_PASSWORD;
-        const avatarURL = req.body.avatarURL;
-        const birthday = req.body.birthday;
+        let username = null;
+        let atIndex = email.indexOf("@");
+        username = email.substring(0, atIndex);
+
         const user = new User({
           username: username,
+          name: name,
           password: password,
           email: email,
           avatarURL: avatarURL,
           birthday: birthday,
-          social: social,
+          social: [social],
           verified: true
         });
         return user.save();
       } else {
-        return Promise.resolve(user);
+        let socialUser = user.social;
+        let isLinked = false;
+        social.map(each => {
+          if (each.type === social.type) {
+            isLinked = true;
+          }
+        });
+        if (isLinked) {
+          return Promise.resolve(user);
+        } else {
+          socialUser.push(social);
+          return user.save();
+        }
       }
     })
     .then(result => {
@@ -78,7 +96,7 @@ exports.loginSocialUser = (req, res, next) => {
     })
     .catch(error => {
       const { errmsg } = error;
-      if (errmsg.includes("email")) {
+      if (errmsg && errmsg.includes("email")) {
         error = new Error(social.type === "GOOGLE" ? "fb_taken" : "gg_taken");
         error.statusCode = 401;
       }

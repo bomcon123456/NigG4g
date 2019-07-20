@@ -65,7 +65,7 @@ export class LoginModal extends KComponent {
         let { accessToken } = res;
         return {
           email,
-          username: name,
+          name: name,
           avatarURL: imageUrl,
           accessToken,
           social: { id: googleId, type: "GOOGLE" }
@@ -103,7 +103,7 @@ export class LoginModal extends KComponent {
         let imageUrl = picture.data.url;
         return {
           email,
-          username: name,
+          name: name,
           avatarURL: imageUrl,
           birthday: birthday ? new Date(birthday).toISOString() : null,
           social: { id: userID, type: "FACEBOOK" }

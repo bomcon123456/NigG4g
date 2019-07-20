@@ -65,11 +65,16 @@ exports.createUser = (req, res, next) => {
   let resUser = null;
   let token = null;
   const email = req.body.email;
-  const username = req.body.username;
+  const name = req.body.name;
   const password = req.body.password;
   const avatarURL = req.body.avatarURL;
   const birthday = req.body.birthday;
+  let username = null;
+  let atIndex = email.indexOf("@");
+  username = email.substring(0, atIndex);
+
   const user = new User({
+    name: name,
     username: username,
     password: password,
     email: email,
@@ -390,13 +395,13 @@ exports.changePassword = (req, res, next) => {
         })
         .catch(err => {
           next(err);
-        })
+        });
     })
     .catch(err => {
       console.log(err);
       next(err);
     });
-}
+};
 
 // bcrypt.compare(currentPassword, user.password)
 //         .then(result => {

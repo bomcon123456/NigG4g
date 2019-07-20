@@ -21,8 +21,8 @@ const userModel = new Schema(
     },
     gender: {
       type: String,
-      enum: ["MALE", "FEMALE", "UNSPECIFIED"],
-      default: null
+      enum: ["MALE", "FEMALE", "UNSPECIFIED", "NULL"],
+      default: "NULL"
     },
     homeCountry: {
       type: Schema.Types.ObjectId,
@@ -45,7 +45,10 @@ const userModel = new Schema(
       type: String,
       default: ""
     },
-    avatarURL: { type: String, default: "" },
+    avatarURL: {
+      type: String,
+      default: `${process.env.ASSET_DIR}/1_62_100_v0.jpg`
+    },
     birthday: { type: Date },
     active: { type: Boolean, default: true },
     social: {

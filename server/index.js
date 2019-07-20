@@ -16,6 +16,8 @@ const categoryRoutes = require("./modules/api/category/router");
 const countryRoutes = require("./modules/api/country/router");
 const utilRoutes = require("./modules/api/util/router");
 
+// const Category = require("./modules/api/category/model");
+
 const {
   fileFilter,
   fileStorage
