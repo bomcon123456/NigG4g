@@ -5,7 +5,8 @@ const bcrypt = require("bcryptjs");
 const userModel = new Schema(
   {
     username: { type: String, required: true },
-    password: { type: String, require: true },
+    password: { type: String, required: true },
+    name: { type: String, required: true },
     email: {
       type: String,
       required: true,
@@ -18,15 +19,46 @@ const userModel = new Schema(
         message: "{Value} is not a valid email address!"
       }
     },
+    gender: {
+      type: String,
+      enum: ["MALE", "FEMALE", "UNSPECIFIED"],
+      default: null
+    },
+    homeCountry: {
+      type: Schema.Types.ObjectId,
+      ref: "Country",
+      default: "5d328ca0fa6aa2366918c496"
+    },
+    maskNSFW: {
+      type: Boolean,
+      default: false
+    },
+    showNSFW: {
+      type: Boolean,
+      default: true
+    },
+    status: {
+      type: String,
+      default: ""
+    },
+    description: {
+      type: String,
+      default: ""
+    },
     avatarURL: { type: String, default: "" },
     birthday: { type: Date },
     active: { type: Boolean, default: true },
     social: {
-      id: String,
-      type: {
-        type: String,
-        enum: ["GOOGLE", "FACEBOOK"]
-      }
+      type: [
+        {
+          id: String,
+          type: {
+            type: String,
+            enum: ["GOOGLE", "FACEBOOK"]
+          }
+        }
+      ],
+      default: []
     },
     verified: {
       type: Boolean,
