@@ -22,7 +22,10 @@ class CommentInput extends KComponent {
         .string()
         .min(10, "Comment should be at least 10-char long.")
         .max(1000, "Comment should not "),
-      url: yup.string().url("This should be a Freaking memeful URL"),
+      url: yup
+        .string()
+        .url("This should be a Freaking memeful URL")
+        .matches(/memeful\.com/),
       picture: yup.mixed().notRequired()
     });
     this.form = createFormWithValidator(schema, {
