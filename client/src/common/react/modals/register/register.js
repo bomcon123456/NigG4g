@@ -391,12 +391,7 @@ export class RegisterModal extends KComponent {
     ) : null;
 
     return (
-      <div
-        className={classnames(
-          "register-modal",
-          isSignup ? "register-modal-longer" : null
-        )}
-      >
+      <div className={classnames("register-modal")}>
         {isSignup ? registerModalBody : initialModalBody}
       </div>
     );
