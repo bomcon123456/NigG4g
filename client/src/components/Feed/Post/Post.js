@@ -18,10 +18,23 @@ class Post extends KComponent {
   constructor(props) {
     super(props);
 
+    const info = userInfo.getState();
+    let currentVoteState = "";
+    if (info) {
+      const postId = this.props.post._id;
+      let upIndex = info.upVotes.findIndex(each => each === postId);
+      let downIndex = info.downVotes.findIndex(each => each === postId);
+      if (upIndex !== -1) {
+        currentVoteState = "UP";
+      } else if (downIndex !== -1) {
+        currentVoteState = "DOWN";
+      }
+    }
+
     this.state = {
       upVoteCount: this.props.post.upVoteCount,
       downVoteCount: this.props.post.downVoteCount,
-      currentVote: "",
+      currentVote: currentVoteState,
       error: null,
       showMore: false
     };
@@ -155,19 +168,7 @@ class Post extends KComponent {
     }
   }
 
-  componentDidMount() {
-    const info = userInfo.getState();
-    if (info) {
-      const postId = this.props.post._id;
-      let upIndex = info.upVotes.findIndex(each => each === postId);
-      let downIndex = info.downVotes.findIndex(each => each === postId);
-      if (upIndex !== -1) {
-        this.setState({ currentVote: "UP" });
-      } else if (downIndex !== -1) {
-        this.setState({ currentVote: "DOWN" });
-      }
-    }
-  }
+  componentDidMount() {}
 
   render() {
     const { post, firstPost } = this.props;

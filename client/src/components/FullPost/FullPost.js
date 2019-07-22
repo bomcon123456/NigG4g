@@ -15,15 +15,29 @@ import { registerModal } from "../../common/react/modals/register/register";
 import { timeDifference } from "../../common/utils/common-util";
 import VideoPlayer from "../../components/VideoPlayer/VideoPlayer";
 import { reportModal } from "../../common/react/modals/report/report";
+import CommentSection from "../CommentSection/CommentSection";
 
 class FullPost extends KComponent {
   constructor(props) {
     super(props);
 
+    const info = userInfo.getState();
+    let currentVoteState = "";
+    if (info) {
+      const postId = this.props.post._id;
+      let upIndex = info.upVotes.findIndex(each => each === postId);
+      let downIndex = info.downVotes.findIndex(each => each === postId);
+      if (upIndex !== -1) {
+        currentVoteState = "UP";
+      } else if (downIndex !== -1) {
+        currentVoteState = "DOWN";
+      }
+    }
+
     this.state = {
       upVoteCount: this.props.post.upVoteCount,
       downVoteCount: this.props.post.downVoteCount,
-      currentVote: "",
+      currentVote: currentVoteState,
       error: null
     };
     this.pictureStyle = {};
@@ -153,20 +167,6 @@ class FullPost extends KComponent {
         this.videoContainerStyle = {
           paddingLeft: (600 - realWidth) / 2
         };
-      }
-    }
-  }
-
-  componentDidMount() {
-    const info = userInfo.getState();
-    if (info) {
-      const postId = this.props.post._id;
-      let upIndex = info.upVotes.findIndex(each => each === postId);
-      let downIndex = info.downVotes.findIndex(each => each === postId);
-      if (upIndex !== -1) {
-        this.setState({ currentVote: "UP" });
-      } else if (downIndex !== -1) {
-        this.setState({ currentVote: "DOWN" });
       }
     }
   }
@@ -337,6 +337,9 @@ class FullPost extends KComponent {
                 </li>
               </ul>
             </div>
+          </div>
+          <div className="full-post-comments__content">
+            <CommentSection />
           </div>
         </div>
       </article>

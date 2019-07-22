@@ -6,7 +6,6 @@ import SectionPicker from "../../../react/section-picker/section-picker";
 import { modals } from "../modals";
 
 import { LoadingInline } from "../../loading-inline/loading-inline";
-import reportShit from "./report.json";
 
 export class ReportModal extends KComponent {
   constructor(props) {
