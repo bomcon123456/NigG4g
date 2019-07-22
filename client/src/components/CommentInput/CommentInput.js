@@ -6,6 +6,7 @@ import { createFormWithValidator } from "../../common/react/form-validator/form-
 import { InputBase } from "../../common/react/input-base/input-base";
 import UploadButton from "../../common/react/upload-btn/upload-btn";
 import ImagePreview from "../ImagePreview/ImagePreview";
+import { utilApi } from "../../common/api/common/util-api";
 
 class CommentInput extends KComponent {
   constructor(props) {
@@ -14,8 +15,9 @@ class CommentInput extends KComponent {
     this.state = {
       uploadError: "",
       isPostMemeful: false,
+      imagePreviewSrc: "",
       textError: "",
-      loading: false
+      loadingPreview: false
     };
 
     const schema = yup.object().shape({
@@ -41,16 +43,61 @@ class CommentInput extends KComponent {
     this.form.validateData();
   }
 
+  handleServerError = () => {
+    const { uploadError } = this.state;
+    const message = uploadError.message;
+    let errMatcher = {
+      invalid_picture: "Unsupported dimension",
+      network_error: "Database is ded."
+    };
+    return errMatcher.hasOwnProperty(message)
+      ? errMatcher[message]
+      : "Something bad happened.";
+  };
+
   handlePostComment = () => {
     const { isPostMemeful } = this.state;
   };
 
+  handleFileChange = async (file, defaultOnChange) => {
+    this.setState({ loadingPreview: true });
+    let sendData = new FormData();
+    sendData.append("file", file.file);
+    try {
+      const response = await utilApi.getCommentPreview(sendData);
+      if (response) {
+        const { data } = response;
+        this.setState({ imagePreviewSrc: data.data, loadingPreview: false });
+        defaultOnChange(file);
+      }
+    } catch (err) {
+      this.setState({
+        uploadError: err,
+        imagePreviewSrc: "",
+        loadingPreview: false
+      });
+    }
+  };
+
   render() {
     let text = this.form.getPathData("content");
-    let file = this.form.getPathData("picture");
-    const { isPostMemeful } = this.state;
+    const {
+      isPostMemeful,
+      imagePreviewSrc,
+      loadingPreview,
+      uploadError
+    } = this.state;
     return (
       <Fragment>
+        {uploadError && (
+          <div className="error-notice-message">
+            <p>{this.handleServerError()}</p>
+            <i
+              className="fas fa-times"
+              onClick={() => this.setState({ uploadError: "" })}
+            />
+          </div>
+        )}
         <div className="ci-textarea-container">
           {!isPostMemeful
             ? this.form.enhancedComponent(
@@ -90,13 +137,13 @@ class CommentInput extends KComponent {
                 true
               )}
         </div>
-        {file ? (
+        {loadingPreview || imagePreviewSrc ? (
           <div className="ci-image-container">
             <div className="image-prev-container">
               <ImagePreview
-                src={file.src}
+                src={imagePreviewSrc}
                 onClose={() => {
-                  this.form.updatePathData("picture", null);
+                  this.setState({ imagePreviewSrc: "" });
                 }}
               />
             </div>
@@ -133,9 +180,10 @@ class CommentInput extends KComponent {
                         });
                       }}
                       onChange={files => {
-                        onChange(files);
+                        this.handleFileChange(files, () => onChange(files));
                         // this.handlePost(files);
                       }}
+                      uploadImageOnly
                       value={value}
                     />
                   )

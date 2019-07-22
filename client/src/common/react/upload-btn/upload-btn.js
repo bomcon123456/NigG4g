@@ -94,7 +94,7 @@ class UploadButton extends Component {
   handleVideoUpload = e => {};
 
   render() {
-    let { renderBtn, onError } = this.props;
+    let { renderBtn, onError, uploadImageOnly } = this.props;
     return (
       <Fragment>
         {renderBtn({
@@ -107,7 +107,7 @@ class UploadButton extends Component {
           className="upload-input"
           type="file"
           onChange={this.handleUpload}
-          accept={"image/*,video/*"}
+          accept={!uploadImageOnly ? "image/*,video/*" : "image/*"}
           style={{ width: 0, height: 0 }}
           ref={element => (this.inputElement = element)}
           multiple={this.isMultiple}

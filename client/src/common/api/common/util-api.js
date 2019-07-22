@@ -11,6 +11,13 @@ export const utilApi = {
       }
     });
   },
+  getCommentPreview(data) {
+    return axiosApi.post("/util/comment-preview", data, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    });
+  },
   getMetaTags(url) {
     return axiosApi.post("/util/get-url", { url: url });
   }

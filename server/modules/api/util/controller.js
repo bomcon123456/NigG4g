@@ -64,6 +64,41 @@ const validateImage = async (req, res, next) => {
   }
 };
 
+const getCommentPreview = (req, res, next) => {
+  const file = req.file;
+  const image = sharp(file.buffer);
+  let format = "";
+  if (!file) {
+    const error = new Error("file_not_valid");
+    error.statusCode = 406;
+    next(error);
+  } else {
+    image
+      .metadata()
+      .then(metadata => {
+        console.log(metadata);
+        if (
+          metadata.width >= 700 &&
+          metadata.width * metadata.height >= 600000
+        ) {
+          format = metadata.format;
+          return image.resize(700).toBuffer();
+        } else if (metadata.width <= 200 && metadata.height <= 100) {
+          const error = new Error("invalid_picture");
+          error.statusCode = 406;
+          throw error;
+        }
+        return req.file.buffer;
+      })
+      .then(data => {
+        let base64 = data.toString("base64");
+        base64 = `data:image/${format};base64,` + base64;
+        res.status(200).json({ message: "valid_picture", data: base64 });
+      })
+      .catch(err => next(err));
+  }
+};
+
 //@TODO: Self-scraper
 // const getURL = (req, res, next) => {
 //   let http = require("https");
@@ -148,5 +183,6 @@ const getUrl = (req, res, next) => {
 
 module.exports = {
   validateImage,
+  getCommentPreview,
   getUrl
 };

@@ -112,7 +112,7 @@ export class UploadPostModal extends KComponent {
           <div className="modal-body upload-modal-body">
             {this.state.error && (
               <div className="server-error">{this.handleServerError()}</div>
-            )}{" "}
+            )}
             <div className="spacer">
               <div
                 className="upload-image"

@@ -6,6 +6,9 @@ const router = express.Router();
 
 /// Post API
 router.post("/image-size", Controller.validateImage);
+
+router.post("/comment-preview", Controller.getCommentPreview);
+
 router.post(
   "/get-url",
   [
