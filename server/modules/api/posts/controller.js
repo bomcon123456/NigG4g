@@ -1,7 +1,9 @@
 const Post = require("./model");
 const User = require("../users/model");
 const axios = require("axios");
+const sharp = require("sharp");
 const streamifier = require("streamifier");
+const mongoose = require("mongoose");
 const {
   saveImagesToMultipleSize,
   saveVideoToStorage,
@@ -294,38 +296,65 @@ const deletePost = (req, res, next) => {
 };
 
 // @TODO: Process Image
-const addComment = (req, res, next) => {
+const addComment = async (req, res, next) => {
   const postId = req.params.postId;
   const userId = req.userId;
   const content = req.body.content;
-  const imageURL = req.body.imageURL;
-  console.log(imageURL);
-
-  return Post.updateOne(
-    {
-      _id: postId,
-      active: true
-    },
-    {
-      $push: {
-        comments: { createdBy: userId, content: content, imageURL: imageURL }
+  const imageUrl = req.body.imageUrl;
+  const file = req.file;
+  const id = mongoose.Types.ObjectId();
+  let saveUrl = imageUrl;
+  let buffer = null;
+  try {
+    const post = await Post.findById({
+      _id: postId
+    });
+    if (!post) {
+      const error = new Error("post_not_found");
+      error.statusCode = 404;
+      throw error;
+    }
+    if (file) {
+      const image = sharp(file.buffer);
+      const metadata = await image.metadata();
+      if (metadata.format !== "gif") {
+        if (metadata.width >= 700) {
+          await image
+            .resize(700, null, {
+              kernel: sharp.kernel.cubic
+            })
+            .jpeg({
+              quality: 100
+            })
+            .toFile(`./uploads/comments-images/${id}_700.jpg`);
+        } else {
+          await image
+            .jpeg({
+              quality: 100
+            })
+            .toFile(`./uploads/comments-images/${id}_700.jpg`);
+        }
+        saveUrl = `${process.env.COMMENT_ASSETS_DIR}/${id}_700.jpg`;
       }
     }
-  )
-    .then(result => {
-      if (!result.nModified) {
-        const error = new Error("post_not_found");
-        error.statusCode = 400;
-        throw error;
-      }
-      res.status(200).json({
-        message: "add_comment_successfully"
-      });
-    })
-    .catch(err => {
-      console.log(err);
-      next(err);
+    const newComment = {
+      _id: id,
+      createdBy: userId,
+      content: content,
+      imageUrl: saveUrl
+    };
+    console.log(newComment);
+    post.comments.push(newComment);
+    await post.save();
+    res.status(200).json({
+      message: "add_comment_successfully",
+      postId: post._id,
+      commentId: id
     });
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
 };
 
 const getPostComments = (req, res, next) => {

@@ -28,7 +28,7 @@ class CommentSection extends Component {
           />
         </div>
         <div className="comment">
-          <CommentInput />
+          <CommentInput postId={this.props.postId} />
         </div>
       </div>
     );

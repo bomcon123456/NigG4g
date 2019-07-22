@@ -7,6 +7,7 @@ import { InputBase } from "../../common/react/input-base/input-base";
 import UploadButton from "../../common/react/upload-btn/upload-btn";
 import ImagePreview from "../ImagePreview/ImagePreview";
 import { utilApi } from "../../common/api/common/util-api";
+import { postApi } from "../../common/api/common/post-api";
 
 class CommentInput extends KComponent {
   constructor(props) {
@@ -56,7 +57,17 @@ class CommentInput extends KComponent {
   };
 
   handlePostComment = () => {
-    const { isPostMemeful } = this.state;
+    // const { isPostMemeful } = this.state;
+    let sendData = new FormData();
+    let { content, picture, url } = this.form.getData();
+    console.log(url);
+    sendData.append("content", content);
+    sendData.append("file", picture ? picture.file : null);
+    sendData.append("imageUrl", url ? url : "");
+    postApi
+      .postComment(this.props.postId, sendData)
+      .then(response => console.log(response))
+      .catch(err => this.setState({ error: err }));
   };
 
   handleFileChange = async (file, defaultOnChange) => {

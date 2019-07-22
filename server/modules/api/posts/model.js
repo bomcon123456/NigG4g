@@ -6,7 +6,7 @@ const commentSchema = new Schema(
   {
     createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
     content: { type: String, required: false, default: "" },
-    imageURL: { type: String, required: false, default: "" },
+    imageUrl: { type: String, required: false, default: "" },
     subcomments: {
       type: [
         {

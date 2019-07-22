@@ -339,7 +339,7 @@ class FullPost extends KComponent {
             </div>
           </div>
           <div className="full-post-comments__content">
-            <CommentSection />
+            <CommentSection postId={post._id}/>
           </div>
         </div>
       </article>

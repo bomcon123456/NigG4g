@@ -31,7 +31,7 @@ app.use(bodyParser.json());
 app.use("/images", express.static(path.join(__dirname, "/uploads/images")));
 app.use("/assets", express.static(path.join(__dirname, "/uploads/assets")));
 app.use(
-  "/comment-image",
+  "/comment-images",
   express.static(path.join(__dirname, "/uploads/comment-images"))
 );
 
