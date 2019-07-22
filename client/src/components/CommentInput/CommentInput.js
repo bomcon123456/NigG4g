@@ -5,6 +5,7 @@ import { KComponent } from "../KComponent";
 import { createFormWithValidator } from "../../common/react/form-validator/form-validator";
 import { InputBase } from "../../common/react/input-base/input-base";
 import UploadButton from "../../common/react/upload-btn/upload-btn";
+import ImagePreview from "../ImagePreview/ImagePreview";
 
 class CommentInput extends KComponent {
   constructor(props) {
@@ -41,11 +42,12 @@ class CommentInput extends KComponent {
   }
 
   handlePostComment = () => {
-    console.log("lol");
+    const { isPostMemeful } = this.state;
   };
 
   render() {
     let text = this.form.getPathData("content");
+    let file = this.form.getPathData("picture");
     const { isPostMemeful } = this.state;
     return (
       <Fragment>
@@ -88,6 +90,18 @@ class CommentInput extends KComponent {
                 true
               )}
         </div>
+        {file ? (
+          <div className="ci-image-container">
+            <div className="image-prev-container">
+              <ImagePreview
+                src={file.src}
+                onClose={() => {
+                  this.form.updatePathData("picture", null);
+                }}
+              />
+            </div>
+          </div>
+        ) : null}
         <div className="ci-action">
           <div className="action-left">
             {!isPostMemeful ? (
@@ -97,7 +111,10 @@ class CommentInput extends KComponent {
                   className="icon"
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => this.setState({ isPostMemeful: true })}
+                  onClick={() => {
+                    this.form.resetData();
+                    this.setState({ isPostMemeful: true });
+                  }}
                 >
                   <i className="far fa-grin" />
                 </a>
@@ -127,7 +144,10 @@ class CommentInput extends KComponent {
             ) : (
               <div
                 className="cancel-text"
-                onClick={() => this.setState({ isPostMemeful: false })}
+                onClick={() => {
+                  this.form.resetData();
+                  this.setState({ isPostMemeful: false });
+                }}
               >
                 Cancel
               </div>

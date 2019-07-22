@@ -30,6 +30,10 @@ app.use(bodyParser.json());
 // Static folder Middleware
 app.use("/images", express.static(path.join(__dirname, "/uploads/images")));
 app.use("/assets", express.static(path.join(__dirname, "/uploads/assets")));
+app.use(
+  "/comment-image",
+  express.static(path.join(__dirname, "/uploads/comment-images"))
+);
 
 // CORS-Middleware
 app.use((req, res, next) => {
