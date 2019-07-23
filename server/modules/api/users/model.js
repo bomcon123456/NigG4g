@@ -37,9 +37,14 @@ const userModel = new Schema(
       type: Boolean,
       default: true
     },
-    status: {
-      type: String,
-      default: ""
+    isPro: {
+      type: Boolean,
+      default: false
+    },
+    statusId: {
+      type: Schema.Types.ObjectId,
+      ref: "Status",
+      default: "5d368a0cfcb82a10b27d53d8"
     },
     description: {
       type: String,

@@ -1,5 +1,14 @@
 .comment {
   display: flex;
+  position: relative;
+
+  &:hover {
+    .extra-menu {
+      .extra-arrow {
+        opacity: 100;
+      }
+    }
+  }
 
   .avatar {
     width: 50px;
@@ -11,5 +20,98 @@
     flex-grow: 2;
     margin-top: 0;
     margin-left: 10px;
+
+    .info {
+      font-size: 12px;
+      line-height: 20px;
+      height: 20px;
+      color: #999;
+      margin-bottom: 4px;
+    }
+
+    .content {
+      word-break: normal;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      font-size: 14px;
+      line-height: 20px;
+      margin-bottom: 4px;
+    }
+
+    .media {
+      margin-bottom: 4px;
+
+      img {
+        max-width: 100%;
+        max-height: 400px;
+        width: auto;
+        display: block;
+      }
+    }
+
+    .action {
+      display: flex;
+      align-items: center;
+
+      .action-text {
+        margin-right: 10px;
+        color: #999;
+        font-weight: 700;
+        font-size: 12px;
+        cursor: pointer;
+
+        &:hover {
+          color: darken(#999, 15%);
+        }
+      }
+
+      .vote-btn {
+        color: #999;
+        font-size: 14px;
+
+        .vote {
+          margin-right: 10px;
+          cursor: pointer;
+
+          &:hover {
+            color: darken(#999, 15%);
+          }
+
+          &.active {
+            color: rgb(12, 111, 254);
+          }
+        }
+      }
+    }
+
+    .collasped-comment {
+      font-size: 14px;
+      line-height: 24px;
+      margin: 0;
+      padding: 10px 0 8px 0;
+      font-weight: 700;
+      color: black;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .extra-menu {
+    position: absolute;
+    top: 10px;
+    right: 0;
+
+    .extra-arrow {
+      color: #999;
+      opacity: 0;
+      cursor: pointer;
+
+      &:hover {
+        color: black;
+      }
+    }
   }
 }

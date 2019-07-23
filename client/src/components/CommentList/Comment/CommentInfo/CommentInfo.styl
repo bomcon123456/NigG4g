@@ -1,0 +1,60 @@
+.comment-info {
+  display: flex;
+  align-items: center;
+
+  .username {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 700;
+    color: black;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .status {
+    font-size: 14px;
+    font-weight: 700;
+    color: black;
+    overflow: auto;
+    margin-left: 4px;
+
+    .emoji {
+      width: 16px;
+      height: 16px;
+      vertical-align: -12%;
+    }
+  }
+
+  .pro-badge {
+    margin-left: 4px;
+    padding: 0 4px;
+    height: 14px;
+    background-color: #fc0;
+    border-radius: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #fff;
+    line-height: 14px;
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+  .meta {
+    // vertical-align: -3%;
+    margin-left: 4px;
+
+    .points {
+      color: #999;
+    }
+
+    .time {
+      // vertical-align: middle;
+      a {
+        color: #999;
+        text-decoration: none;
+      }
+    }
+  }
+}

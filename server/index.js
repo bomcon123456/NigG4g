@@ -33,7 +33,7 @@ app.use("/images", express.static(path.join(__dirname, "/uploads/images")));
 app.use("/assets", express.static(path.join(__dirname, "/uploads/assets")));
 app.use(
   "/comment-images",
-  express.static(path.join(__dirname, "/uploads/comment-images"))
+  express.static(path.join(__dirname, "/uploads/comments-images"))
 );
 
 // CORS-Middleware
