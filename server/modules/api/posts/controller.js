@@ -3,6 +3,7 @@ const User = require("../users/model");
 const axios = require("axios");
 const sharp = require("sharp");
 const streamifier = require("streamifier");
+const fs = require("fs");
 const mongoose = require("mongoose");
 const {
   saveImagesToMultipleSize,
@@ -35,7 +36,7 @@ const createPost = async (req, res, next) => {
       const response = await axios.get(newUrl, {
         responseType: "arraybuffer"
       });
-      buffer = new Buffer(response.data, "binary");
+      buffer = Buffer.from(response.data, "binary");
     } else if (file) {
       buffer = file.buffer;
     }
@@ -336,6 +337,13 @@ const addComment = async (req, res, next) => {
         }
         saveUrl = `${process.env.COMMENT_ASSETS_DIR}/${id}_700.jpg`;
       }
+    } else if (imageUrl) {
+      const response = await axios.get(imageUrl, {
+        responseType: "arraybuffer"
+      });
+      buffer = Buffer.from(response.data, "binary");
+      saveUrl = `./uploads/comments-images/${id}_700.gif`;
+      fs.writeFileSync(saveUrl, buffer, "binary");
     }
     const newComment = {
       _id: id,

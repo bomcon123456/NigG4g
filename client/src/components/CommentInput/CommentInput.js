@@ -14,28 +14,29 @@ class CommentInput extends KComponent {
     super(props);
 
     this.state = {
-      uploadError: "",
+      uploadError: null,
       isPostMemeful: false,
       imagePreviewSrc: "",
-      textError: "",
       loadingPreview: false
     };
 
     const schema = yup.object().shape({
       content: yup
         .string()
-        .min(10, "Comment should be at least 10-char long.")
-        .max(1000, "Comment should not "),
+        .min(5, "Comment should be at least 5-char long.")
+        .max(1000, "Comment should not longer than 1000 characters."),
       url: yup
         .string()
-        .url("This should be a Freaking memeful URL")
+        .notRequired()
+        .url("This should be a Freaking memeful URL.")
         .matches(/memeful\.com/),
       picture: yup.mixed().notRequired()
     });
     this.form = createFormWithValidator(schema, {
       initData: {
         content: "",
-        picture: null
+        picture: null,
+        url: ""
       }
     });
 
@@ -57,7 +58,6 @@ class CommentInput extends KComponent {
   };
 
   handlePostComment = () => {
-    // const { isPostMemeful } = this.state;
     let sendData = new FormData();
     let { content, picture, url } = this.form.getData();
     console.log(url);
@@ -66,12 +66,21 @@ class CommentInput extends KComponent {
     sendData.append("imageUrl", url ? url : "");
     postApi
       .postComment(this.props.postId, sendData)
-      .then(response => console.log(response))
+      .then(response => {
+        console.log(response);
+        this.form.resetData();
+        this.setState({
+          uploadError: null,
+          isPostMemeful: false,
+          imagePreviewSrc: "",
+          loadingPreview: false
+        });
+      })
       .catch(err => this.setState({ error: err }));
   };
 
   handleFileChange = async (file, defaultOnChange) => {
-    this.setState({ loadingPreview: true });
+    this.setState({ loadingPreview: true, uploadError: null });
     let sendData = new FormData();
     sendData.append("file", file.file);
     try {
@@ -98,6 +107,14 @@ class CommentInput extends KComponent {
       loadingPreview,
       uploadError
     } = this.state;
+    let invalidForms = this.form.getInvalidPaths();
+    let isFormInvalid = false;
+    if (isPostMemeful) {
+      isFormInvalid = invalidForms.findIndex(each => each === "url") !== -1;
+    } else {
+      isFormInvalid = invalidForms.findIndex(each => each === "content") !== -1;
+    }
+    let isDisable = loadingPreview || uploadError !== null || isFormInvalid;
     return (
       <Fragment>
         {uploadError && (
@@ -219,6 +236,7 @@ class CommentInput extends KComponent {
             <button
               className="btn btn-primary post-btn"
               onClick={this.handlePostComment}
+              disabled={isDisable}
             >
               Post
             </button>
