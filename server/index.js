@@ -14,6 +14,7 @@ const userRoutes = require("./modules/api/users/router");
 const postRoutes = require("./modules/api/posts/router");
 const categoryRoutes = require("./modules/api/category/router");
 const countryRoutes = require("./modules/api/country/router");
+const statusRoutes = require("./modules/api/status/router");
 const utilRoutes = require("./modules/api/util/router");
 
 // const Category = require("./modules/api/category/model");
@@ -60,6 +61,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/countries", countryRoutes);
+app.use("/api/status", statusRoutes);
 app.use("/api/util", utilRoutes);
 
 // Error-handling Middleware
