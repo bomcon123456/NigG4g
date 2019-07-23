@@ -4,9 +4,13 @@ const Schema = mongoose.Schema;
 const statusSchema = new Schema({
   alt: {
     type: String,
-    required: true
+    required: false
   },
   src: {
+    type: String,
+    required: false
+  },
+  name: {
     type: String,
     required: true
   },

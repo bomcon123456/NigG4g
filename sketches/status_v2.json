@@ -1,0 +1,1445 @@
+[
+  {"name":"None", "alt":"", "src":""}
+  ,
+  {
+    "alt": "🎃",
+    "src": "https://localhost:6969/assets/1f383.png",
+    "name": "Jack-O-Lantern"
+  },
+  {
+    "alt": "💀",
+    "src": "https://localhost:6969/assets/1f480.png",
+    "name": "Skull"
+  },
+  {
+    "alt": "👻",
+    "src": "https://localhost:6969/assets/1f47b.png",
+    "name": "Ghost"
+  },
+  {
+    "alt": "🧛",
+    "src": "https://localhost:6969/assets/1f9db.png",
+    "name": "Vampire"
+  },
+  {
+    "alt": "🧟",
+    "src": "https://localhost:6969/assets/1f9df.png",
+    "name": "Zombie"
+  },
+  {
+    "alt": "🦇",
+    "src": "https://localhost:6969/assets/1f987.png",
+    "name": "Bat"
+  },
+  {
+    "alt": "🦉",
+    "src": "https://localhost:6969/assets/1f989.png",
+    "name": "Owl"
+  },
+  {
+    "alt": "🕷",
+    "src": "https://localhost:6969/assets/1f577.png",
+    "name": "Spider"
+  },
+  {
+    "alt": "🕸",
+    "src": "https://localhost:6969/assets/1f578.png",
+    "name": "Spider Web"
+  },
+  {
+    "alt": "🕯",
+    "src": "https://localhost:6969/assets/1f56f.png",
+    "name": "Candle"
+  },
+  {
+    "alt": "⚰",
+    "src": "https://localhost:6969/assets/26b0.png",
+    "name": "Coffin"
+  },
+  {
+    "alt": "🇦🇩",
+    "src": "https://localhost:6969/assets/1f1e6-1f1e9.png",
+    "name": "Andorra"
+  },
+  {
+    "alt": "🇦🇪",
+    "src": "https://localhost:6969/assets/1f1e6-1f1ea.png",
+    "name": "United Arab Emirates"
+  },
+  {
+    "alt": "🇦🇫",
+    "src": "https://localhost:6969/assets/1f1e6-1f1eb.png",
+    "name": "Afghanistan"
+  },
+  {
+    "alt": "🇦🇮",
+    "src": "https://localhost:6969/assets/1f1e6-1f1ee.png",
+    "name": "Anguilla"
+  },
+  {
+    "alt": "🇦🇱",
+    "src": "https://localhost:6969/assets/1f1e6-1f1f1.png",
+    "name": "Albania"
+  },
+  {
+    "alt": "🇦🇲",
+    "src": "https://localhost:6969/assets/1f1e6-1f1f2.png",
+    "name": "Armenia"
+  },
+  {
+    "alt": "🇦🇴",
+    "src": "https://localhost:6969/assets/1f1e6-1f1f4.png",
+    "name": "Angola"
+  },
+  {
+    "alt": "🇦🇶",
+    "src": "https://localhost:6969/assets/1f1e6-1f1f6.png",
+    "name": "Antarctica"
+  },
+  {
+    "alt": "🇦🇷",
+    "src": "https://localhost:6969/assets/1f1e6-1f1f7.png",
+    "name": "Argentina"
+  },
+  {
+    "alt": "🇦🇹",
+    "src": "https://localhost:6969/assets/1f1e6-1f1f9.png",
+    "name": "Austria"
+  },
+  {
+    "alt": "🇦🇺",
+    "src": "https://localhost:6969/assets/1f1e6-1f1fa.png",
+    "name": "Australia"
+  },
+  {
+    "alt": "🇦🇼",
+    "src": "https://localhost:6969/assets/1f1e6-1f1fc.png",
+    "name": "Aruba"
+  },
+  {
+    "alt": "🇦🇿",
+    "src": "https://localhost:6969/assets/1f1e6-1f1ff.png",
+    "name": "Azerbaijan"
+  },
+  {
+    "alt": "🇧🇦",
+    "src": "https://localhost:6969/assets/1f1e7-1f1e6.png",
+    "name": "Bosnia &amp; Herzegovina"
+  },
+  {
+    "alt": "🇧🇧",
+    "src": "https://localhost:6969/assets/1f1e7-1f1e7.png",
+    "name": "Barbados"
+  },
+  {
+    "alt": "🇧🇩",
+    "src": "https://localhost:6969/assets/1f1e7-1f1e9.png",
+    "name": "Bangladesh"
+  },
+  {
+    "alt": "🇧🇪",
+    "src": "https://localhost:6969/assets/1f1e7-1f1ea.png",
+    "name": "Belgium"
+  },
+  {
+    "alt": "🇧🇬",
+    "src": "https://localhost:6969/assets/1f1e7-1f1ec.png",
+    "name": "Bulgaria"
+  },
+  {
+    "alt": "🇧🇭",
+    "src": "https://localhost:6969/assets/1f1e7-1f1ed.png",
+    "name": "Bahrain"
+  },
+  {
+    "alt": "🇧🇮",
+    "src": "https://localhost:6969/assets/1f1e7-1f1ee.png",
+    "name": "Burundi"
+  },
+  {
+    "alt": "🇧🇯",
+    "src": "https://localhost:6969/assets/1f1e7-1f1ef.png",
+    "name": "Benin"
+  },
+  {
+    "alt": "🇧🇲",
+    "src": "https://localhost:6969/assets/1f1e7-1f1f2.png",
+    "name": "Bermuda"
+  },
+  {
+    "alt": "🇧🇳",
+    "src": "https://localhost:6969/assets/1f1e7-1f1f3.png",
+    "name": "Brunei"
+  },
+  {
+    "alt": "🇧🇴",
+    "src": "https://localhost:6969/assets/1f1e7-1f1f4.png",
+    "name": "Bolivia"
+  },
+  {
+    "alt": "🇧🇷",
+    "src": "https://localhost:6969/assets/1f1e7-1f1f7.png",
+    "name": "Brazil"
+  },
+  {
+    "alt": "🇧🇸",
+    "src": "https://localhost:6969/assets/1f1e7-1f1f8.png",
+    "name": "Bahamas"
+  },
+  {
+    "alt": "🇧🇹",
+    "src": "https://localhost:6969/assets/1f1e7-1f1f9.png",
+    "name": "Bhutan"
+  },
+  {
+    "alt": "🇧🇼",
+    "src": "https://localhost:6969/assets/1f1e7-1f1fc.png",
+    "name": "Botswana"
+  },
+  {
+    "alt": "🇧🇾",
+    "src": "https://localhost:6969/assets/1f1e7-1f1fe.png",
+    "name": "Belarus"
+  },
+  {
+    "alt": "🇧🇿",
+    "src": "https://localhost:6969/assets/1f1e7-1f1ff.png",
+    "name": "Belize"
+  },
+  {
+    "alt": "🇨🇦",
+    "src": "https://localhost:6969/assets/1f1e8-1f1e6.png",
+    "name": "Canada"
+  },
+  {
+    "alt": "🇨🇭",
+    "src": "https://localhost:6969/assets/1f1e8-1f1ed.png",
+    "name": "Switzerland"
+  },
+  {
+    "alt": "🇨🇱",
+    "src": "https://localhost:6969/assets/1f1e8-1f1f1.png",
+    "name": "Chile"
+  },
+  {
+    "alt": "🇨🇲",
+    "src": "https://localhost:6969/assets/1f1e8-1f1f2.png",
+    "name": "Cameroon"
+  },
+  {
+    "alt": "🇨🇳",
+    "src": "https://localhost:6969/assets/1f1e8-1f1f3.png",
+    "name": "China"
+  },
+  {
+    "alt": "🇨🇴",
+    "src": "https://localhost:6969/assets/1f1e8-1f1f4.png",
+    "name": "Colombia"
+  },
+  {
+    "alt": "🇨🇷",
+    "src": "https://localhost:6969/assets/1f1e8-1f1f7.png",
+    "name": "Costa, Rica"
+  },
+  {
+    "alt": "🇨🇺",
+    "src": "https://localhost:6969/assets/1f1e8-1f1fa.png",
+    "name": "Cuba"
+  },
+  {
+    "alt": "🇨🇼",
+    "src": "https://localhost:6969/assets/1f1e8-1f1fc.png",
+    "name": "Curaçao"
+  },
+  {
+    "alt": "🇨🇾",
+    "src": "https://localhost:6969/assets/1f1e8-1f1fe.png",
+    "name": "Cyprus"
+  },
+  {
+    "alt": "🇨🇿",
+    "src": "https://localhost:6969/assets/1f1e8-1f1ff.png",
+    "name": "Czechia"
+  },
+  {
+    "alt": "🇩🇪",
+    "src": "https://localhost:6969/assets/1f1e9-1f1ea.png",
+    "name": "Germany"
+  },
+  {
+    "alt": "🇩🇰",
+    "src": "https://localhost:6969/assets/1f1e9-1f1f0.png",
+    "name": "Denmark"
+  },
+  {
+    "alt": "🇩🇲",
+    "src": "https://localhost:6969/assets/1f1e9-1f1f2.png",
+    "name": "Dominica"
+  },
+  {
+    "alt": "🇩🇴",
+    "src": "https://localhost:6969/assets/1f1e9-1f1f4.png",
+    "name": "Dominican Republic"
+  },
+  {
+    "alt": "🇩🇿",
+    "src": "https://localhost:6969/assets/1f1e9-1f1ff.png",
+    "name": "Algeria"
+  },
+  {
+    "alt": "🇪🇨",
+    "src": "https://localhost:6969/assets/1f1ea-1f1e8.png",
+    "name": "Ecuador"
+  },
+  {
+    "alt": "🇪🇪",
+    "src": "https://localhost:6969/assets/1f1ea-1f1ea.png",
+    "name": "Estonia"
+  },
+  {
+    "alt": "🇪🇬",
+    "src": "https://localhost:6969/assets/1f1ea-1f1ec.png",
+    "name": "Egypt"
+  },
+  {
+    "alt": "🇪🇷",
+    "src": "https://localhost:6969/assets/1f1ea-1f1f7.png",
+    "name": "Eritrea"
+  },
+  {
+    "alt": "🇪🇸",
+    "src": "https://localhost:6969/assets/1f1ea-1f1f8.png",
+    "name": "Spain"
+  },
+  {
+    "alt": "🇪🇹",
+    "src": "https://localhost:6969/assets/1f1ea-1f1f9.png",
+    "name": "Ethiopia"
+  },
+  {
+    "alt": "🇪🇺",
+    "src": "https://localhost:6969/assets/1f1ea-1f1fa.png",
+    "name": "European Union"
+  },
+  {
+    "alt": "🇫🇮",
+    "src": "https://localhost:6969/assets/1f1eb-1f1ee.png",
+    "name": "Finland"
+  },
+  {
+    "alt": "🇫🇯",
+    "src": "https://localhost:6969/assets/1f1eb-1f1ef.png",
+    "name": "Fiji"
+  },
+  {
+    "alt": "🇫🇲",
+    "src": "https://localhost:6969/assets/1f1eb-1f1f2.png",
+    "name": "Micronesia"
+  },
+  {
+    "alt": "🇫🇷",
+    "src": "https://localhost:6969/assets/1f1eb-1f1f7.png",
+    "name": "France"
+  },
+  {
+    "alt": "🇬🇦",
+    "src": "https://localhost:6969/assets/1f1ec-1f1e6.png",
+    "name": "Gabon"
+  },
+  {
+    "alt": "🇬🇧",
+    "src": "https://localhost:6969/assets/1f1ec-1f1e7.png",
+    "name": "United Kingdom"
+  },
+  {
+    "alt": "🇬🇩",
+    "src": "https://localhost:6969/assets/1f1ec-1f1e9.png",
+    "name": "Grenada"
+  },
+  {
+    "alt": "🇬🇪",
+    "src": "https://localhost:6969/assets/1f1ec-1f1ea.png",
+    "name": "Georgia"
+  },
+  {
+    "alt": "🇬🇬",
+    "src": "https://localhost:6969/assets/1f1ec-1f1ec.png",
+    "name": "Guernsey"
+  },
+  {
+    "alt": "🇬🇭",
+    "src": "https://localhost:6969/assets/1f1ec-1f1ed.png",
+    "name": "Ghana"
+  },
+  {
+    "alt": "🇬🇮",
+    "src": "https://localhost:6969/assets/1f1ec-1f1ee.png",
+    "name": "Gibraltar"
+  },
+  {
+    "alt": "🇬🇱",
+    "src": "https://localhost:6969/assets/1f1ec-1f1f1.png",
+    "name": "Greenland"
+  },
+  {
+    "alt": "🇬🇲",
+    "src": "https://localhost:6969/assets/1f1ec-1f1f2.png",
+    "name": "Gambia"
+  },
+  {
+    "alt": "🇬🇳",
+    "src": "https://localhost:6969/assets/1f1ec-1f1f3.png",
+    "name": "Guinea"
+  },
+  {
+    "alt": "🇬🇵",
+    "src": "https://localhost:6969/assets/1f1ec-1f1f5.png",
+    "name": "Guadeloupe"
+  },
+  {
+    "alt": "🇬🇷",
+    "src": "https://localhost:6969/assets/1f1ec-1f1f7.png",
+    "name": "Greece"
+  },
+  {
+    "alt": "🇬🇹",
+    "src": "https://localhost:6969/assets/1f1ec-1f1f9.png",
+    "name": "Guatemala"
+  },
+  {
+    "alt": "🇬🇺",
+    "src": "https://localhost:6969/assets/1f1ec-1f1fa.png",
+    "name": "Guam"
+  },
+  {
+    "alt": "🇬🇾",
+    "src": "https://localhost:6969/assets/1f1ec-1f1fe.png",
+    "name": "Guyana"
+  },
+  {
+    "alt": "🇭🇰",
+    "src": "https://localhost:6969/assets/1f1ed-1f1f0.png",
+    "name": "Hong Kong"
+  },
+  {
+    "alt": "🇭🇳",
+    "src": "https://localhost:6969/assets/1f1ed-1f1f3.png",
+    "name": "Honduras"
+  },
+  {
+    "alt": "🇭🇷",
+    "src": "https://localhost:6969/assets/1f1ed-1f1f7.png",
+    "name": "Croatia"
+  },
+  {
+    "alt": "🇭🇹",
+    "src": "https://localhost:6969/assets/1f1ed-1f1f9.png",
+    "name": "Haiti"
+  },
+  {
+    "alt": "🇭🇺",
+    "src": "https://localhost:6969/assets/1f1ed-1f1fa.png",
+    "name": "Hungary"
+  },
+  {
+    "alt": "🇮🇩",
+    "src": "https://localhost:6969/assets/1f1ee-1f1e9.png",
+    "name": "Indonesia"
+  },
+  {
+    "alt": "🇮🇪",
+    "src": "https://localhost:6969/assets/1f1ee-1f1ea.png",
+    "name": "Ireland"
+  },
+  {
+    "alt": "🇮🇱",
+    "src": "https://localhost:6969/assets/1f1ee-1f1f1.png",
+    "name": "Israel"
+  },
+  {
+    "alt": "🇮🇳",
+    "src": "https://localhost:6969/assets/1f1ee-1f1f3.png",
+    "name": "India"
+  },
+  {
+    "alt": "🇮🇶",
+    "src": "https://localhost:6969/assets/1f1ee-1f1f6.png",
+    "name": "Iraq"
+  },
+  {
+    "alt": "🇮🇷",
+    "src": "https://localhost:6969/assets/1f1ee-1f1f7.png",
+    "name": "Iran"
+  },
+  {
+    "alt": "🇮🇸",
+    "src": "https://localhost:6969/assets/1f1ee-1f1f8.png",
+    "name": "Iceland"
+  },
+  {
+    "alt": "🇮🇹",
+    "src": "https://localhost:6969/assets/1f1ee-1f1f9.png",
+    "name": "Italy"
+  },
+  {
+    "alt": "🇯🇪",
+    "src": "https://localhost:6969/assets/1f1ef-1f1ea.png",
+    "name": "Jersey"
+  },
+  {
+    "alt": "🇯🇲",
+    "src": "https://localhost:6969/assets/1f1ef-1f1f2.png",
+    "name": "Jamaica"
+  },
+  {
+    "alt": "🇯🇴",
+    "src": "https://localhost:6969/assets/1f1ef-1f1f4.png",
+    "name": "Jordan"
+  },
+  {
+    "alt": "🇯🇵",
+    "src": "https://localhost:6969/assets/1f1ef-1f1f5.png",
+    "name": "Japan"
+  },
+  {
+    "alt": "🇰🇪",
+    "src": "https://localhost:6969/assets/1f1f0-1f1ea.png",
+    "name": "Kenya"
+  },
+  {
+    "alt": "🇰🇬",
+    "src": "https://localhost:6969/assets/1f1f0-1f1ec.png",
+    "name": "Kyrgyzstan"
+  },
+  {
+    "alt": "🇰🇭",
+    "src": "https://localhost:6969/assets/1f1f0-1f1ed.png",
+    "name": "Cambodia"
+  },
+  {
+    "alt": "🇰🇮",
+    "src": "https://localhost:6969/assets/1f1f0-1f1ee.png",
+    "name": "Kiribati"
+  },
+  {
+    "alt": "🇰🇲",
+    "src": "https://localhost:6969/assets/1f1f0-1f1f2.png",
+    "name": "Comoros"
+  },
+  {
+    "alt": "🇰🇵",
+    "src": "https://localhost:6969/assets/1f1f0-1f1f5.png",
+    "name": "North Korea"
+  },
+  {
+    "alt": "🇰🇷",
+    "src": "https://localhost:6969/assets/1f1f0-1f1f7.png",
+    "name": "South Korea"
+  },
+  {
+    "alt": "🇰🇼",
+    "src": "https://localhost:6969/assets/1f1f0-1f1fc.png",
+    "name": "Kuwait"
+  },
+  {
+    "alt": "🇰🇿",
+    "src": "https://localhost:6969/assets/1f1f0-1f1ff.png",
+    "name": "Kazakhstan"
+  },
+  {
+    "alt": "🇽🇰",
+    "src": "https://localhost:6969/assets/1f1fd-1f1f0.png",
+    "name": "Kosovo"
+  },
+  {
+    "alt": "🇱🇦",
+    "src": "https://localhost:6969/assets/1f1f1-1f1e6.png",
+    "name": "Laos"
+  },
+  {
+    "alt": "🇱🇧",
+    "src": "https://localhost:6969/assets/1f1f1-1f1e7.png",
+    "name": "Lebanon"
+  },
+  {
+    "alt": "🇱🇮",
+    "src": "https://localhost:6969/assets/1f1f1-1f1ee.png",
+    "name": "Liechtenstein"
+  },
+  {
+    "alt": "🇱🇰",
+    "src": "https://localhost:6969/assets/1f1f1-1f1f0.png",
+    "name": "Sri Lanka"
+  },
+  {
+    "alt": "🇱🇷",
+    "src": "https://localhost:6969/assets/1f1f1-1f1f7.png",
+    "name": "Liberia"
+  },
+  {
+    "alt": "🇱🇸",
+    "src": "https://localhost:6969/assets/1f1f1-1f1f8.png",
+    "name": "Lesotho"
+  },
+  {
+    "alt": "🇱🇹",
+    "src": "https://localhost:6969/assets/1f1f1-1f1f9.png",
+    "name": "Lithuania"
+  },
+  {
+    "alt": "🇱🇺",
+    "src": "https://localhost:6969/assets/1f1f1-1f1fa.png",
+    "name": "Luxembourg"
+  },
+  {
+    "alt": "🇱🇻",
+    "src": "https://localhost:6969/assets/1f1f1-1f1fb.png",
+    "name": "Latvia"
+  },
+  {
+    "alt": "🇱🇾",
+    "src": "https://localhost:6969/assets/1f1f1-1f1fe.png",
+    "name": "Libya"
+  },
+  {
+    "alt": "🇲🇦",
+    "src": "https://localhost:6969/assets/1f1f2-1f1e6.png",
+    "name": "Morocco"
+  },
+  {
+    "alt": "🇲🇨",
+    "src": "https://localhost:6969/assets/1f1f2-1f1e8.png",
+    "name": "Monaco"
+  },
+  {
+    "alt": "🇲🇩",
+    "src": "https://localhost:6969/assets/1f1f2-1f1e9.png",
+    "name": "Moldova"
+  },
+  {
+    "alt": "🇲🇪",
+    "src": "https://localhost:6969/assets/1f1f2-1f1ea.png",
+    "name": "Montenegro"
+  },
+  {
+    "alt": "🇲🇬",
+    "src": "https://localhost:6969/assets/1f1f2-1f1ec.png",
+    "name": "Madagascar"
+  },
+  {
+    "alt": "🇲🇰",
+    "src": "https://localhost:6969/assets/1f1f2-1f1f0.png",
+    "name": "Macedonia"
+  },
+  {
+    "alt": "🇲🇱",
+    "src": "https://localhost:6969/assets/1f1f2-1f1f1.png",
+    "name": "Mali"
+  },
+  {
+    "alt": "🇲🇲",
+    "src": "https://localhost:6969/assets/1f1f2-1f1f2.png",
+    "name": "Myanmar (Burma)"
+  },
+  {
+    "alt": "🇲🇳",
+    "src": "https://localhost:6969/assets/1f1f2-1f1f3.png",
+    "name": "Mongolia"
+  },
+  {
+    "alt": "🇲🇴",
+    "src": "https://localhost:6969/assets/1f1f2-1f1f4.png",
+    "name": "Macau"
+  },
+  {
+    "alt": "🇲🇶",
+    "src": "https://localhost:6969/assets/1f1f2-1f1f6.png",
+    "name": "Martinique"
+  },
+  {
+    "alt": "🇲🇷",
+    "src": "https://localhost:6969/assets/1f1f2-1f1f7.png",
+    "name": "Mauritania"
+  },
+  {
+    "alt": "🇲🇸",
+    "src": "https://localhost:6969/assets/1f1f2-1f1f8.png",
+    "name": "Montserrat"
+  },
+  {
+    "alt": "🇲🇹",
+    "src": "https://localhost:6969/assets/1f1f2-1f1f9.png",
+    "name": "Malta"
+  },
+  {
+    "alt": "🇲🇺",
+    "src": "https://localhost:6969/assets/1f1f2-1f1fa.png",
+    "name": "Mauritius"
+  },
+  {
+    "alt": "🇲🇻",
+    "src": "https://localhost:6969/assets/1f1f2-1f1fb.png",
+    "name": "Maldives"
+  },
+  {
+    "alt": "🇲🇼",
+    "src": "https://localhost:6969/assets/1f1f2-1f1fc.png",
+    "name": "Malawi"
+  },
+  {
+    "alt": "🇲🇽",
+    "src": "https://localhost:6969/assets/1f1f2-1f1fd.png",
+    "name": "Mexico"
+  },
+  {
+    "alt": "🇲🇾",
+    "src": "https://localhost:6969/assets/1f1f2-1f1fe.png",
+    "name": "Malaysia"
+  },
+  {
+    "alt": "🇲🇿",
+    "src": "https://localhost:6969/assets/1f1f2-1f1ff.png",
+    "name": "Mozambique"
+  },
+  {
+    "alt": "🇳🇦",
+    "src": "https://localhost:6969/assets/1f1f3-1f1e6.png",
+    "name": "Namibia"
+  },
+  {
+    "alt": "🇳🇨",
+    "src": "https://localhost:6969/assets/1f1f3-1f1e8.png",
+    "name": "New Caledonia"
+  },
+  {
+    "alt": "🇳🇪",
+    "src": "https://localhost:6969/assets/1f1f3-1f1ea.png",
+    "name": "Niger"
+  },
+  {
+    "alt": "🇳🇬",
+    "src": "https://localhost:6969/assets/1f1f3-1f1ec.png",
+    "name": "Nigeria"
+  },
+  {
+    "alt": "🇳🇮",
+    "src": "https://localhost:6969/assets/1f1f3-1f1ee.png",
+    "name": "Nicaragua"
+  },
+  {
+    "alt": "🇳🇱",
+    "src": "https://localhost:6969/assets/1f1f3-1f1f1.png",
+    "name": "Netherlands"
+  },
+  {
+    "alt": "🇳🇴",
+    "src": "https://localhost:6969/assets/1f1f3-1f1f4.png",
+    "name": "Norway"
+  },
+  {
+    "alt": "🇳🇵",
+    "src": "https://localhost:6969/assets/1f1f3-1f1f5.png",
+    "name": "Nepal"
+  },
+  {
+    "alt": "🇳🇷",
+    "src": "https://localhost:6969/assets/1f1f3-1f1f7.png",
+    "name": "Nauru"
+  },
+  {
+    "alt": "🇳🇺",
+    "src": "https://localhost:6969/assets/1f1f3-1f1fa.png",
+    "name": "Niue"
+  },
+  {
+    "alt": "🇳🇿",
+    "src": "https://localhost:6969/assets/1f1f3-1f1ff.png",
+    "name": "New Zealand"
+  },
+  {
+    "alt": "🇴🇲",
+    "src": "https://localhost:6969/assets/1f1f4-1f1f2.png",
+    "name": "Oman"
+  },
+  {
+    "alt": "🇵🇦",
+    "src": "https://localhost:6969/assets/1f1f5-1f1e6.png",
+    "name": "Panama"
+  },
+  {
+    "alt": "🇵🇪",
+    "src": "https://localhost:6969/assets/1f1f5-1f1ea.png",
+    "name": "Peru"
+  },
+  {
+    "alt": "🇵🇬",
+    "src": "https://localhost:6969/assets/1f1f5-1f1ec.png",
+    "name": "Papua New Guinea"
+  },
+  {
+    "alt": "🇵🇭",
+    "src": "https://localhost:6969/assets/1f1f5-1f1ed.png",
+    "name": "Philippines"
+  },
+  {
+    "alt": "🇵🇰",
+    "src": "https://localhost:6969/assets/1f1f5-1f1f0.png",
+    "name": "Pakistan"
+  },
+  {
+    "alt": "🇵🇱",
+    "src": "https://localhost:6969/assets/1f1f5-1f1f1.png",
+    "name": "Poland"
+  },
+  {
+    "alt": "🇵🇷",
+    "src": "https://localhost:6969/assets/1f1f5-1f1f7.png",
+    "name": "Puerto Rico"
+  },
+  {
+    "alt": "🇵🇹",
+    "src": "https://localhost:6969/assets/1f1f5-1f1f9.png",
+    "name": "Portugal"
+  },
+  {
+    "alt": "🇵🇼",
+    "src": "https://localhost:6969/assets/1f1f5-1f1fc.png",
+    "name": "Palau"
+  },
+  {
+    "alt": "🇵🇸",
+    "src": "https://localhost:6969/assets/1f1f5-1f1f8.png",
+    "name": "Palestine"
+  },
+  {
+    "alt": "🇵🇾",
+    "src": "https://localhost:6969/assets/1f1f5-1f1fe.png",
+    "name": "Paraguay"
+  },
+  {
+    "alt": "🇶🇦",
+    "src": "https://localhost:6969/assets/1f1f6-1f1e6.png",
+    "name": "Qatar"
+  },
+  {
+    "alt": "🇷🇪",
+    "src": "https://localhost:6969/assets/1f1f7-1f1ea.png",
+    "name": "Réunion"
+  },
+  {
+    "alt": "🇷🇴",
+    "src": "https://localhost:6969/assets/1f1f7-1f1f4.png",
+    "name": "Romania"
+  },
+  {
+    "alt": "🇷🇸",
+    "src": "https://localhost:6969/assets/1f1f7-1f1f8.png",
+    "name": "Serbia"
+  },
+  {
+    "alt": "🇷🇺",
+    "src": "https://localhost:6969/assets/1f1f7-1f1fa.png",
+    "name": "Russia"
+  },
+  {
+    "alt": "🇷🇼",
+    "src": "https://localhost:6969/assets/1f1f7-1f1fc.png",
+    "name": "Rwanda"
+  },
+  {
+    "alt": "🇸🇦",
+    "src": "https://localhost:6969/assets/1f1f8-1f1e6.png",
+    "name": "Saudi Arabia"
+  },
+  {
+    "alt": "🇸🇨",
+    "src": "https://localhost:6969/assets/1f1f8-1f1e8.png",
+    "name": "Seychelles"
+  },
+  {
+    "alt": "🇸🇩",
+    "src": "https://localhost:6969/assets/1f1f8-1f1e9.png",
+    "name": "Sudan"
+  },
+  {
+    "alt": "🇸🇪",
+    "src": "https://localhost:6969/assets/1f1f8-1f1ea.png",
+    "name": "Sweden"
+  },
+  {
+    "alt": "🇸🇬",
+    "src": "https://localhost:6969/assets/1f1f8-1f1ec.png",
+    "name": "Singapore"
+  },
+  {
+    "alt": "🇸🇮",
+    "src": "https://localhost:6969/assets/1f1f8-1f1ee.png",
+    "name": "Slovenia"
+  },
+  {
+    "alt": "🇸🇰",
+    "src": "https://localhost:6969/assets/1f1f8-1f1f0.png",
+    "name": "Slovakia"
+  },
+  {
+    "alt": "🇸🇱",
+    "src": "https://localhost:6969/assets/1f1f8-1f1f1.png",
+    "name": "Sierra Leone"
+  },
+  {
+    "alt": "🇸🇲",
+    "src": "https://localhost:6969/assets/1f1f8-1f1f2.png",
+    "name": "San Marino"
+  },
+  {
+    "alt": "🇸🇳",
+    "src": "https://localhost:6969/assets/1f1f8-1f1f3.png",
+    "name": "Senegal"
+  },
+  {
+    "alt": "🇸🇴",
+    "src": "https://localhost:6969/assets/1f1f8-1f1f4.png",
+    "name": "Somalia"
+  },
+  {
+    "alt": "🇸🇷",
+    "src": "https://localhost:6969/assets/1f1f8-1f1f7.png",
+    "name": "Suriname"
+  },
+  {
+    "alt": "🇸🇸",
+    "src": "https://localhost:6969/assets/1f1f8-1f1f8.png",
+    "name": "South Sudan"
+  },
+  {
+    "alt": "🇸🇻",
+    "src": "https://localhost:6969/assets/1f1f8-1f1fb.png",
+    "name": "El Salvador"
+  },
+  {
+    "alt": "🇸🇽",
+    "src": "https://localhost:6969/assets/1f1f8-1f1fd.png",
+    "name": "Sint Maarten"
+  },
+  {
+    "alt": "🇸🇾",
+    "src": "https://localhost:6969/assets/1f1f8-1f1fe.png",
+    "name": "Syria"
+  },
+  {
+    "alt": "🇸🇿",
+    "src": "https://localhost:6969/assets/1f1f8-1f1ff.png",
+    "name": "Swaziland"
+  },
+  {
+    "alt": "🇹🇩",
+    "src": "https://localhost:6969/assets/1f1f9-1f1e9.png",
+    "name": "Chad"
+  },
+  {
+    "alt": "🇹🇬",
+    "src": "https://localhost:6969/assets/1f1f9-1f1ec.png",
+    "name": "Togo"
+  },
+  {
+    "alt": "🇹🇭",
+    "src": "https://localhost:6969/assets/1f1f9-1f1ed.png",
+    "name": "Thailand"
+  },
+  {
+    "alt": "🇹🇯",
+    "src": "https://localhost:6969/assets/1f1f9-1f1ef.png",
+    "name": "Tajikistan"
+  },
+  {
+    "alt": "🇹🇰",
+    "src": "https://localhost:6969/assets/1f1f9-1f1f0.png",
+    "name": "Tokelau"
+  },
+  {
+    "alt": "🇹🇲",
+    "src": "https://localhost:6969/assets/1f1f9-1f1f2.png",
+    "name": "Turkmenistan"
+  },
+  {
+    "alt": "🇹🇳",
+    "src": "https://localhost:6969/assets/1f1f9-1f1f3.png",
+    "name": "Tunisia"
+  },
+  {
+    "alt": "🇹🇴",
+    "src": "https://localhost:6969/assets/1f1f9-1f1f4.png",
+    "name": "Tonga"
+  },
+  {
+    "alt": "🇹🇷",
+    "src": "https://localhost:6969/assets/1f1f9-1f1f7.png",
+    "name": "Turkey"
+  },
+  {
+    "alt": "🇹🇻",
+    "src": "https://localhost:6969/assets/1f1f9-1f1fb.png",
+    "name": "Tuvalu"
+  },
+  {
+    "alt": "🇹🇼",
+    "src": "https://localhost:6969/assets/1f1f9-1f1fc.png",
+    "name": "Taiwan"
+  },
+  {
+    "alt": "🇹🇿",
+    "src": "https://localhost:6969/assets/1f1f9-1f1ff.png",
+    "name": "Tanzania"
+  },
+  {
+    "alt": "🇺🇦",
+    "src": "https://localhost:6969/assets/1f1fa-1f1e6.png",
+    "name": "Ukraine"
+  },
+  {
+    "alt": "🇺🇬",
+    "src": "https://localhost:6969/assets/1f1fa-1f1ec.png",
+    "name": "Uganda"
+  },
+  {
+    "alt": "🇺🇸",
+    "src": "https://localhost:6969/assets/1f1fa-1f1f8.png",
+    "name": "United States"
+  },
+  {
+    "alt": "🇺🇾",
+    "src": "https://localhost:6969/assets/1f1fa-1f1fe.png",
+    "name": "Uruguay"
+  },
+  {
+    "alt": "🇻🇪",
+    "src": "https://localhost:6969/assets/1f1fb-1f1ea.png",
+    "name": "Venezuela"
+  },
+  {
+    "alt": "🇻🇳",
+    "src": "https://localhost:6969/assets/1f1fb-1f1f3.png",
+    "name": "Vietnam"
+  },
+  {
+    "alt": "🇼🇸",
+    "src": "https://localhost:6969/assets/1f1fc-1f1f8.png",
+    "name": "Samoa"
+  },
+  {
+    "alt": "🇾🇪",
+    "src": "https://localhost:6969/assets/1f1fe-1f1ea.png",
+    "name": "Yemen"
+  },
+  {
+    "alt": "🇾🇹",
+    "src": "https://localhost:6969/assets/1f1fe-1f1f9.png",
+    "name": "Mayotte"
+  },
+  {
+    "alt": "🇿🇦",
+    "src": "https://localhost:6969/assets/1f1ff-1f1e6.png",
+    "name": "South Africa"
+  },
+  {
+    "alt": "🇿🇲",
+    "src": "https://localhost:6969/assets/1f1ff-1f1f2.png",
+    "name": "Zambia"
+  },
+  {
+    "alt": "🇿🇼",
+    "src": "https://localhost:6969/assets/1f1ff-1f1fc.png",
+    "name": "Zimbabwe"
+  },
+  {
+    "alt": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "src": "https://localhost:6969/assets/1f3f4-e0067-e0062-e0065-e006e-e0067-e007f.png",
+    "name": "England"
+  },
+  {
+    "alt": "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
+    "src": "https://localhost:6969/assets/1f3f4-e0067-e0062-e0073-e0063-e0074-e007f.png",
+    "name": "Scotland"
+  },
+  {
+    "alt": "🏴󠁧󠁢󠁷󠁬󠁳󠁿",
+    "src": "https://localhost:6969/assets/1f3f4-e0067-e0062-e0077-e006c-e0073-e007f.png",
+    "name": "Wales"
+  },
+  {
+    "alt": "⚽",
+    "src": "https://localhost:6969/assets/26bd.png",
+    "name": "Football"
+  },
+  {
+    "alt": "⚾",
+    "src": "https://localhost:6969/assets/26be.png",
+    "name": "Baseball"
+  },
+  {
+    "alt": "🏀",
+    "src": "https://localhost:6969/assets/1f3c0.png",
+    "name": "Basketball"
+  },
+  {
+    "alt": "🏐",
+    "src": "https://localhost:6969/assets/1f3d0.png",
+    "name": "Volleyball"
+  },
+  {
+    "alt": "🏈",
+    "src": "https://localhost:6969/assets/1f3c8.png",
+    "name": "American Football"
+  },
+  {
+    "alt": "🏉",
+    "src": "https://localhost:6969/assets/1f3c9.png",
+    "name": "Rugby"
+  },
+  {
+    "alt": "🎾",
+    "src": "https://localhost:6969/assets/1f3be.png",
+    "name": "Tennis"
+  },
+  {
+    "alt": "🎳",
+    "src": "https://localhost:6969/assets/1f3b3.png",
+    "name": "Bowling"
+  },
+  {
+    "alt": "🏏",
+    "src": "https://localhost:6969/assets/1f3cf.png",
+    "name": "Cricket"
+  },
+  {
+    "alt": "🏑",
+    "src": "https://localhost:6969/assets/1f3d1.png",
+    "name": "Field Hockey"
+  },
+  {
+    "alt": "🏒",
+    "src": "https://localhost:6969/assets/1f3d2.png",
+    "name": "Ice Hockey"
+  },
+  {
+    "alt": "🏓",
+    "src": "https://localhost:6969/assets/1f3d3.png",
+    "name": "Table Tennis"
+  },
+  {
+    "alt": "🏸",
+    "src": "https://localhost:6969/assets/1f3f8.png",
+    "name": "Badminton"
+  },
+  {
+    "alt": "🍇",
+    "src": "https://localhost:6969/assets/1f347.png",
+    "name": "Grapes"
+  },
+  {
+    "alt": "🍈",
+    "src": "https://localhost:6969/assets/1f348.png",
+    "name": "Melon"
+  },
+  {
+    "alt": "🍉",
+    "src": "https://localhost:6969/assets/1f349.png",
+    "name": "Watermelon"
+  },
+  {
+    "alt": "🍊",
+    "src": "https://localhost:6969/assets/1f34a.png",
+    "name": "Tangerine"
+  },
+  {
+    "alt": "🍋",
+    "src": "https://localhost:6969/assets/1f34b.png",
+    "name": "Lemon"
+  },
+  {
+    "alt": "🍌",
+    "src": "https://localhost:6969/assets/1f34c.png",
+    "name": "Banana"
+  },
+  {
+    "alt": "🍍",
+    "src": "https://localhost:6969/assets/1f34d.png",
+    "name": "Pineapple"
+  },
+  {
+    "alt": "🍎",
+    "src": "https://localhost:6969/assets/1f34e.png",
+    "name": "Red Apple"
+  },
+  {
+    "alt": "🍏",
+    "src": "https://localhost:6969/assets/1f34f.png",
+    "name": "Green Apple"
+  },
+  {
+    "alt": "🍐",
+    "src": "https://localhost:6969/assets/1f350.png",
+    "name": "Pear"
+  },
+  {
+    "alt": "🍑",
+    "src": "https://localhost:6969/assets/1f351.png",
+    "name": "Peach"
+  },
+  {
+    "alt": "🍒",
+    "src": "https://localhost:6969/assets/1f352.png",
+    "name": "Cherries"
+  },
+  {
+    "alt": "🍓",
+    "src": "https://localhost:6969/assets/1f353.png",
+    "name": "Strawberry"
+  },
+  {
+    "alt": "🥝",
+    "src": "https://localhost:6969/assets/1f95d.png",
+    "name": "Kiwi Fruit"
+  },
+  {
+    "alt": "🍅",
+    "src": "https://localhost:6969/assets/1f345.png",
+    "name": "Tomato"
+  },
+  {
+    "alt": "🥥",
+    "src": "https://localhost:6969/assets/1f965.png",
+    "name": "Coconut"
+  },
+  {
+    "alt": "🥑",
+    "src": "https://localhost:6969/assets/1f951.png",
+    "name": "Avocado"
+  },
+  {
+    "alt": "🍆",
+    "src": "https://localhost:6969/assets/1f346.png",
+    "name": "Eggplant"
+  },
+  {
+    "alt": "🥔",
+    "src": "https://localhost:6969/assets/1f954.png",
+    "name": "Potato"
+  },
+  {
+    "alt": "🥕",
+    "src": "https://localhost:6969/assets/1f955.png",
+    "name": "Carrot"
+  },
+  {
+    "alt": "🌽",
+    "src": "https://localhost:6969/assets/1f33d.png",
+    "name": "Ear of Corn"
+  },
+  {
+    "alt": "🌶",
+    "src": "https://localhost:6969/assets/1f336.png",
+    "name": "Hot Pepper"
+  },
+  {
+    "alt": "🥒",
+    "src": "https://localhost:6969/assets/1f952.png",
+    "name": "Cucumber"
+  },
+  {
+    "alt": "🥦",
+    "src": "https://localhost:6969/assets/1f966.png",
+    "name": "Broccoli"
+  },
+  {
+    "alt": "🍄",
+    "src": "https://localhost:6969/assets/1f344.png",
+    "name": "Mushroom"
+  },
+  {
+    "alt": "🥜",
+    "src": "https://localhost:6969/assets/1f95c.png",
+    "name": "Peanuts"
+  },
+  {
+    "alt": "🌰",
+    "src": "https://localhost:6969/assets/1f330.png",
+    "name": "Chestnut"
+  },
+  {
+    "alt": "🍞",
+    "src": "https://localhost:6969/assets/1f35e.png",
+    "name": "Bread"
+  },
+  {
+    "alt": "🥐",
+    "src": "https://localhost:6969/assets/1f950.png",
+    "name": "Croissant"
+  },
+  {
+    "alt": "🥖",
+    "src": "https://localhost:6969/assets/1f956.png",
+    "name": "Baguette Bread"
+  },
+  {
+    "alt": "🥨",
+    "src": "https://localhost:6969/assets/1f968.png",
+    "name": "Pretzel"
+  },
+  {
+    "alt": "🥞",
+    "src": "https://localhost:6969/assets/1f95e.png",
+    "name": "Pancakes"
+  },
+  {
+    "alt": "🧀",
+    "src": "https://localhost:6969/assets/1f9c0.png",
+    "name": "Cheese"
+  },
+  {
+    "alt": "🍖",
+    "src": "https://localhost:6969/assets/1f356.png",
+    "name": "Meat on Bone"
+  },
+  {
+    "alt": "🍗",
+    "src": "https://localhost:6969/assets/1f357.png",
+    "name": "Poultry Leg"
+  },
+  {
+    "alt": "🥩",
+    "src": "https://localhost:6969/assets/1f969.png",
+    "name": "Cut of Meat"
+  },
+  {
+    "alt": "🥓",
+    "src": "https://localhost:6969/assets/1f953.png",
+    "name": "Bacon"
+  },
+  {
+    "alt": "🍔",
+    "src": "https://localhost:6969/assets/1f354.png",
+    "name": "Hamburger"
+  },
+  {
+    "alt": "🍟",
+    "src": "https://localhost:6969/assets/1f35f.png",
+    "name": "French Fries"
+  },
+  {
+    "alt": "🍕",
+    "src": "https://localhost:6969/assets/1f355.png",
+    "name": "Pizza"
+  },
+  {
+    "alt": "🌭",
+    "src": "https://localhost:6969/assets/1f32d.png",
+    "name": "Hot Dog"
+  },
+  {
+    "alt": "🥪",
+    "src": "https://localhost:6969/assets/1f96a.png",
+    "name": "Sandwich"
+  },
+  {
+    "alt": "🌮",
+    "src": "https://localhost:6969/assets/1f32e.png",
+    "name": "Taco"
+  },
+  {
+    "alt": "🌯",
+    "src": "https://localhost:6969/assets/1f32f.png",
+    "name": "Burrito"
+  },
+  {
+    "alt": "🥙",
+    "src": "https://localhost:6969/assets/1f959.png",
+    "name": "Stuffed Flatbread"
+  },
+  {
+    "alt": "🥗",
+    "src": "https://localhost:6969/assets/1f957.png",
+    "name": "Green Salad"
+  },
+  {
+    "alt": "🍿",
+    "src": "https://localhost:6969/assets/1f37f.png",
+    "name": "Popcorn"
+  },
+  {
+    "alt": "🍠",
+    "src": "https://localhost:6969/assets/1f360.png",
+    "name": "Sweet Potato"
+  },
+  {
+    "alt": "🍢",
+    "src": "https://localhost:6969/assets/1f362.png",
+    "name": "Oden"
+  },
+  {
+    "alt": "🍣",
+    "src": "https://localhost:6969/assets/1f363.png",
+    "name": "Sushi"
+  },
+  {
+    "alt": "🍤",
+    "src": "https://localhost:6969/assets/1f364.png",
+    "name": "Fried Shrimp"
+  },
+  {
+    "alt": "🍥",
+    "src": "https://localhost:6969/assets/1f365.png",
+    "name": "Fish Cake"
+  },
+  {
+    "alt": "🍡",
+    "src": "https://localhost:6969/assets/1f361.png",
+    "name": "Dango"
+  },
+  {
+    "alt": "🥟",
+    "src": "https://localhost:6969/assets/1f95f.png",
+    "name": "Dumpling"
+  },
+  {
+    "alt": "🥠",
+    "src": "https://localhost:6969/assets/1f960.png",
+    "name": "Fortune Cookie"
+  },
+  {
+    "alt": "🍦",
+    "src": "https://localhost:6969/assets/1f366.png",
+    "name": "Soft Ice Cream"
+  },
+  {
+    "alt": "🍩",
+    "src": "https://localhost:6969/assets/1f369.png",
+    "name": "Doughnut"
+  },
+  {
+    "alt": "🍪",
+    "src": "https://localhost:6969/assets/1f36a.png",
+    "name": "Cookie"
+  },
+  {
+    "alt": "🥧",
+    "src": "https://localhost:6969/assets/1f967.png",
+    "name": "Pie"
+  },
+  {
+    "alt": "🍫",
+    "src": "https://localhost:6969/assets/1f36b.png",
+    "name": "Chocolate Bar"
+  },
+  {
+    "alt": "🍬",
+    "src": "https://localhost:6969/assets/1f36c.png",
+    "name": "Candy"
+  },
+  {
+    "alt": "🍭",
+    "src": "https://localhost:6969/assets/1f36d.png",
+    "name": "Lollipop"
+  }
+
+]
