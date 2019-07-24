@@ -37,7 +37,7 @@ class CommentSection extends Component {
           </div>
         </div>
         <div style={{ marginTop: "20px" }}>
-          <Comment />
+          <CommentList />
         </div>
       </Fragment>
     );

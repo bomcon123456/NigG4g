@@ -365,7 +365,7 @@ const addComment = async (req, res, next) => {
   }
 };
 
-const getPostComments = (req, res, next) => {
+const getComments = (req, res, next) => {
   const postId = req.params.postId;
 
   return Post.findOne({
@@ -518,49 +518,86 @@ const updateComment = (req, res, next) => {
     });
 };
 
-const addSubcomment = (req, res, next) => {
+const addSubcomment = async (req, res, next) => {
   const postId = req.params.postId;
   const userId = req.userId;
   const commentId = req.params.commentId;
+  const file = req.file;
   const content = req.body.content;
-  const imageURL = req.body.imageURL;
+  const imageUrl = req.body.imageUrl;
+  const id = mongoose.Types.ObjectId();
+  let saveUrl = imageUrl;
+  let buffer = null;
 
-  return Post.findOne({
-    _id: postId,
-    active: true
-  })
-    .then(data => {
-      if (!data) {
-        const error = new Error("post_not_found");
-        error.statusCode = 404;
-        throw error;
-      }
-      const comment = data.comments.find(comment => {
-        return comment._id.toString() === commentId.toString();
-      });
-      if (!comment) {
-        const error = new Error("comment_not_found");
-        error.statusCode = 404;
-        throw error;
-      }
-      const subcomment = {
-        createdBy: userId,
-        content: content,
-        imageURL: imageURL
-      };
-      comment.subcomments.push(subcomment);
-      return data.save();
-    })
-    .then(result => {
-      res.status(200).json({
-        message: "subcomment_created_successfully",
-        post: result
-      });
-    })
-    .catch(err => {
-      console.log(err);
-      next(err);
+  try {
+    const post = await Post.findOne({
+      _id: postId,
+      active: true
     });
+    if (!post) {
+      const error = new Error("post_not_found");
+      error.statusCode = 406;
+      throw error;
+    }
+    const comment = post.comments.find(comment => {
+      return comment._id.toString() === commentId.toString();
+    });
+    if (!comment) {
+      const error = new Error("comment_not_found");
+      error.statusCode = 406;
+      throw error;
+    }
+
+    if (file) {
+      const image = sharp(file.buffer);
+      const metadata = await image.metadata();
+      if (metadata.format !== "gif") {
+        if (metadata.width >= 700) {
+          await image
+            .resize(700, null, {
+              kernel: sharp.kernel.cubic
+            })
+            .jpeg({
+              quality: 100
+            })
+            .toFile(`./uploads/comments-images/${id}_700.jpg`);
+        } else {
+          await image
+            .jpeg({
+              quality: 100
+            })
+            .toFile(`./uploads/comments-images/${id}_700.jpg`);
+        }
+        saveUrl = `${process.env.COMMENT_ASSETS_DIR}/${id}_700.jpg`;
+      }
+    } else if (imageUrl) {
+      const response = await axios.get(imageUrl, {
+        responseType: "arraybuffer"
+      });
+      buffer = Buffer.from(response.data, "binary");
+      saveUrl = `./uploads/comments-images/${id}_700.gif`;
+      fs.writeFileSync(saveUrl, buffer, "binary");
+    }
+
+    const subcomment = {
+      createdBy: userId,
+      content: content,
+      imageURL: saveUrl,
+      _id: id
+    };
+    comment.subcomments.push(subcomment);
+    await post.save();
+
+    res.status(200).json({
+      message: "subcomment_created_successfully",
+      postId: postId,
+      commentId: comment._id,
+      subcommentId: id
+    });
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
 };
 
 const getSubcomment = (req, res, next) => {
@@ -776,7 +813,7 @@ module.exports = {
   deletePost,
   updatePostVote,
   addComment,
-  getPostComments,
+  getComments,
   getComment,
   deleteComment,
   updateComment,

@@ -1,17 +1,21 @@
 import React, { Component } from "react";
-import Comment from "./Comment/Comment";
+import FullComment from "./FullComment/FullComment";
 
 class CommentList extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      post: [],
+      loading: false,
+      error: null
+    };
   }
 
   render() {
     return (
       <div>
-        <Comment />
+        <FullComment />
       </div>
     );
   }
