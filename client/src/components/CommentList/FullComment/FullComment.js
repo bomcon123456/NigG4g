@@ -1,39 +1,53 @@
 import React, { Component, Fragment } from "react";
 import Comment from "../Comment/Comment";
+import CommentInputWithAvatar from "../../CommentInputWithAvatar/CommentInputWithAvatar";
 
 class FullComment extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      showReplyInput: false,
+      taggedUser: "",
+      subcomments: [],
+      subcommentsLength: 0
+    };
   }
 
+  handleReplyClicked = username => {
+    this.setState({
+      showReplyInput: true,
+      taggedUser: username
+    });
+  };
+
   render() {
-    const comment = {
-      content: "This shit is not normal man",
-      imageUrl:
-        "https://localhost:6969/comment-images/5d3679ea521a6e0884e4b98d_700.jpg",
-      type: "Photo",
-      points: 0,
-      _id: "5d3679ea521a6e0884e4b98d",
-      createdBy: {
-        username: "bomcon123",
-        statusId: "5d368a0cfcb82a10b27d53ea",
-        isPro: true,
-        avatarURL:
-          "https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=2593714977403208&height=50&width=50&ext=1566449169&hash=AeTm9_YV3ws_sIR_"
-      },
-      subcomments: [],
-      createdAt: "2019-07-23T03:07:22.284+00:00",
-      updatedAt: "2019-07-23T03:07:22.284+00:00"
-    };
+    const { comment } = this.props;
+    const { showReplyInput, taggedUser } = this.state;
     return (
       <Fragment>
-        <Comment comment={comment} />
-        <div style={{ marginLeft: "20px" }}>
-          <Comment comment={comment} isSubComment />
-        </div>
+        <Comment
+          comment={comment}
+          handleReplyClicked={this.handleReplyClicked}
+        />
+        {/* SubCommentArray here */}
+        {/* <div style={{ marginLeft: "20px" }}>
+          <Comment
+            comment={comment}
+            isSubComment
+            handleReplyClicked={this.handleReplyClicked}
+          />
+        </div> */}
         <div className="collasped-comment">View 9 replies</div>
+        <div style={{ marginLeft: "20px", marginTop: "5px" }}>
+          {showReplyInput ? (
+            <CommentInputWithAvatar
+              postId={this.props.postId}
+              commentId={comment._id}
+              taggedUser={taggedUser}
+            />
+          ) : null}
+        </div>
       </Fragment>
     );
   }

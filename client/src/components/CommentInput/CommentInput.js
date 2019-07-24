@@ -39,6 +39,8 @@ class CommentInput extends KComponent {
         url: ""
       }
     });
+    this.taggedUser = null;
+    this.commentId = null;
 
     this.onUnmount(this.form.on("change", () => this.forceUpdate()));
     this.onUnmount(this.form.on("enter", () => null));
@@ -57,6 +59,18 @@ class CommentInput extends KComponent {
       : "Something bad happened.";
   };
 
+  componentDidUpdate() {
+    if (
+      this.props.taggedUser &&
+      (this.props.taggedUser !== this.taggedUser ||
+        this.commentId !== this.props.commentId)
+    ) {
+      this.taggedUser = this.props.taggedUser;
+      this.commentId = this.props.commentId;
+      this.form.updatePathData("content", `@${this.taggedUser} `);
+    }
+  }
+
   handlePostComment = () => {
     let sendData = new FormData();
     let { content, picture, url } = this.form.getData();
@@ -64,8 +78,16 @@ class CommentInput extends KComponent {
     sendData.append("content", content);
     sendData.append("file", picture ? picture.file : null);
     sendData.append("imageUrl", url ? url : "");
-    postApi
-      .postComment(this.props.postId, sendData)
+    let apiFunction = () => postApi.postComment(this.props.postId, sendData);
+    if (this.props.commentId) {
+      apiFunction = () =>
+        postApi.postSubcomment(
+          this.props.postId,
+          this.props.commentId,
+          sendData
+        );
+    }
+    apiFunction()
       .then(response => {
         console.log(response);
         this.form.resetData();
@@ -76,7 +98,9 @@ class CommentInput extends KComponent {
           loadingPreview: false
         });
       })
-      .catch(err => this.setState({ error: err }));
+      .catch(err => {
+        this.setState({ uploadError: err });
+      });
   };
 
   handleFileChange = async (file, defaultOnChange) => {

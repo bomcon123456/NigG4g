@@ -10,7 +10,6 @@ const commentInfo = props => {
   let redirect = `${process.env.REACT_APP_APP_URL}/u/${user.username}`;
   let status = statusCache.syncGet();
   let statusObject = status.find(each => each._id === user.statusId);
-  console.log(statusObject);
   let showStatus = statusObject && statusObject.name !== "None";
 
   return (

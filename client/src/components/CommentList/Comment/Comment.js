@@ -50,7 +50,12 @@ class Comment extends Component {
           {content}
           {media}
           <div className="action">
-            <span className="action-text">Reply</span>
+            <span
+              className="action-text"
+              onClick={() => this.props.handleReplyClicked(user.username)}
+            >
+              Reply
+            </span>
             <div className="vote-btn">
               <span className="vote">
                 <i className="fas fa-arrow-up" />
