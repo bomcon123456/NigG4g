@@ -10,11 +10,24 @@ class CommentList extends Component {
     this.state = {
       comments: [],
       loading: false,
-      error: null
+      error: null,
+      focusedReply: {
+        username: null,
+        commentId: null
+      }
     };
     this.postId = this.props.postId;
     console.log(this.postId);
   }
+
+  handleReplyClicked = (username, commentId) => {
+    this.setState({
+      focusedReply: {
+        username: username,
+        commentId: commentId
+      }
+    });
+  };
 
   componentDidMount() {
     this.setState({ loading: true, error: null });
@@ -29,11 +42,16 @@ class CommentList extends Component {
   }
 
   render() {
-    const { comments } = this.state;
+    const { comments, focusedReply } = this.state;
     return (
       <div>
         {comments.map(comment => (
-          <FullComment key={comment._id} comment={comment} />
+          <FullComment
+            key={comment._id}
+            comment={comment}
+            showReplyInput={comment._id === focusedReply.commentId}
+            handleReplyClicked={this.handleReplyClicked}
+          />
         ))}
       </div>
     );

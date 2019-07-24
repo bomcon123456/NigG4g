@@ -16,7 +16,7 @@ class Comment extends Component {
   }
 
   render() {
-    const { comment } = this.props;
+    const { comment, isSubComment } = this.props;
     const { points } = this.state;
     const user = comment.createdBy;
     let media = null;
@@ -52,7 +52,13 @@ class Comment extends Component {
           <div className="action">
             <span
               className="action-text"
-              onClick={() => this.props.handleReplyClicked(user.username)}
+              onClick={() => {
+                if (!isSubComment) {
+                  this.props.handleReplyClicked(user.username, comment._id);
+                } else {
+                  this.props.handleReplyClicked(user.username);
+                }
+              }}
             >
               Reply
             </span>

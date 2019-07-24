@@ -16,12 +16,11 @@ class FullComment extends Component {
     };
   }
 
-  handleReplyClicked = username => {
-    this.setState({
-      showReplyInput: true,
-      taggedUser: username
-    });
-  };
+  componentDidUpdate() {
+    if (this.props.showReplyInput !== this.state.showReplyInput) {
+      this.setState({ showReplyInput: this.props.showReplyInput });
+    }
+  }
 
   render() {
     const { comment } = this.props;
@@ -30,14 +29,14 @@ class FullComment extends Component {
       <Fragment>
         <Comment
           comment={comment}
-          handleReplyClicked={this.handleReplyClicked}
+          handleReplyClicked={this.props.handleReplyClicked}
         />
         {/* SubCommentArray here */}
         {/* <div style={{ marginLeft: "20px" }}>
           <Comment
-            comment={comment}
+            comment={subcomment}
             isSubComment
-            handleReplyClicked={this.handleReplyClicked}
+            handleReplyClicked={(username) => this.handleReplyClicked(username, comment._id)}
           />
         </div> */}
         {subcommentsLength !== 0 ? (
@@ -45,15 +44,21 @@ class FullComment extends Component {
             View {subcommentsLength} replies
           </div>
         ) : null}
-        <div style={{ marginLeft: "20px", marginTop: "5px" }}>
-          {showReplyInput ? (
+        {showReplyInput ? (
+          <div
+            style={{
+              marginLeft: "20px",
+              marginTop: "5px",
+              marginBottom: "20px"
+            }}
+          >
             <CommentInputWithAvatar
               postId={this.props.postId}
               commentId={comment._id}
               taggedUser={taggedUser}
             />
-          ) : null}
-        </div>
+          </div>
+        ) : null}
       </Fragment>
     );
   }
