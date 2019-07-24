@@ -79,7 +79,11 @@ const createPost = async (req, res, next) => {
       });
       result = await post.save();
     }
-    await User.findByIdAndUpdate(req.userId, { $push: { posts: result._id } });
+    await User.findByIdAndUpdate(req.userId, {
+      $push: {
+        posts: result._id
+      }
+    });
     res.status(200).json({
       message: "Hail Hydra",
       data: {
@@ -91,7 +95,9 @@ const createPost = async (req, res, next) => {
       try {
         const { dir } = await saveVideoToMultipleType(result._id);
         let post = await Post.findById(result._id);
-        let newImages = { ...post.images };
+        let newImages = {
+          ...post.images
+        };
         newImages.image460svwm = {
           ...post.images.image460sv
         };
@@ -127,11 +133,15 @@ const getPosts = (req, res, next) => {
     lowercaseTag = lowercaseTag.replace(/\s+/g, "-");
     options = {
       ...options,
-      tags: { $all: lowercaseTag }
+      tags: {
+        $all: lowercaseTag
+      }
     };
   }
   return Post.find(options)
-    .sort({ createdAt: -1 })
+    .sort({
+      createdAt: -1
+    })
     .skip((page - 1) * 20)
     .limit(20)
     .populate("createdBy", "username avatarURL")
@@ -277,7 +287,9 @@ const deletePost = (req, res, next) => {
       createdBy: userId,
       active: true
     },
-    { active: false }
+    {
+      active: false
+    }
   )
     .then(result => {
       if (!result.nModified) {
@@ -369,18 +381,32 @@ const getComments = (req, res, next) => {
   const postId = req.params.postId;
   const page = req.query.page || 1;
   const query = req.query.query;
-  let sortQuery = { $sort: { points: -1 } };
+  let sortQuery = {
+    $sort: {
+      points: -1
+    }
+  };
   if (query === "fresh") {
-    sortQuery = { $sort: { createdAt: -1 } };
+    sortQuery = {
+      $sort: {
+        createdAt: -1
+      }
+    };
   }
   const take = 10;
   const skip = (page - 1) * take;
   let pipeline = [
     {
-      $match: { _id: postId }
+      $match: {
+        _id: postId
+      }
     },
-    { $skip: skip },
-    { $limit: take },
+    {
+      $skip: skip
+    },
+    {
+      $limit: take
+    },
     {
       $project: {
         comments: 1,
@@ -398,14 +424,18 @@ const getComments = (req, res, next) => {
         as: "comments.createdBy"
       }
     },
-    { $unwind: "$comments.createdBy" },
+    {
+      $unwind: "$comments.createdBy"
+    },
     {
       $project: {
         _id: "$comments._id",
         content: "$comments.content",
         imageUrl: "$comments.imageUrl",
         points: "$comments.points",
-        subcommentsLength: { $size: "$comments.subcomments" },
+        subcommentsLength: {
+          $size: "$comments.subcomments"
+        },
         "createdBy.avatarURL": "$comments.createdBy.avatarURL",
         "createdBy.username": "$comments.createdBy.username",
         "createdBy.isPro": "$comments.createdBy.isPro",
@@ -416,7 +446,14 @@ const getComments = (req, res, next) => {
     sortQuery
   ];
   return Post.aggregate(pipeline)
-    .then(data => res.status(200).json(data))
+    .then(data => {
+      if (data.length === 0) {
+        const error = new Error("not_found");
+        error.statusCode = 406;
+        throw error;
+      }
+      res.status(200).json(data);
+    })
     .catch(err => {
       next(err);
     });
@@ -678,37 +715,64 @@ const getSubcomment = (req, res, next) => {
     });
 };
 
-const getCommentSubcomments = (req, res, next) => {
+const getSubcomments = (req, res, next) => {
   const postId = req.params.postId;
   const commentId = req.params.commentId;
-
-  return Post.findOne({
-    _id: postId,
-    active: true
-  })
-    .then(result => {
-      console.log(result);
-      if (!result) {
-        const error = new Error("post_not_found");
-        error.statusCode = 404;
-        throw error;
+  console.log(commentId);
+  const page = req.query.page || 1;
+  let pipeline = [
+    {
+      $match: {
+        _id: postId
       }
-      const comment = result.comments.find(
-        each => each._id.toString() === commentId
-      );
-      if (!comment) {
-        const error = new Error("comment_not_found");
-        error.statusCode = 404;
-        throw error;
+    },
+    {
+      $project: {
+        _id: 0,
+        comments: 1
       }
-
-      res.status(200).json({
-        message: "fetch_subcomment_successfully",
-        subcomments: comment.subcomments
-      });
-    })
+    },
+    {
+      $unwind: "$comments"
+    },
+    {
+      $match: {
+        "comments._id": mongoose.Types.ObjectId(commentId)
+      }
+    },
+    {
+      $project: {
+        subcomments: "$comments.subcomments"
+      }
+    },
+    {
+      $unwind: "$subcomments"
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "subcomments.createdBy",
+        foreignField: "_id",
+        as: "subcomments.createdBy"
+      }
+    },
+    {
+      $project: {
+        _id: "$subcomments._id",
+        content: "$subcomments.content",
+        imageUrl: "$subcomments.imageUrl",
+        points: "$subcomments.points",
+        "createdBy.avatarURL": "$subcomments.createdBy.avatarURL",
+        "createdBy.username": "$subcomments.createdBy.username",
+        "createdBy.isPro": "$subcomments.createdBy.isPro",
+        "createdBy.statusId": "$subcomments.createdBy.statusId",
+        createdAt: "$subcomments.createdAt"
+      }
+    }
+  ];
+  return Post.aggregate(pipeline)
+    .then(data => res.status(200).json(data))
     .catch(err => {
-      console.log(err);
       next(err);
     });
 };
@@ -851,7 +915,7 @@ module.exports = {
   updateComment,
   addSubcomment,
   getSubcomment,
-  getCommentSubcomments,
+  getSubcomments,
   deleteSubcomment,
   updateSubcomment
 };

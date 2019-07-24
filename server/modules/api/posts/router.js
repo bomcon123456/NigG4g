@@ -38,7 +38,7 @@ router.delete(
 /// Subcomment API
 router.get(
   "/:postId/comments/:commentId/subcomments",
-  postController.getCommentSubcomments
+  postController.getSubcomments
 );
 
 router.get(

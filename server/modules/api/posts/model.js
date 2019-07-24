@@ -10,6 +10,10 @@ const commentSchema = new Schema(
     subcomments: {
       type: [
         {
+          createdAt: {
+            type: Date,
+            default: Date.now()
+          },
           createdBy: {
             type: Schema.Types.ObjectId,
             ref: "User",
@@ -17,7 +21,7 @@ const commentSchema = new Schema(
           },
           content: { type: String, required: false, default: "" },
           imageURL: { type: String, required: false, default: "" },
-          point: { type: Number, default: 0 }
+          points: { type: Number, default: 0 }
         }
       ],
       required: false,
