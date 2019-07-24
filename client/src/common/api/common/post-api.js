@@ -35,8 +35,8 @@ export const postApi = {
   getComment(postId, commentId) {
     return axiosApi.get("/posts/" + postId + "/comments/" + commentId);
   },
-  getComments(postId) {
-    return axiosApi.get("/posts/" + postId + "/comments");
+  getComments(postId, queryType = "hot") {
+    return axiosApi.get("/posts/" + postId + `/comments?query=${queryType}`);
   },
   postComment(postId, data) {
     return axiosApi.post("/posts/" + postId + "/comments", data, {

@@ -11,9 +11,8 @@ const {
   saveVideoToMultipleType
 } = require("./util-function");
 
-//@TODO: Add API for change posts's votes
+//@TODO: Add API for change comments's votes
 
-// @TODO: Check video upload by file -> OKEY BRO
 const createPost = async (req, res, next) => {
   const { title, tags, url, nsfw, category, type, attributeLink } = req.body;
   let savedTags = JSON.parse(tags);
@@ -115,6 +114,7 @@ const createPost = async (req, res, next) => {
   }
 };
 
+//@TODO: reduce the data that we get.
 const getPosts = (req, res, next) => {
   const page = req.query.page || 1;
   const tag = req.query.tag || null;
@@ -367,25 +367,57 @@ const addComment = async (req, res, next) => {
 
 const getComments = (req, res, next) => {
   const postId = req.params.postId;
-
-  return Post.findOne({
-    _id: postId,
-    active: true
-  })
-    .then(data => {
-      if (!data) {
-        const error = new Error("post_not_found");
-        error.statusCode = 400;
-        throw error;
+  const page = req.query.page || 1;
+  const query = req.query.query;
+  let sortQuery = { $sort: { points: -1 } };
+  if (query === "fresh") {
+    sortQuery = { $sort: { createdAt: -1 } };
+  }
+  const take = 10;
+  const skip = (page - 1) * take;
+  let pipeline = [
+    {
+      $match: { _id: postId }
+    },
+    { $skip: skip },
+    { $limit: take },
+    {
+      $project: {
+        comments: 1,
+        _id: 1
       }
-
-      res.status(200).json({
-        message: "fetch_post_comments_successfully",
-        comments: data.comments
-      });
-    })
+    },
+    {
+      $unwind: "$comments"
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "comments.createdBy",
+        foreignField: "_id",
+        as: "comments.createdBy"
+      }
+    },
+    { $unwind: "$comments.createdBy" },
+    {
+      $project: {
+        _id: "$comments._id",
+        content: "$comments.content",
+        imageUrl: "$comments.imageUrl",
+        points: "$comments.points",
+        subcommentsLength: { $size: "$comments.subcomments" },
+        "createdBy.avatarURL": "$comments.createdBy.avatarURL",
+        "createdBy.username": "$comments.createdBy.username",
+        "createdBy.isPro": "$comments.createdBy.isPro",
+        "createdBy.statusId": "$comments.createdBy.statusId",
+        createdAt: "$comments.createdAt"
+      }
+    },
+    sortQuery
+  ];
+  return Post.aggregate(pipeline)
+    .then(data => res.status(200).json(data))
     .catch(err => {
-      console.log(err);
       next(err);
     });
 };

@@ -22,7 +22,8 @@ class CommentList extends Component {
       .getComments(this.postId)
       .then(res => {
         const { data } = res;
-        this.setState({ loading: true, error: null, comments: data.comments });
+        // console.log(data);
+        this.setState({ loading: true, error: null, comments: data });
       })
       .catch(err => this.setState({ loading: false, error: err }));
   }

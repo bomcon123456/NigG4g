@@ -6,11 +6,13 @@ class FullComment extends Component {
   constructor(props) {
     super(props);
 
+    const { comment } = this.props;
+
     this.state = {
       showReplyInput: false,
       taggedUser: "",
       subcomments: [],
-      subcommentsLength: 0
+      subcommentsLength: comment.subcommentsLength
     };
   }
 
@@ -23,7 +25,7 @@ class FullComment extends Component {
 
   render() {
     const { comment } = this.props;
-    const { showReplyInput, taggedUser } = this.state;
+    const { showReplyInput, taggedUser, subcommentsLength } = this.state;
     return (
       <Fragment>
         <Comment
@@ -38,7 +40,11 @@ class FullComment extends Component {
             handleReplyClicked={this.handleReplyClicked}
           />
         </div> */}
-        <div className="collasped-comment">View 9 replies</div>
+        {subcommentsLength !== 0 ? (
+          <div className="collasped-comment">
+            View {subcommentsLength} replies
+          </div>
+        ) : null}
         <div style={{ marginLeft: "20px", marginTop: "5px" }}>
           {showReplyInput ? (
             <CommentInputWithAvatar
