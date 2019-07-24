@@ -7,7 +7,7 @@ class Comment extends Component {
     super(props);
 
     this.state = {
-      points: 15
+      points: this.props.comment.points
     };
     this.avatarStyle = null;
     if (this.props.isSubComment) {
