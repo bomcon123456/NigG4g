@@ -12,7 +12,7 @@ const userModel = new Schema(
       required: true,
       unique: true,
       validate: {
-        validator: function(value) {
+        validator: function (value) {
           const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
           return regex.test(value);
         },
@@ -31,14 +31,18 @@ const userModel = new Schema(
     },
     maskNSFW: {
       type: Boolean,
-      default: false
+      default: false,
+      required: true
     },
     showNSFW: {
       type: Boolean,
-      default: true
+      default: true,
+      required: true
+
     },
     isPro: {
       type: Boolean,
+      required: true,
       default: false
     },
     statusId: {
@@ -122,7 +126,7 @@ const userModel = new Schema(
   { timestamps: { createdAt: "createdAt" } }
 );
 
-userModel.pre("save", function(next) {
+userModel.pre("save", function (next) {
   if (!this.isModified("password")) {
     return next();
   }
