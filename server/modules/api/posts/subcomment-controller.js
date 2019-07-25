@@ -180,6 +180,8 @@ const getSubcomments = (req, res, next) => {
         content: "$subcomments.content",
         imageUrl: "$subcomments.imageUrl",
         points: "$subcomments.points",
+        upVotes: "$subcomments.upVotes",
+        downVotes: "$subcomments.downVotes",
         "createdBy.avatarURL": "$subcomments.createdBy.avatarURL",
         "createdBy.username": "$subcomments.createdBy.username",
         "createdBy.isPro": "$subcomments.createdBy.isPro",

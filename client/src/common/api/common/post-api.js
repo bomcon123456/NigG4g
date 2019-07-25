@@ -29,10 +29,31 @@ export const postApi = {
   },
   //Vote API
   updateVotePost(postId, upVote) {
-    console.log(postId, upVote);
     return axiosApi.put("/posts/" + postId + "/votes", {
       upvote: upVote
     });
+  },
+  updateVoteComment(postId, commentId, upVote) {
+    return axiosApi.put(
+      "/posts/" + postId + "/comments/" + commentId + "/votes",
+      {
+        upvote: upVote
+      }
+    );
+  },
+  updateVoteReply(postId, commentId, replyId, upVote) {
+    return axiosApi.put(
+      "/posts/" +
+        postId +
+        "/comments/" +
+        commentId +
+        "/subcomments/" +
+        replyId +
+        "/votes",
+      {
+        upvote: upVote
+      }
+    );
   },
   /// Comment API
   getComment(postId, commentId) {

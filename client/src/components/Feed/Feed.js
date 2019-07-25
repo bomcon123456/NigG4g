@@ -23,7 +23,6 @@ class Feed extends Component {
   loadItems(page) {
     if (this.state.nextLink !== null) {
       postApi.getPosts(page).then(data => {
-        console.log(data);
         let newPosts = [...this.state.posts, ...data.post];
         if (data.nextLink !== null) {
           this.setState({
