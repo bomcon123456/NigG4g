@@ -49,8 +49,10 @@ class CommentList extends Component {
           <FullComment
             key={comment._id}
             comment={comment}
+            postId={this.postId}
             showReplyInput={comment._id === focusedReply.commentId}
             handleReplyClicked={this.handleReplyClicked}
+            taggedUser={focusedReply.username}
           />
         ))}
       </div>
