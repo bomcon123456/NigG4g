@@ -138,6 +138,8 @@ const getComments = (req, res, next) => {
         "createdBy.username": "$comments.createdBy.username",
         "createdBy.isPro": "$comments.createdBy.isPro",
         "createdBy.statusId": "$comments.createdBy.statusId",
+        upVotes: "$comments.upVotes",
+        downVotes: "$comments.downVotes",
         createdAt: "$comments.createdAt"
       }
     },

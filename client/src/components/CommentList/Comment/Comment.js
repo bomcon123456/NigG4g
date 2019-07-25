@@ -1,13 +1,33 @@
 import React, { Component } from "react";
+import classnames from "classnames";
+import debounce from "lodash/debounce";
+
 import Avatar from "../../Avatar/Avatar";
 import CommentInfo from "./CommentInfo/CommentInfo";
+import { postApi } from "../../../common/api/common/post-api";
+import { userInfo } from "../../../common/states/user-info";
 
 class Comment extends Component {
   constructor(props) {
     super(props);
 
+    let currentVote = "";
+    const info = userInfo.getState();
+    const { upVotes, downVotes, points } = this.props.comment;
+    const upVoteFind = upVotes.find(each => {
+      return each.toString() === info._id.toString();
+    });
+    const downVoteFind = downVotes.find(each => {
+      return each.toString() === info._id.toString();
+    });
+    if (upVoteFind) {
+      currentVote = "UP";
+    } else if (downVoteFind) {
+      currentVote = "DOWN";
+    }
     this.state = {
-      points: this.props.comment.points
+      points: points,
+      currentVote: currentVote
     };
     this.avatarStyle = null;
     if (this.props.isSubComment) {
@@ -15,9 +35,52 @@ class Comment extends Component {
     }
   }
 
+  requestVoteApi = async isUpvote => {
+    const { isSubComment, postId, comment, parentComment } = this.props;
+
+    if (isSubComment) {
+      await postApi.updateVoteReply(
+        postId,
+        parentComment,
+        comment._id,
+        isUpvote
+      );
+    } else {
+      await postApi.updateVoteComment(postId, comment._id, isUpvote);
+    }
+  };
+
+  requestVoteApi = debounce(this.requestVoteApi, 1000);
+
+  handleVoteClicked = async isUpvote => {
+    let points = this.state.points;
+    let currentVote = this.state.currentVote;
+    if (isUpvote && currentVote === "UP") {
+      points -= 1;
+      currentVote = "";
+    } else if (!isUpvote && currentVote === "DOWN") {
+      points += 1;
+      currentVote = "";
+    } else if (isUpvote && currentVote === "DOWN") {
+      points += 2;
+      currentVote = "UP";
+    } else if (!isUpvote && currentVote === "UP") {
+      points -= 2;
+      currentVote = "DOWN";
+    } else if (isUpvote) {
+      points += 1;
+      currentVote = "UP";
+    } else if (!isUpvote) {
+      points -= 1;
+      currentVote = "DOWN";
+    }
+    this.setState({ points: points, currentVote: currentVote });
+    this.requestVoteApi(isUpvote);
+  };
+
   render() {
     const { comment, isSubComment } = this.props;
-    const { points } = this.state;
+    const { points, currentVote } = this.state;
     const user = comment.createdBy;
     let media = null;
     let content = null;
@@ -64,10 +127,20 @@ class Comment extends Component {
               Reply
             </span>
             <div className="vote-btn">
-              <span className="vote">
+              <span
+                className={classnames("vote", {
+                  active: currentVote === "UP"
+                })}
+                onClick={() => this.handleVoteClicked(true)}
+              >
                 <i className="fas fa-arrow-up" />
               </span>
-              <span className="vote">
+              <span
+                className={classnames("vote", {
+                  active: currentVote === "DOWN"
+                })}
+                onClick={() => this.handleVoteClicked(false)}
+              >
                 <i className="fas fa-arrow-down" />
               </span>
             </div>

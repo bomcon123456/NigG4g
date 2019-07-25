@@ -110,9 +110,7 @@ const updateCommentVote = async (req, res, next) => {
       each => each.toString() === userId
     );
     if (userUpVoteIndex !== -1 && upvote) {
-      console.log("before", upVotes, userUpVoteIndex);
-      upVotes.splice(0, 1);
-      console.log(upVotes);
+      upVotes.splice(userUpVoteIndex, 1);
     } else if (userDownVoteIndex !== -1 && !upvote) {
       downVotes.splice(userUpVoteIndex, 1);
     } else if (userUpVoteIndex === -1 && upvote) {
@@ -132,7 +130,10 @@ const updateCommentVote = async (req, res, next) => {
     post.comments[commentIndex] = comment;
     postMongoose.comments = post.comments;
     await postMongoose.save();
-    res.status(200).json(post);
+    res.status(200).json({
+      message: "update_vote_successfully",
+      points: comment.points
+    });
   } catch (error) {
     next(error);
   }
@@ -177,9 +178,7 @@ const updateSubcommentVote = async (req, res, next) => {
       each => each.toString() === userId
     );
     if (userUpVoteIndex !== -1 && upvote) {
-      console.log("before", upVotes, userUpVoteIndex);
-      upVotes.splice(0, 1);
-      console.log(upVotes);
+      upVotes.splice(userUpVoteIndex, 1);
     } else if (userDownVoteIndex !== -1 && !upvote) {
       downVotes.splice(userUpVoteIndex, 1);
     } else if (userUpVoteIndex === -1 && upvote) {
@@ -199,7 +198,10 @@ const updateSubcommentVote = async (req, res, next) => {
     post.comments[commentIndex].subcomments[subCommentIndex] = subcomment;
     postMongoose.comments = post.comments;
     await postMongoose.save();
-    res.status(200).json(post);
+    res.status(200).json({
+      message: "update_vote_successfully",
+      points: subcomment.points
+    });
   } catch (error) {
     next(error);
   }

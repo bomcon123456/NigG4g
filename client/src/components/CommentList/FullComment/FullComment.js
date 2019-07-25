@@ -59,6 +59,7 @@ class FullComment extends Component {
     return (
       <Fragment>
         <Comment
+          postId={this.props.postId}
           comment={comment}
           postCreatedBy={this.props.postCreatedBy}
           handleReplyClicked={handleReplyClicked}
@@ -71,6 +72,8 @@ class FullComment extends Component {
                 key={subcomment._id.toString()}
               >
                 <Comment
+                  postId={this.props.postId}
+                  parentComment={comment._id}
                   comment={subcomment}
                   postCreatedBy={this.props.postCreatedBy}
                   isSubComment

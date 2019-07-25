@@ -114,7 +114,6 @@ class CommentInput extends KComponent {
     }
     apiFunction()
       .then(response => {
-        console.log(response);
         this.form.resetData();
         this.setState({
           uploadError: null,

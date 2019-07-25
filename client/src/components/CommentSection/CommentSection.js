@@ -33,7 +33,6 @@ class CommentSection extends Component {
 
   render() {
     const { comments } = this.state;
-    console.log(comments);
     return (
       <Fragment>
         <CommentInputWithAvatar
