@@ -356,6 +356,7 @@ const addComment = async (req, res, next) => {
       buffer = Buffer.from(response.data, "binary");
       saveUrl = `./uploads/comments-images/${id}_700.gif`;
       fs.writeFileSync(saveUrl, buffer, "binary");
+      saveUrl = `${process.env.COMMENT_ASSETS_DIR}/${id}_700.gif`;
     }
     const newComment = {
       _id: id,

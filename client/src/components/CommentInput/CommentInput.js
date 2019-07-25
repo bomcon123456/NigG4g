@@ -80,7 +80,7 @@ class CommentInput extends KComponent {
       this.props.handlePostComment({
         _id: Math.floor(Math.random() * 100) + 1,
         content: content,
-        imageUrl: picture ? picture.src : "",
+        imageUrl: picture ? picture.src : url,
         points: 0,
         subcommentsLength: 0,
         createdBy: {
