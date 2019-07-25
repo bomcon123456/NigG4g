@@ -29,14 +29,17 @@ export const postApi = {
   },
   //Vote API
   updateVotePost(postId, upVote) {
-    return axiosApi.get("/posts/" + postId + "/votes?upvote=" + upVote);
+    console.log(postId, upVote);
+    return axiosApi.put("/posts/" + postId + "/votes", {
+      upvote: upVote
+    });
   },
   /// Comment API
   getComment(postId, commentId) {
     return axiosApi.get("/posts/" + postId + "/comments/" + commentId);
   },
-  getComments(postId) {
-    return axiosApi.get("/posts/" + postId + "/comments");
+  getComments(postId, queryType = "hot") {
+    return axiosApi.get("/posts/" + postId + `/comments?query=${queryType}`);
   },
   postComment(postId, data) {
     return axiosApi.post("/posts/" + postId + "/comments", data, {
