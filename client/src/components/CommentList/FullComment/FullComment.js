@@ -33,7 +33,6 @@ class FullComment extends Component {
       );
       const { data } = response;
       this.setState({ error: null, loading: false, subcomments: data });
-      console.log(response);
     } catch (err) {
       this.setState({ error: err, loading: false });
     }

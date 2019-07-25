@@ -29,7 +29,10 @@ export const postApi = {
   },
   //Vote API
   updateVotePost(postId, upVote) {
-    return axiosApi.get("/posts/" + postId + "/votes?upvote=" + upVote);
+    console.log(postId, upVote);
+    return axiosApi.put("/posts/" + postId + "/votes", {
+      upvote: upVote
+    });
   },
   /// Comment API
   getComment(postId, commentId) {

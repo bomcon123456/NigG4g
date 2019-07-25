@@ -21,13 +21,57 @@ const commentSchema = new Schema(
           },
           content: { type: String, required: false, default: "" },
           imageURL: { type: String, required: false, default: "" },
-          points: { type: Number, default: 0 }
+          points: { type: Number, default: 0 },
+          upVotes: {
+            type: [
+              {
+                type: Schema.Types.ObjectId,
+                ref: "User",
+                required: true
+              }
+            ],
+            required: true,
+            default: []
+          },
+          downVotes: {
+            type: [
+              {
+                type: Schema.Types.ObjectId,
+                ref: "User",
+                required: true
+              }
+            ],
+            required: true,
+            default: []
+          }
         }
       ],
       required: false,
       default: []
     },
-    points: { type: Number, default: 0 }
+    points: { type: Number, default: 0 },
+    upVotes: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "User",
+          required: true
+        }
+      ],
+      required: true,
+      default: []
+    },
+    downVotes: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "User",
+          required: true
+        }
+      ],
+      required: true,
+      default: []
+    }
   },
   { timestamps: { createdAt: "createdAt" } }
 );
