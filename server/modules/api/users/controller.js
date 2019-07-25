@@ -404,19 +404,64 @@ exports.changePassword = (req, res, next) => {
     });
 };
 
-// bcrypt.compare(currentPassword, user.password)
-//         .then(result => {
-//           if (result) {
-//             console.log(true);
-//           } else {
-//             res.status(501).send({
-//               "huhu": "huhu",
-//               "user": user.password,
-//               "currentPass": currentPassword
-//             })
-//           }
-//         })
-//         .catch(err => {
-//           console.log(err);
-//           next(err);
-//         })
+exports.updateAccount = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const error = new Error("user_validation_faied");
+    error.statusCode = 422;
+    error.data = errors.array();
+    throw error;
+  }
+  const userId = req.userId;
+  const newUsername = req.body.newUsername;
+  const newEmail = req.body.newEmail;
+  const newMaskNSFW = req.body.newMaskNSFW;
+  const newShowNSFW = req.body.newShowNSFW;
+
+  return User.findById(userId)
+    .then(user => {
+      if (!user || (user && !user.active)) {
+        const error = new Error("account_not_found");
+        error.statusCode = 400;
+        throw error;
+      }
+      user.username = newUsername;
+      user.email = newEmail;
+      user.maskNSFW = newMaskNSFW;
+      user.showNSFW = newShowNSFW;
+      return user.save();
+    })
+    .then(result => {
+      res.status(200).json({
+        message: "update_account_successfully",
+        userId: userId
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      next(err);
+    });
+}
+
+exports.checkUsernameExisted = (req, res, next) => {
+  const { username } = req.body;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const error = new Error("user_validation_faied");
+    error.statusCode = 422;
+    error.data = errors.array();
+    throw error;
+  }
+  return User.findOne({ username, active: 1 })
+    .then(user => {
+      if (!user) {
+        return res.status(200).json({
+          message: "account_not_found"
+        });
+      }
+      return res.status(200).json({
+        message: "account_found"
+      });
+    })
+    .catch(err => next(err));
+};
