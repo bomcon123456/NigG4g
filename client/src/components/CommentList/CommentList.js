@@ -40,6 +40,7 @@ class CommentList extends Component {
         {comments.map(comment => (
           <FullComment
             key={comment._id}
+            postCreatedBy={this.props.postCreatedBy}
             comment={comment}
             postId={this.postId}
             showReplyInput={comment._id === focusedReply.commentId}

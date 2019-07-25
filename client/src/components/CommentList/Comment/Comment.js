@@ -45,6 +45,7 @@ class Comment extends Component {
               user={user}
               points={points}
               createdAt={comment.createdAt}
+              postCreatedBy={this.props.postCreatedBy}
             />
           </div>
           {content}

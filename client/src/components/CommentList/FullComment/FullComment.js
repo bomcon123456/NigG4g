@@ -59,7 +59,11 @@ class FullComment extends Component {
     const hasMore = subcommentsLength - subcomments.length > 0;
     return (
       <Fragment>
-        <Comment comment={comment} handleReplyClicked={handleReplyClicked} />
+        <Comment
+          comment={comment}
+          postCreatedBy={this.props.postCreatedBy}
+          handleReplyClicked={handleReplyClicked}
+        />
         {/* SubCommentArray here */}
         {subcomments.length !== 0
           ? subcomments.map(subcomment => (
@@ -69,6 +73,7 @@ class FullComment extends Component {
               >
                 <Comment
                   comment={subcomment}
+                  postCreatedBy={this.props.postCreatedBy}
                   isSubComment
                   handleReplyClicked={username => {
                     handleReplyClicked(username, comment._id);

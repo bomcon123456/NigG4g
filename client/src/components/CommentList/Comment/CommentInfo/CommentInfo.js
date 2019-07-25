@@ -11,7 +11,6 @@ const commentInfo = props => {
   let status = statusCache.syncGet();
   let statusObject = status.find(each => each._id === user.statusId);
   let showStatus = statusObject && statusObject.name !== "None";
-
   return (
     <p className="comment-info">
       <Link className="username" to={redirect}>
@@ -29,6 +28,11 @@ const commentInfo = props => {
       ) : null}
       {user.isPro ? <span className="pro-badge">Pro</span> : null}
       <span className="meta">
+        {user.username === props.postCreatedBy ? (
+          <span title="Original Poster" className="role-op">
+            OP
+          </span>
+        ) : null}
         {points ? <span className="points">{points} points</span> : null}
         {points ? <span> · </span> : null}
         <span className="time">

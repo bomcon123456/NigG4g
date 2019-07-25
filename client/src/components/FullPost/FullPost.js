@@ -176,7 +176,7 @@ class FullPost extends KComponent {
     const { images, type, createdAt } = post;
     const { image700 } = images;
     const { downVoteCount, upVoteCount } = this.state;
-
+    console.log(post);
     const time = timeDifference(new Date(createdAt));
     let media = (
       <div
@@ -339,7 +339,10 @@ class FullPost extends KComponent {
             </div>
           </div>
           <div className="full-post-comments__content">
-            <CommentSection postId={post._id}/>
+            <CommentSection
+              postId={post._id}
+              createdBy={post.createdBy.username}
+            />
           </div>
         </div>
       </article>

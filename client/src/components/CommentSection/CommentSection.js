@@ -41,7 +41,11 @@ class CommentSection extends Component {
           handlePostComment={this.handlePostComment}
         />
         <div style={{ marginTop: "20px" }}>
-          <CommentList postId={this.props.postId} comments={comments} />
+          <CommentList
+            postId={this.props.postId}
+            postCreatedBy={this.props.createdBy}
+            comments={comments}
+          />
         </div>
       </Fragment>
     );
