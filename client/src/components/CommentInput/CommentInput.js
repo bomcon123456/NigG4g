@@ -42,6 +42,7 @@ class CommentInput extends KComponent {
     });
     this.taggedUser = null;
     this.commentId = null;
+    this.info = userInfo.getState();
 
     this.onUnmount(this.form.on("change", () => this.forceUpdate()));
     this.onUnmount(this.form.on("enter", () => null));
@@ -163,6 +164,9 @@ class CommentInput extends KComponent {
       isFormInvalid = invalidForms.findIndex(each => each === "content") !== -1;
     }
     let isDisable = loadingPreview || uploadError !== null || isFormInvalid;
+    if (!this.info) {
+      isDisable = true;
+    }
     return (
       <Fragment>
         {uploadError && (
