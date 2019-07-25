@@ -8,6 +8,7 @@ import UploadButton from "../../common/react/upload-btn/upload-btn";
 import ImagePreview from "../ImagePreview/ImagePreview";
 import { utilApi } from "../../common/api/common/util-api";
 import { postApi } from "../../common/api/common/post-api";
+import { userInfo } from "../../common/states/user-info";
 
 class CommentInput extends KComponent {
   constructor(props) {
@@ -74,6 +75,23 @@ class CommentInput extends KComponent {
   handlePostComment = () => {
     let sendData = new FormData();
     let { content, picture, url } = this.form.getData();
+    if (!this.props.commentId) {
+      const info = userInfo.getState();
+      this.props.handlePostComment({
+        _id: Math.floor(Math.random() * 100) + 1,
+        content: content,
+        imageUrl: picture ? picture.src : "",
+        points: 0,
+        subcommentsLength: 0,
+        createdBy: {
+          avatarURL: info.avatarURL,
+          username: info.username,
+          isPro: info.isPro,
+          statusId: info.statusId
+        },
+        createdAt: Date.now()
+      });
+    }
     console.log(url);
     sendData.append("content", content);
     sendData.append("file", picture ? picture.file : null);

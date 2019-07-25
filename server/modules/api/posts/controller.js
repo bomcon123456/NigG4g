@@ -447,11 +447,6 @@ const getComments = (req, res, next) => {
   ];
   return Post.aggregate(pipeline)
     .then(data => {
-      if (data.length === 0) {
-        const error = new Error("not_found");
-        error.statusCode = 406;
-        throw error;
-      }
       res.status(200).json(data);
     })
     .catch(err => {

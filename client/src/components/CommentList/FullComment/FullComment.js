@@ -11,7 +11,6 @@ class FullComment extends Component {
 
     this.state = {
       showReplyInput: false,
-      taggedUser: "",
       subcomments: [],
       subcommentsLength: comment.subcommentsLength,
       error: null,
@@ -41,20 +40,17 @@ class FullComment extends Component {
   };
 
   render() {
-    const { comment } = this.props;
+    const { comment, handleReplyClicked } = this.props;
     const {
       showReplyInput,
-      taggedUser,
       subcommentsLength,
-      subcomments
+      subcomments,
+      loading
     } = this.state;
     const hasMore = subcommentsLength - subcomments.length > 0;
     return (
       <Fragment>
-        <Comment
-          comment={comment}
-          handleReplyClicked={this.props.handleReplyClicked}
-        />
+        <Comment comment={comment} handleReplyClicked={handleReplyClicked} />
         {/* SubCommentArray here */}
         {subcomments.length !== 0
           ? subcomments.map(subcomment => (
@@ -66,7 +62,7 @@ class FullComment extends Component {
                   comment={subcomment}
                   isSubComment
                   handleReplyClicked={username => {
-                    this.props.handleReplyClicked(username, comment._id);
+                    handleReplyClicked(username, comment._id);
                   }}
                 />
               </div>
@@ -74,7 +70,9 @@ class FullComment extends Component {
           : null}
         {subcommentsLength !== 0 && hasMore ? (
           <div className="collasped-comment" onClick={this.handleLoadReply}>
-            {subcommentsLength - subcomments.length === subcommentsLength
+            {loading
+              ? "Loading..."
+              : subcomments.length === 0
               ? `View ${subcommentsLength} replies`
               : "Load more replies"}
           </div>
