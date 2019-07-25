@@ -39,6 +39,15 @@ class FullComment extends Component {
     }
   };
 
+  handlePostReply = reply => {
+    let newSub = [...this.state.subcomments];
+    newSub.unshift(reply);
+    this.setState((prevState, props) => ({
+      subcommentsLength: prevState.subcommentsLength + 1,
+      subcomments: newSub
+    }));
+  };
+
   render() {
     const { comment, handleReplyClicked } = this.props;
     const {
@@ -89,6 +98,7 @@ class FullComment extends Component {
               postId={this.props.postId}
               commentId={comment._id}
               taggedUser={this.props.taggedUser}
+              handlePostReply={this.handlePostReply}
             />
           </div>
         ) : null}

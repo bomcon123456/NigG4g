@@ -75,24 +75,31 @@ class CommentInput extends KComponent {
   handlePostComment = () => {
     let sendData = new FormData();
     let { content, picture, url } = this.form.getData();
+    const info = userInfo.getState();
+
+    const newComment = {
+      _id: Math.floor(Math.random() * 100) + 1,
+      content: content,
+      imageUrl: picture ? picture.src : url,
+      points: 0,
+      subcommentsLength: 0,
+      createdBy: {
+        avatarURL: info.avatarURL,
+        username: info.username,
+        isPro: info.isPro,
+        statusId: info.statusId
+      },
+      createdAt: Date.now()
+    };
+
+    // Client-rendering
     if (!this.props.commentId) {
-      const info = userInfo.getState();
-      this.props.handlePostComment({
-        _id: Math.floor(Math.random() * 100) + 1,
-        content: content,
-        imageUrl: picture ? picture.src : url,
-        points: 0,
-        subcommentsLength: 0,
-        createdBy: {
-          avatarURL: info.avatarURL,
-          username: info.username,
-          isPro: info.isPro,
-          statusId: info.statusId
-        },
-        createdAt: Date.now()
-      });
+      this.props.handlePostComment(newComment);
+    } else {
+      this.props.handlePostReply(newComment);
     }
-    console.log(url);
+
+    // POST-API
     sendData.append("content", content);
     sendData.append("file", picture ? picture.file : null);
     sendData.append("imageUrl", url ? url : "");

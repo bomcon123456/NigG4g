@@ -21,7 +21,7 @@ class CommentInputWithAvatar extends Component {
 
   render() {
     const info = userInfo.getState();
-    const { handlePostComment } = this.props;
+    const { handlePostComment, handlePostReply } = this.props;
     return (
       <div className="comment-section">
         <div className="avatar" style={this.avatarStyle}>
@@ -42,6 +42,7 @@ class CommentInputWithAvatar extends Component {
             commentId={this.props.commentId}
             taggedUser={this.props.taggedUser}
             handlePostComment={handlePostComment}
+            handlePostReply={handlePostReply}
           />
         </div>
       </div>
