@@ -6,13 +6,15 @@ import Avatar from "../../Avatar/Avatar";
 import CommentInfo from "./CommentInfo/CommentInfo";
 import { postApi } from "../../../common/api/common/post-api";
 import { userInfo } from "../../../common/states/user-info";
+import { registerModal } from "../../../common/react/modals/register/register";
 
 class Comment extends Component {
   constructor(props) {
     super(props);
 
     let currentVote = "";
-    const info = userInfo.getState();
+    this.info = userInfo.getState();
+    const info = this.info;
     const { upVotes, downVotes, points } = this.props.comment;
     const upVoteFind = upVotes.find(each => {
       return each.toString() === info._id.toString();
@@ -117,10 +119,14 @@ class Comment extends Component {
             <span
               className="action-text"
               onClick={() => {
-                if (!isSubComment) {
-                  this.props.handleReplyClicked(user.username, comment._id);
+                if (!this.info) {
+                  registerModal.open();
                 } else {
-                  this.props.handleReplyClicked(user.username);
+                  if (!isSubComment) {
+                    this.props.handleReplyClicked(user.username, comment._id);
+                  } else {
+                    this.props.handleReplyClicked(user.username);
+                  }
                 }
               }}
             >
@@ -131,7 +137,13 @@ class Comment extends Component {
                 className={classnames("vote", {
                   active: currentVote === "UP"
                 })}
-                onClick={() => this.handleVoteClicked(true)}
+                onClick={() => {
+                  if (!this.info) {
+                    registerModal.open();
+                  } else {
+                    this.handleVoteClicked(true);
+                  }
+                }}
               >
                 <i className="fas fa-arrow-up" />
               </span>
@@ -139,7 +151,13 @@ class Comment extends Component {
                 className={classnames("vote", {
                   active: currentVote === "DOWN"
                 })}
-                onClick={() => this.handleVoteClicked(false)}
+                onClick={() => {
+                  if (!this.info) {
+                    registerModal.open();
+                  } else {
+                    this.handleVoteClicked(false);
+                  }
+                }}
               >
                 <i className="fas fa-arrow-down" />
               </span>

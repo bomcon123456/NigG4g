@@ -308,7 +308,14 @@ class FullPost extends KComponent {
         <div style={{ marginTop: "8px" }}>
           <p
             className="full-post-report-text"
-            onClick={() => reportModal.open()}
+            onClick={() => {
+              const info = userInfo.getState();
+              if (!info) {
+                registerModal.open();
+              } else {
+                reportModal.open();
+              }
+            }}
           >
             REPORT
           </p>
