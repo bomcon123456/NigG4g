@@ -9,8 +9,11 @@ import { Route, Link, Switch } from "react-router-dom";
 class SettingsPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      name: 'account'
+    };
   }
+
 
   render() {
     console.log(this.props);
@@ -18,14 +21,14 @@ class SettingsPage extends Component {
       <LayoutWithoutSidebarRight>
         <div id="settings">
           <ul className="form-nav">
-            <li key="Account">
-              <Link to={`${this.props.match.url}/account`}>Account</Link>
+            <li key="Account" onClick={() => { this.setState({ name: 'account' }) }}>
+              <Link className={this.state.name === 'account' ? 'selected' : ''} to={`${this.props.match.url}/account`}>Account</Link>
             </li>
-            <li key="Password">
-              <Link to={`${this.props.match.url}/password`}>Password</Link>
+            <li key="Password" onClick={() => { this.setState({ name: 'password' }) }}>
+              <Link className={this.state.name === 'password' ? 'selected' : ''} to={`${this.props.match.url}/password`}>Password</Link>
             </li>
-            <li key="Profile">
-              <Link to={`${this.props.match.url}/profile`}>Profile</Link>
+            <li key="Profile" onClick={() => { this.setState({ name: 'profile' }) }}>
+              <Link className={this.state.name === 'profile' ? 'selected' : ''} to={`${this.props.match.url}/profile`}>Profile</Link>
             </li>
           </ul>
           <Switch>
