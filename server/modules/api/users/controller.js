@@ -495,7 +495,7 @@ exports.updateProfile = (req, res, next) => {
       user.statusId = newStatus;
       user.gender = newGender;
       user.birthday = newBirthday;
-      user.country = newCountry;
+      user.homeCountry = newCountry;
       user.description = newDescription;
       return user.save();
     })

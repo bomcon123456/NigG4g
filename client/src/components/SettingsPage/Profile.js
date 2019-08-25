@@ -120,14 +120,12 @@ class Profile extends KComponent {
   }
 
   handleSelectorCountry = (e) => {
-    alert(e.target.value)
     this.setState({
       optionCountry: e.target.value
     })
   }
 
   handleSelectorGender = (e) => {
-    alert(e.target.value)
     this.setState({
       optionGender: e.target.value
     })
@@ -219,16 +217,16 @@ class Profile extends KComponent {
           <label>Gender</label>
           <Selector name="saveMode" data={[
             {
-              value: "default",
+              value: "NULL",
               key: "Select Gender..."
             }, {
-              value: "F",
+              value: "FEMALE",
               key: "Female"
             }, {
-              value: "M",
+              value: "MALE",
               key: "Male"
             }, {
-              value: "X",
+              value: "UNSPECIFIED",
               key: "Unspecified"
             }
           ]} optionValue={this.state.optionGender} handleSelector={this.handleSelectorGender} />
