@@ -465,3 +465,48 @@ exports.checkUsernameExisted = (req, res, next) => {
     })
     .catch(err => next(err));
 };
+
+exports.updateProfile = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const error = new Error("user_validation_faied");
+    error.statusCode = 422;
+    error.data = errors.array();
+    throw error;
+  }
+  const userId = req.userId;
+  const newAvartarUrl = req.body.avatarUrl;
+  const newName = req.body.name;
+  const newStatus = req.body.status;
+  const newGender = req.body.gender;
+  const newBirthday = req.body.birthday;
+  const newCountry = req.body.country;
+  const newDescription = req.body.description;
+
+  return User.findById(userId)
+    .then(user => {
+      if (!user || (user && !user.active)) {
+        const error = new Error("account_not_found");
+        error.statusCode = 400;
+        throw error;
+      }
+      user.avatarURL = newAvartarUrl;
+      user.name = newName;
+      user.statusId = newStatus;
+      user.gender = newGender;
+      user.birthday = newBirthday;
+      user.country = newCountry;
+      user.description = newDescription;
+      return user.save();
+    })
+    .then(result => {
+      res.status(200).json({
+        message: "update_profile_successfully",
+        userId: userId
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      next(err);
+    });
+}

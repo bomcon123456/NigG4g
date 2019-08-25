@@ -2,6 +2,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { userInfo } from "../../common/states/user-info"
+import { userApi } from "../../common/api/common/user-api";
 
 import { KComponent } from "../KComponent";
 
@@ -20,7 +21,8 @@ class Profile extends KComponent {
       loading: false,
       error: "",
       optionStatus: userInfo.getState().statusId,
-      optionCountry: userInfo.getState().country
+      optionCountry: userInfo.getState().country,
+      optionGender: userInfo.getState().gender
     };
 
     const cachedStatus = statusCache.syncGet();
@@ -49,27 +51,23 @@ class Profile extends KComponent {
         .integer(),
       birthdayMonth: yup
         .number()
-        .integer()
-        .min(1, "month < 1")
-        .max(12, "month > 12"),
+        .integer(),
       birthdayDay: yup
         .number()
-        .integer()
-        .min(1, "day < 1")
-        .max(31, "day > 31"),
+        .integer(),
       blogText: yup
         .string()
         .max(120, "Max length id 120")
     })
 
+    const bd = new Date(this.state.data.birthday);
     const birthday = {
-      year: this.state.data.birthday !== null ? this.state.data.birthday.getFullyear() : null,
-      date: this.state.data.birthday !== null ? this.state.data.birthday.getDate() : null,
-      month: this.state.data.birthday !== null ? this.state.data.birthday.getMonth() : null
+      year: bd !== null ? bd.getFullYear() : null,
+      date: bd !== null ? bd.getDate() : null,
+      month: bd !== null ? bd.getMonth() : null
     }
-    console.log(this.state.data.name)
 
-
+    console.log(birthday);
     this.form = createFormWithValidator(this.profileSchema, {
       initData: {
         name: this.state.data.name,
@@ -87,9 +85,32 @@ class Profile extends KComponent {
   }
 
   handleUpdateProfile = () => {
-    const { name, birthdayYear, birthdayDay, birthdayMonth } = this.form.getData();
+    const avatarUrl = userInfo.getState.avatarURL;
+    const { name, birthdayYear, birthdayDay, birthdayMonth, blogText } = this.form.getData();
+    const birthday = new Date(birthdayYear, birthdayMonth, birthdayDay);
     const status = this.state.optionStatus;
     const country = this.state.optionCountry;
+    const gender = this.state.optionGender;
+
+    userApi
+      .updateProfile({ avatarUrl, name, status: status, country: country, gender: gender, birthday: birthday, description: blogText })
+      .then(res => {
+        if (res.data.message === "update_account_successfully") {
+          this.setState({ loading: false });
+          this.props.history.push("/");
+        } else {
+          this.setState({
+            error: { message: "bad_error" },
+            loading: false,
+          });
+        }
+      })
+      .catch(err => {
+        this.setState({
+          error: err,
+          loading: false
+        });
+      });
   }
 
   handleSelectorStatus = (e) => {
@@ -102,6 +123,13 @@ class Profile extends KComponent {
     alert(e.target.value)
     this.setState({
       optionCountry: e.target.value
+    })
+  }
+
+  handleSelectorGender = (e) => {
+    alert(e.target.value)
+    this.setState({
+      optionGender: e.target.value
     })
   }
 
@@ -119,7 +147,7 @@ class Profile extends KComponent {
   };
 
   render() {
-    console.log(this.status);
+    console.log(this.state.data.birthday)
     const isSubmittable =
       this.form.getInvalidPaths().length === 0 &&
       this.state.error === "" &&
@@ -189,12 +217,21 @@ class Profile extends KComponent {
 
         <div className="field">
           <label>Gender</label>
-          <select name="gender">
-            <option>Select Gender...</option>
-            <option value="F">Female</option>
-            <option value="M">Male</option>
-            <option value="X">Unspecified</option>
-          </select>
+          <Selector name="saveMode" data={[
+            {
+              value: "default",
+              key: "Select Gender..."
+            }, {
+              value: "F",
+              key: "Female"
+            }, {
+              value: "M",
+              key: "Male"
+            }, {
+              value: "X",
+              key: "Unspecified"
+            }
+          ]} optionValue={this.state.optionGender} handleSelector={this.handleSelectorGender} />
         </div>
 
         <div className="field">
