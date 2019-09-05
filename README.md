@@ -106,4 +106,4 @@ What we aim to do is whatever we make, it should function as close as possible a
 ## Contributors
 This project is created at June 21 2019 by me (Dao Tuan Trung) and Nguyen Khac Minh. Nigg4g was being continously commited until July 18 and then have been "abandoned" from since due to life schedule of both of us.
 
-Greatly thank Nguyen Khac Minh for his contribution. NKM solely made the front-end nav-bar, toolbar, sidebar and the whole account's settings page, also very funny 404 page (original to 9Gag).
+Greatly thank Nguyen Khac Minh for his contribution. NKM solely made the front-end of nav-bar, toolbar, sidebar and the whole account's settings page, also very funny 404 page (original to 9Gag).
