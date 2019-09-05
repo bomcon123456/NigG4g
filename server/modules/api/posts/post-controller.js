@@ -123,10 +123,17 @@ const createPost = async (req, res, next) => {
 const getPosts = (req, res, next) => {
   const page = req.query.page || 1;
   const tag = req.query.tag || null;
+  const catId = req.query.catId || null;
 
   let options = {
     active: true
   };
+  if (catId !== null) {
+    options = {
+      ...options,
+      categoryId: catId
+    };
+  }
   if (tag !== null) {
     let lowercaseTag = tag.toLowerCase();
     lowercaseTag = lowercaseTag.replace(/\s+/g, "-");
