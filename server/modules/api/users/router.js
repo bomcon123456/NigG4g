@@ -31,6 +31,7 @@ router.put(
   isAuth,
   userController.changePassword
 );
+router.put("/update-profile", isAuth, userController.updateProfile);
 router.delete("/:userId", isAuth, userController.deleteUser);
 router.put("/:userId", isAuth, userController.updateUserInformation);
 

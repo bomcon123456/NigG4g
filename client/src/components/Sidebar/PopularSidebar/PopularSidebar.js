@@ -26,7 +26,6 @@ class PopularSidebar extends React.Component {
       document.removeEventListener('click', this.handleClickOutside, false);
     }
     this.setState((prevState) => ({ visibility: !prevState.visibility }));
-
   }
 
   handleClickOutside(event) {

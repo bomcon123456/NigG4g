@@ -2,6 +2,8 @@ import React from "react";
 import Category from "./Category/Category";
 import { categoryCache } from "../../../common/cache/api-cache/common-cache";
 
+import MoreDropdown from "../PopularSidebar/MoreDropdown/MoreDropdown"
+
 class CategorySection extends React.Component {
   constructor(props) {
     super(props);
@@ -44,12 +46,23 @@ class CategorySection extends React.Component {
           <h3>Sections</h3>
         </header>
         <ul className="nav">
+          <Category
+            name="Vietnam 🇻🇳"
+            description="Everything about Vietnam"
+            imageUrl="https://localhost:6969/assets/0_country_100.jpg"
+            iconType="more"
+            handleToggleVisibility={this.handleToggleVisibility}
+          />
+          {this.state.visibility && (
+            <MoreDropdown />
+          )}
           {this.categories.map(category => (
             <Category
               key={category.name}
               name={category.name}
               description={category.description}
               imageUrl={category.imageUrl}
+              iconType="star"
             />
           ))}
         </ul>

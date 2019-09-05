@@ -295,11 +295,28 @@ class Account extends KComponent {
         </div>
         <div className="field">
           <label>Mask Sensitive Content</label>
-          <Selector name="saveMode" optionValue={this.state.optionMaskNSFW} handleSelector={this.handleSelectorMaskNSFW} />
+          <Selector name="saveMode" data={[
+            {
+              value: "true",
+              key: "On"
+            }, {
+              value: "false",
+              key: "Off"
+            }
+          ]} optionValue={this.state.optionMaskNSFW} handleSelector={this.handleSelectorMaskNSFW} />
         </div>
         <div className="field">
           <label>Show Sensitive Content</label>
-          <Selector name="nsfwMode" optionValue={this.state.optionShowNSFW} handleSelector={this.handleSelectorShowNSFW} />
+          <Selector name="nsfwMode" data={[
+            {
+              value: "true",
+              key: "On"
+            }, {
+              value: "false",
+              key: "Off"
+            }
+          ]}
+            optionValue={this.state.optionShowNSFW} handleSelector={this.handleSelectorShowNSFW} />
         </div>
 
         <div className="btn-setting-container">

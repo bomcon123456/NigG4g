@@ -10,8 +10,9 @@ export default class Selector extends Component {
   render() {
     return (
       <select name={this.props.name} value={this.props.optionValue} onChange={this.props.handleSelector}>
-        <option value="true" >On</option>
-        <option value="false">Off</option>
+        {this.props.data.map(each => (
+          <option key={each.key} value={each.value}>{each.key}</option>
+        ))}
       </select>
     )
   }

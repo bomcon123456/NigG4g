@@ -91,7 +91,7 @@ class UploadButton extends Component {
     }
   };
 
-  handleVideoUpload = e => {};
+  handleVideoUpload = e => { };
 
   render() {
     let { renderBtn, onError, uploadImageOnly } = this.props;

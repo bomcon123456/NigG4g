@@ -32,6 +32,9 @@ export const userApi = {
     return axiosApi.put("/users/change-password", data);
   },
   updateAccount(data) {
-    return axiosApi.put("users/update-account", data)
+    return axiosApi.put("users/update-account", data);
+  },
+  updateProfile(data) {
+    return axiosApi.put("users/update-profile", data);
   }
 };
