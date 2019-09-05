@@ -34,6 +34,19 @@ exports.checkEmailExisted = (req, res, next) => {
     .catch(err => next(err));
 };
 
+exports.getUserNames = (req, res, next) => {
+  return User.find()
+    .then(data => {
+      let usernames = data.map(each => {
+        each.username, each._id;
+      });
+      res.status(200).json(usernames);
+    })
+    .catch(err => {
+      next(err);
+    });
+};
+
 exports.getUser = (req, res, next) => {
   const userId = req.params.userId;
   return User.findById(userId)
@@ -284,7 +297,7 @@ exports.requireResetPassword = (req, res, next) => {
           appUrl: "https://localhost:3000/",
           redirect: `https://localhost:3000/confirm-reset-password?token=${
             token.token
-            }`,
+          }`,
           name: myUser.username
         }
       });
@@ -360,20 +373,22 @@ exports.changePassword = (req, res, next) => {
         error.statusCode = 400;
         throw error;
       }
-      console.log("hihi")
-      bcrypt.compare(process.env.DEFAULT_PASSWORD, user.password)
+      console.log("hihi");
+      bcrypt
+        .compare(process.env.DEFAULT_PASSWORD, user.password)
         .then(result => {
           if (result) {
-            console.log("hihi")
+            console.log("hihi");
             user.password = newPassword;
             user.isChangePassword = true;
             res.status(200).json({
               message: "changed_password_the_1st_time_successfully",
-              userId: userId,
+              userId: userId
             });
             return user.save();
           } else {
-            bcrypt.compare(currentPassword, user.password)
+            bcrypt
+              .compare(currentPassword, user.password)
               .then(result => {
                 if (!result) {
                   const error = new Error("incorrect_password");
@@ -384,14 +399,14 @@ exports.changePassword = (req, res, next) => {
                 user.isChangePassword = true;
                 res.status(200).json({
                   message: "changed_password_successfully",
-                  userId: userId,
+                  userId: userId
                 });
                 return user.save();
               })
               .catch(err => {
                 console.log(err);
                 next(err);
-              })
+              });
           }
         })
         .catch(err => {
@@ -441,7 +456,7 @@ exports.updateAccount = (req, res, next) => {
       console.log(err);
       next(err);
     });
-}
+};
 
 exports.checkUsernameExisted = (req, res, next) => {
   const { username } = req.body;

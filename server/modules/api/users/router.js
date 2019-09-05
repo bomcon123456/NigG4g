@@ -2,81 +2,19 @@ const express = require("express");
 const { body } = require("express-validator/check");
 
 const isAuth = require("../../common/middleware/is-auth");
-const User = require("./model");
 const userController = require("./controller");
 
 const router = express.Router();
-const createUserBodyValidator = [
-  body("email")
-    .isEmail()
-    .withMessage("Please enter a valid email.")
-    .custom((value, { req }) => {
-      return User.findOne({ email: value }).then(user => {
-        if (user) {
-          return Promise.reject("account_existed");
-        }
-      });
-    })
-    .normalizeEmail(),
-  body("password")
-    .trim()
-    .isLength({ min: 6 }),
-];
 
-const emailValidator = [
-  body("email")
-    .isEmail()
-    .withMessage("Please enter a valid email.")
-    .normalizeEmail()
-];
+const {
+  createUserBodyValidator,
+  emailValidator,
+  newPasswordValidator,
+  usernameValidator,
+  updateAccountValidator
+} = require("./route-validators");
 
-const newPasswordValidator = [
-  body("newPassword")
-    .trim()
-    .isLength({ min: 6 })
-];
-
-const usernameValidator = [
-  body("username")
-    .trim()
-    .isLength({ max: 15, min: 4 })
-    .isAscii()
-]
-
-const updateAccountValidator = [
-  body("newUsername")
-    .trim()
-    .isLength({ max: 15, min: 4 })
-    .isAscii()
-    .custom((value, { req }) => {
-      return User.findOne({ username: value }).then(user => {
-        if (user) {
-          if (user._id.toString() !== req.userId.toString())
-            return Promise.reject("account_existed");
-        }
-      });
-    }),
-  body("newEmail")
-    .isEmail()
-    .withMessage("Please enter a valid email.")
-    .custom((value, { req }) => {
-      return User.findOne({ email: value }).then(user => {
-        if (user) {
-          if (user._id.toString() !== req.userId.toString()) {
-            console.log(req.userId, user._id)
-            return Promise.reject("account_existed");
-          }
-        }
-      });
-    }),
-  body("newShowNSFW")
-    .isBoolean()
-  ,
-  body("newMaskNSFW")
-    .isBoolean()
-]
-
-
+router.get("/", userController.getUserNames);
 
 router.get("/:userId", userController.getUser);
 
@@ -96,7 +34,11 @@ router.put(
 router.delete("/:userId", isAuth, userController.deleteUser);
 router.put("/:userId", isAuth, userController.updateUserInformation);
 
-router.post("/check-username", usernameValidator, userController.checkUsernameExisted);
+router.post(
+  "/check-username",
+  usernameValidator,
+  userController.checkUsernameExisted
+);
 router.post("/check-email", emailValidator, userController.checkEmailExisted);
 
 router.get("/verify/:myToken", userController.verifyUser);
@@ -116,8 +58,5 @@ router.post(
   ],
   userController.updatePassword
 );
-
-
-
 
 module.exports = router;

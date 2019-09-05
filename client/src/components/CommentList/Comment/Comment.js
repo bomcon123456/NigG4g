@@ -16,6 +16,7 @@ class Comment extends Component {
     this.info = userInfo.getState();
     const info = this.info;
     const { upVotes, downVotes, points } = this.props.comment;
+    console.log(this.props.comment)
     const upVoteFind = upVotes.find(each => {
       return each.toString() === info._id.toString();
     });

@@ -12,7 +12,7 @@ const userModel = new Schema(
       required: true,
       unique: true,
       validate: {
-        validator: function (value) {
+        validator: function(value) {
           const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
           return regex.test(value);
         },
@@ -38,7 +38,6 @@ const userModel = new Schema(
       type: Boolean,
       default: true,
       required: true
-
     },
     isPro: {
       type: Boolean,
@@ -117,6 +116,42 @@ const userModel = new Schema(
       require: false,
       default: []
     },
+    notifications: {
+      type: [
+        {
+          type: {
+            type: String,
+            enum: [
+              "UPVOTED",
+              "MENTIONED",
+              "COMMENTED",
+              "MILESTONE10",
+              "MILESTONE50",
+              "MILESTONE100"
+            ]
+          },
+          createBy: {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+            required: true
+          },
+          createdAt: {
+            type: Date,
+            default: Date.now()
+          },
+          seen: {
+            type: Boolean,
+            default: false
+          },
+          redirect: {
+            type: String,
+            required: true
+          }
+        }
+      ],
+      default: [],
+      required: true
+    },
     isChangePassword: {
       type: Boolean,
       default: false,
@@ -126,7 +161,7 @@ const userModel = new Schema(
   { timestamps: { createdAt: "createdAt" } }
 );
 
-userModel.pre("save", function (next) {
+userModel.pre("save", function(next) {
   if (!this.isModified("password")) {
     return next();
   }

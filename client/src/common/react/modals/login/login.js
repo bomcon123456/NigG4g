@@ -99,6 +99,7 @@ export class LoginModal extends KComponent {
     facebook: {
       isValid: res => res.hasOwnProperty("userID") && res.userID,
       getData: res => {
+        console.log(res);
         let { email, name, picture, userID, birthday } = res;
         let imageUrl = picture.data.url;
         return {

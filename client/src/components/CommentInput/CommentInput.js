@@ -90,6 +90,8 @@ class CommentInput extends KComponent {
         isPro: info.isPro,
         statusId: info.statusId
       },
+      upVotes: [],
+      downVotes: [],
       createdAt: Date.now()
     };
 
