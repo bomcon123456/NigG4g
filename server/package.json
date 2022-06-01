@@ -34,7 +34,7 @@
     "nodemailer-express-handlebars": "^3.0.0",
     "open-graph-scraper": "^3.6.2",
     "probe-image-size": "^4.0.1",
-    "sharp": "^0.22.1",
+    "sharp": "^0.30.5",
     "shortid": "^2.2.14",
     "streamifier": "^0.1.1"
   }
